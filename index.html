@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trò chơi lớp 1</title>
+<style>
+body{font-family:"Segoe UI",Arial,sans-serif;background:#e8f6ff;margin:0;padding:20px 16px;color:#12304a}
+h1{text-align:center;color:#0b5cab;font-size:30px;margin:6px 0 18px}
+a{display:block;max-width:520px;margin:0 auto 14px;padding:16px 20px;border-radius:18px;background:#f08c00;
+  box-shadow:0 6px 0 #b86200;color:#fff;text-decoration:none;text-align:center}
+a b{display:block;font-size:26px}a span{font-size:18px}
+</style>
+</head>
+<body>
+<h1 id="tieu-de">Cô Điệp AI - Trò chơi lớp 1</h1>
+<div id="ds"></div>
+<script>
+// Mỗi trò một dòng: "ma" là tên file trong thư mục này (ma + '.html'). Trò mới nhất để trên cùng.
+const TRO = [
+  { ma: 'tuan8', ten: 'Phiêu lưu bản đồ tuần 8: Toán + Tiếng Việt', mon: 'Toán + Tiếng Việt', tuan: 'Tuần 8' },
+  { ma: 'tuan7', ten: 'Đường đua tuần 7: Toán + Tiếng Việt', mon: 'Toán + Tiếng Việt', tuan: 'Tuần 7' },
+  { ma: 'tuan6', ten: 'Ôn tuần 6: Toán + Tiếng Việt', mon: 'Toán + Tiếng Việt', tuan: 'Tuần 6' },
+  { ma: 'tuan5', ten: 'Ôn tuần 5: Toán + Tiếng Việt', mon: 'Toán + Tiếng Việt', tuan: 'Tuần 5' },
+  { ma: 'toan5', ten: 'Ôn Toán tuần 5', mon: 'Toán', tuan: 'Tuần 5' },
+  { ma: 'beca',  ten: 'Bể cá Mấy và mấy', mon: 'Toán', tuan: 'Tuần 4-5' }
+];
+// link có ?lop=1.14 thì các trò chơi cũng mang theo lớp để ghi kết quả
+const lop = (new URLSearchParams(location.search).get('lop') || '').replace(/[^0-9A-Za-z.]/g, '');
+if (lop) document.getElementById('tieu-de').textContent += ' - lớp ' + lop;
+TRO.forEach(t => {
+  const a = document.createElement('a');
+  a.href = t.ma + '.html' + (lop ? '?lop=' + lop : '');
+  const b = document.createElement('b'); b.textContent = t.ten;
+  const s = document.createElement('span'); s.textContent = t.mon + ' - ' + t.tuan;
+  a.append(b, s);
+  document.getElementById('ds').appendChild(a);
+});
+</script>
+</body>
+</html>
