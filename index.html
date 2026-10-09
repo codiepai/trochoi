@@ -3,39 +3,89 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Trò chơi lớp 1</title>
+<title>Cô Điệp AI - Kho trò chơi</title>
 <style>
-body{font-family:"Segoe UI",Arial,sans-serif;background:#e8f6ff;margin:0;padding:20px 16px;color:#12304a}
-h1{text-align:center;color:#0b5cab;font-size:30px;margin:6px 0 18px}
-a{display:block;max-width:520px;margin:0 auto 14px;padding:16px 20px;border-radius:18px;background:#f08c00;
-  box-shadow:0 6px 0 #b86200;color:#fff;text-decoration:none;text-align:center}
-a b{display:block;font-size:26px}a span{font-size:18px}
+body{font-family:"Segoe UI",Arial,sans-serif;background:#e8f6ff;margin:0;padding:20px 16px 40px;color:#12304a}
+h1{text-align:center;color:#0b5cab;font-size:28px;margin:6px 0 6px}
+.gt{text-align:center;max-width:560px;margin:0 auto 18px;font-size:16px;line-height:1.4}
+h2{max-width:560px;margin:26px auto 4px;font-size:21px;color:#0b5cab}
+.ghi{max-width:560px;margin:0 auto 10px;font-size:14px;color:#4a6378}
+.the{max-width:560px;margin:0 auto 12px;display:flex;gap:8px}
+.the a{flex:1;padding:14px 18px;border-radius:16px;background:#f08c00;box-shadow:0 5px 0 #b86200;color:#fff;text-decoration:none}
+.lop3 .the a{background:#2f9e44;box-shadow:0 5px 0 #1e6b2e}
+.kd .the a{background:#7048e8;box-shadow:0 5px 0 #4c2fb0}
+.the a b{display:block;font-size:21px;line-height:1.2}.the a span{font-size:15px}
+.the button{flex:none;width:76px;border:3px solid #0b5cab;border-radius:16px;background:#fff;color:#0b5cab;font:inherit;font-weight:700;font-size:14px;cursor:pointer}
+.the button.xong{background:#2f9e44;border-color:#2f9e44;color:#fff}
 </style>
 </head>
 <body>
-<h1 id="tieu-de">Cô Điệp AI - Trò chơi lớp 1</h1>
+<h1 id="tieu-de">Cô Điệp AI - Kho trò chơi</h1>
+<p class="gt">Trò chơi ôn tập cho học sinh tiểu học. Bấm vào tên trò để chơi, bấm "Chép link" để gửi cho đồng nghiệp hoặc phụ huynh.</p>
 <div id="ds"></div>
 <script>
-// Mỗi trò một dòng: "ma" là tên file trong thư mục này (ma + '.html'). Trò mới nhất để trên cùng.
-const TRO = [
-  { ma: 'co25',  ten: 'Đàn cò tha chữ: Ôn Bài 25', mon: 'Tiếng Việt', tuan: 'Tuần 6' },
-  { ma: 'tuan8', ten: 'Phiêu lưu bản đồ tuần 8: Toán + Tiếng Việt', mon: 'Toán + Tiếng Việt', tuan: 'Tuần 8' },
-  { ma: 'tuan7', ten: 'Đường đua tuần 7: Toán + Tiếng Việt', mon: 'Toán + Tiếng Việt', tuan: 'Tuần 7' },
-  { ma: 'tuan6', ten: 'Ôn tuần 6: Toán + Tiếng Việt', mon: 'Toán + Tiếng Việt', tuan: 'Tuần 6' },
-  { ma: 'tuan5', ten: 'Ôn tuần 5: Toán + Tiếng Việt', mon: 'Toán + Tiếng Việt', tuan: 'Tuần 5' },
-  { ma: 'toan5', ten: 'Ôn Toán tuần 5', mon: 'Toán', tuan: 'Tuần 5' },
-  { ma: 'beca',  ten: 'Bể cá Mấy và mấy', mon: 'Toán', tuan: 'Tuần 4-5' }
+// Mỗi trò một dòng: "ma" là tên file trong thư mục này (ma + '.html'). Trò mới nhất để trên cùng trong nhóm.
+const NHOM = [
+  { ten: 'Lớp 1 - Ôn cuối tuần (Toán + Tiếng Việt)', ghi: 'Học sinh chơi trên điện thoại ở nhà.', TRO: [
+    { ma: 'tuan8', ten: 'Phiêu lưu bản đồ tuần 8', tuan: 'Tuần 8' },
+    { ma: 'tuan7', ten: 'Đường đua tuần 7', tuan: 'Tuần 7' },
+    { ma: 'tuan6', ten: 'Ôn tuần 6', tuan: 'Tuần 6' },
+    { ma: 'tuan5', ten: 'Ôn tuần 5', tuan: 'Tuần 5' }
+  ]},
+  { ten: 'Lớp 1 - Tiếng Việt luyện tập', ghi: 'Chơi trên tivi cả lớp hoặc ở nhà.', TRO: [
+    { ma: 'tv30', ten: 'Sách bay', tuan: 'Bài 30 Ôn tập' },
+    { ma: 'tv29', ten: 'Bể cá chính tả', tuan: 'Bài 29 Chính tả' },
+    { ma: 'tv28', ten: 'Bướm tha chữ', tuan: 'Bài 28 Y y' },
+    { ma: 'tv27', ten: 'Đoàn xe chở chữ', tuan: 'Bài 27 V v, X x' },
+    { ma: 'tv26', ten: 'Bóng bay chữ', tuan: 'Bài 26 Ph ph, Qu qu' },
+    { ma: 'co25', ten: 'Đàn cò tha chữ', tuan: 'Bài 25 Ôn tập' }
+  ]},
+  { ten: 'Lớp 1 - Tiếng Việt khởi động', ghi: 'Trình chiếu trên tivi đầu tiết học.', lop: 'kd', TRO: [
+    { ma: 'kd27', ten: 'Hộp quà bí mật', tuan: 'Bài 27 V v, X x' },
+    { ma: 'kd26', ten: 'Đoán hình bị che', tuan: 'Bài 26 Ph ph, Qu qu' },
+    { ma: 'kd25', ten: 'Vòng quay may mắn', tuan: 'Bài 25 Ôn tập' },
+    { ma: 'kd24', ten: 'Ai nhanh hơn', tuan: 'Bài 24 ua, ưa' },
+    { ma: 'kd23', ten: 'Câu cá', tuan: 'Bài 23 Th th, ia' },
+    { ma: 'kd22', ten: 'Hộp quà bí mật', tuan: 'Bài 22 T t, Tr tr' }
+  ]},
+  { ten: 'Lớp 1 - Toán', TRO: [
+    { ma: 'toan5', ten: 'Ôn Toán tuần 5', tuan: 'Tuần 5' },
+    { ma: 'beca', ten: 'Bể cá Mấy và mấy', tuan: 'Tuần 4-5' }
+  ]},
+  { ten: 'Lớp 3', lop: 'lop3', TRO: [
+    { ma: 'l3tv7', ten: 'Bàn tay cô giáo', tuan: 'Tiếng Việt - Tuần 7' },
+    { ma: 'l3toan6', ten: 'Một phần mấy', tuan: 'Toán - Tuần 6' }
+  ]}
 ];
-// link có ?lop=1.14 thì các trò chơi cũng mang theo lớp để ghi kết quả
+// link có ?lop=1.14 thì các trò chơi cũng mang theo lớp để ghi kết quả (chỉ dùng cho lớp của cô)
 const lop = (new URLSearchParams(location.search).get('lop') || '').replace(/[^0-9A-Za-z.]/g, '');
 if (lop) document.getElementById('tieu-de').textContent += ' - lớp ' + lop;
-TRO.forEach(t => {
-  const a = document.createElement('a');
-  a.href = t.ma + '.html' + (lop ? '?lop=' + lop : '');
-  const b = document.createElement('b'); b.textContent = t.ten;
-  const s = document.createElement('span'); s.textContent = t.mon + ' - ' + t.tuan;
-  a.append(b, s);
-  document.getElementById('ds').appendChild(a);
+const goc = location.href.replace(/[^/]*$/, '');
+const ds = document.getElementById('ds');
+NHOM.forEach(n => {
+  const khoi = document.createElement('section');
+  if (n.lop) khoi.className = n.lop;
+  const h = document.createElement('h2'); h.textContent = n.ten; khoi.appendChild(h);
+  if (n.ghi) { const g = document.createElement('p'); g.className = 'ghi'; g.textContent = n.ghi; khoi.appendChild(g); }
+  n.TRO.forEach(t => {
+    const dong = document.createElement('div'); dong.className = 'the';
+    const a = document.createElement('a');
+    a.href = t.ma + '.html' + (lop ? '?lop=' + lop : '');
+    const b = document.createElement('b'); b.textContent = t.ten;
+    const s = document.createElement('span'); s.textContent = t.tuan;
+    a.append(b, s);
+    // nút chép link: luôn chép link KHÔNG có lớp, để người khác chơi không bị ghi vào bảng của cô
+    const nut = document.createElement('button'); nut.textContent = 'Chép link';
+    nut.onclick = () => {
+      const link = goc + t.ma + '.html';
+      const xong = () => { nut.textContent = 'Đã chép'; nut.classList.add('xong'); setTimeout(() => { nut.textContent = 'Chép link'; nut.classList.remove('xong'); }, 1800); };
+      if (navigator.clipboard) navigator.clipboard.writeText(link).then(xong, () => prompt('Chép link này:', link));
+      else prompt('Chép link này:', link);
+    };
+    dong.append(a, nut);
+    khoi.appendChild(dong);
+  });
+  ds.appendChild(khoi);
 });
 </script>
 </body>
