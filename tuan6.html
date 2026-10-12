@@ -153,6 +153,7 @@
   .tu.dai { font-size: max(30px, calc(var(--u) * 10)); }
   .mon { font-size: max(15px, calc(var(--u) * 2.8)); color: #fff; background: var(--xanh); border-radius: 30px; padding: 2px 14px; }
   .mon.tv { background: var(--do); }
+  #nut-loa { font-size: max(15px, calc(var(--u) * 2.8)); color: var(--xanh); background: #fff; border: 3px solid var(--xanh); border-radius: 30px; padding: 2px 14px; cursor: pointer; }
   @keyframes lac { 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
 
   .nut-lon { font-size: max(26px, calc(var(--u) * 5.5)); padding: calc(var(--u) * 1) calc(var(--u) * 5); background: var(--la); box-shadow: 0 6px 0 var(--la-dam); }
@@ -196,6 +197,7 @@
 <header>
   <h1>Ôn tuần 6: Toán + Tiếng Việt</h1>
   <div class="mon" id="mon">Toán</div>
+  <button id="nut-loa" title="Nghe lại câu hỏi">🔊 Nghe lại</button>
   <div class="diem">Câu <span id="so-cau">1</span>/<span id="tong-cau">10</span> · Sao: <span id="so-sao">0</span></div>
 </header>
 
@@ -275,14 +277,33 @@ function boSo(dung, max = 10, min = 0) {
   return [...ds].sort((a, b) => a - b);
 }
 
+// giọng đọc tiếng Việt của máy (Edge, iPhone, Android đều có); máy nào không có giọng Việt thì im, không đọc bằng giọng Anh
+let giongViet = null;
+function timGiong() {
+  if (!window.speechSynthesis) return;
+  const ds = speechSynthesis.getVoices().filter(v => /^vi/i.test(v.lang));
+  giongViet = ds.find(v => /natural|online|hoaimy/i.test(v.name)) || ds[0] || null;
+}
+if (window.speechSynthesis) { timGiong(); speechSynthesis.onvoiceschanged = timGiong; }
+function doc(chu, cho = 0) {
+  if (!window.speechSynthesis || !giongViet || !$('mo-dau').hidden) return;
+  speechSynthesis.cancel();
+  setTimeout(() => {
+    const u = new SpeechSynthesisUtterance(chu.replace(/ > /g, ' lớn hơn ').replace(/ < /g, ' bé hơn ').replace(/ = /g, ' bằng '));
+    u.voice = giongViet; u.lang = giongViet.lang; u.rate = 0.9;
+    speechSynthesis.speak(u);
+  }, cho);
+}
+
 function keu(dsTanSo) {
   try {
     amThanh = amThanh || new (window.AudioContext || window.webkitAudioContext)();
+    if (amThanh.state === 'suspended') amThanh.resume();
     dsTanSo.forEach((f, i) => {
       const o = amThanh.createOscillator(), g = amThanh.createGain();
-      const t = amThanh.currentTime + i * 0.13;
+      const t = amThanh.currentTime + 0.02 + i * 0.13;
       o.frequency.value = f; o.type = 'triangle';
-      g.gain.setValueAtTime(0.25, t);
+      g.gain.setValueAtTime(0.6, t);
       g.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
       o.connect(g); g.connect(amThanh.destination);
       o.start(t); o.stop(t + 0.26);
@@ -338,7 +359,7 @@ const TAO = {
     let b = t - a;
     if (!that) do { b = ngau(1, 4); } while (b === t - a);
     return {
-      so: t, hoi: 'Đúng hay sai?', chon: ['Đúng', 'Sai'], dung: that ? 'Đúng' : 'Sai', chu: true,
+      so: t, hoi: 'Đúng hay sai?', noi: `${t} gồm ${a} và ${b}. Đúng hay sai?`, chon: ['Đúng', 'Sai'], dung: that ? 'Đúng' : 'Sai', chu: true,
       ve: () => `<div class="tu dai">${t} gồm ${a} và ${b}</div>`,
       khen: that ? `Đúng rồi! ${t} gồm ${a} và ${b}.` : `Đúng rồi! Câu đó sai. ${t} gồm ${a} và ${t - a}.`
     };
@@ -422,6 +443,7 @@ function raCau() {
   $('cau-hoi').textContent = cau.hoi;
   $('thong-bao').textContent = ''; $('thong-bao').className = '';
   $('hang-tiep').hidden = true;
+  doc(cau.noi || cau.hoi, 150);
 
   const hang = $('lua-chon'), khung = $('khung');
   hang.textContent = ''; khung.textContent = '';
@@ -458,12 +480,14 @@ function chon(v, nut) {
     $('hang-tiep').hidden = false;
     $('nut-tiep').textContent = thuTu === hangDoi.length - 1 ? 'Xem kết quả' : 'Câu tiếp';
     keu([523, 659, 784, 1047]);
+    doc(cau.khen, 650);
   } else {
     daSai = true;
     nut.classList.add('sai'); nut.disabled = true;
     $('thong-bao').className = 'sai';
     $('thong-bao').textContent = 'Con thử lại nhé!';
     keu([220, 196]);
+    doc('Con thử lại nhé!', 300);
   }
 }
 
@@ -475,9 +499,15 @@ $('nut-tiep').onclick = () => {
     guiKetQua();
     $('ket-thuc').hidden = false;
     keu([523, 659, 784, 1047, 1319]);
+    doc(`Hoàn thành! Con được ${sao} ngôi sao.`, 900);
   } else raCau();
 };
 $('nut-choi-lai').onclick = batDau;
+$('nut-loa').onclick = () => {
+  if (!giongViet) timGiong();
+  if (!giongViet) { alert('Máy này chưa có giọng đọc tiếng Việt. Thầy cô và ba mẹ thử mở bằng Microsoft Edge hoặc điện thoại nhé.'); return; }
+  doc(cau.noi || cau.hoi);
+};
 
 // điểm từng môn và các dạng còn sai, để cô biết con yếu chỗ nào
 function theoMon(mon) {
