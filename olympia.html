@@ -114,39 +114,41 @@ window.onerror = (m, f, d) => {
   o.textContent = 'Lỗi: ' + m + ' (dòng ' + d + ')';
 };
 // ====== NỘI DUNG (cô sửa ở đây theo tuần). Mỗi câu: [câu hỏi, đáp án] ======
-// Tuần 8: Tiếng Việt bài 31-35, Toán cộng trong phạm vi 5, số đến 10, hình phẳng.
+// Tuần 7: Tiếng Việt bài 26-30 (ph, qu, v, x, y, chính tả c/k, g/gh, ng/ngh), Toán hình phẳng, số đến 10, mấy và mấy.
+// (Bản tuần 8 cũ lưu trong thư mục "Bản cũ".)
 const NOI_DUNG = {
   khoiDong: [   // mỗi tổ 6 câu, 60 giây
-    ['2 + 2 bằng mấy?', '4'], ['3 + 1 bằng mấy?', '4'], ['1 + 4 bằng mấy?', '5'], ['0 + 3 bằng mấy?', '3'], ['2 + 3 bằng mấy?', '5'], ['1 + 2 bằng mấy?', '3'],
-    ['Số liền sau số 7 là số mấy?', '8'], ['Số liền trước số 5 là số mấy?', '4'], ['Hình tam giác có mấy cạnh?', '3'], ['Hình vuông có mấy cạnh?', '4'],
-    ['Số nào lớn nhất: 3, 9, 6?', '9'], ['Số nào bé nhất: 4, 1, 7?', '1'],
-    ['Tiếng "bạn" có vần gì?', 'an'], ['Tiếng "khăn" có vần gì?', 'ăn'], ['Tiếng "gần" có vần gì?', 'ân'], ['Tiếng "con" có vần gì?', 'on'],
-    ['Tiếng "bốn" có vần gì?', 'ôn'], ['Tiếng "sơn" có vần gì?', 'ơn'], ['Tiếng "sen" có vần gì?', 'en'], ['Tiếng "nến" có vần gì?', 'ên'],
-    ['Tiếng "pin" có vần gì?', 'in'], ['Tiếng "cún" có vần gì?', 'un'], ['Tiếng "cam" có vần gì?', 'am'], ['Tiếng "tăm" có vần gì?', 'ăm'],
-    ['Tiếng "sâm" có vần gì?', 'âm'], ['Nói một tiếng có vần "an".', 'bàn, lan, gan...']
+    ['Hình tam giác có mấy cạnh?', '3'], ['Hình vuông có mấy cạnh?', '4'], ['Hình chữ nhật có mấy cạnh?', '4'],
+    ['Mặt đồng hồ treo tường có dạng hình gì?', 'Hình tròn'], ['Cái bảng lớp mình có dạng hình gì?', 'Hình chữ nhật'], ['Lá cờ đỏ sao vàng có dạng hình gì?', 'Hình chữ nhật'],
+    ['Số liền sau số 7 là số mấy?', '8'], ['Số liền trước số 10 là số mấy?', '9'], ['Số nào lớn nhất: 3, 9, 6?', '9'],
+    ['Số nào bé nhất: 8, 2, 5?', '2'], ['3 và 2 được mấy?', '5'], ['5 gồm 4 và mấy?', '1'],
+    ['Tiếng "phố" có âm đầu là gì?', 'ph'], ['Tiếng "quê" có âm đầu là gì?', 'qu'], ['Tiếng "vẽ" có âm đầu là gì?', 'v'], ['Tiếng "xe" có âm đầu là gì?', 'x'],
+    ['Đọc to: quả khế', 'quả khế'], ['Đọc to: vỉa hè', 'vỉa hè'], ['Đọc to: y tá', 'y tá'],
+    ['Tiếng "cá" viết c hay k?', 'c'], ['Tiếng "kẻ" viết c hay k?', 'k'], ['Tiếng "ghế" viết g hay gh?', 'gh'], ['Tiếng "ngõ" viết ng hay ngh?', 'ng'],
+    ['Tiếng "nghé" viết ng hay ngh?', 'ngh'], ['Nói một tiếng có âm v.', 'vở, về, vẽ, vua...'], ['Nói một tiếng có âm x.', 'xe, xa, xô, xứ...']
   ],
   vcnv: {   // 4 hàng ngang (đáp án là một từ) + 1 câu ô giữa; mở hàng nào thì mở một góc tranh
     hang: [
-      ['Con vật có sọc đen trắng, trông giống con ngựa?', 'NGỰA VẰN'],
-      ['Đồ dùng chạy bằng pin, để soi sáng khi trời tối?', 'ĐÈN PIN'],
-      ['Chú chim nhỏ hót hay trong bài "on ôn ơn"?', 'SƠN CA'],
-      ['Đồ đội đầu làm bằng lá, để che nắng che mưa?', 'NÓN LÁ']
+      ['Quyển vở có trang giấy trắng để bé vẽ tranh gọi là gì?', 'VỞ VẼ'],
+      ['Xe có bánh rất to và nặng, dùng để làm phẳng mặt đường?', 'XE LU'],
+      ['Loài hoa màu vàng có trong bài "Y y"?', 'DÃ QUỲ'],
+      ['Củ có màu vàng, dùng để nấu ăn, có trong bài chính tả ng - ngh?', 'CỦ NGHỆ']
     ],
-    giua: ['Hai cộng ba bằng mấy?', 'NĂM'],
-    hinh: '🍊', tuKhoa: 'QUẢ CAM'
+    giua: ['Hình có 3 cạnh gọi là hình gì?', 'TAM GIÁC'],
+    hinh: '🥥', tuKhoa: 'QUẢ DỪA'
   },
   tangToc: [   // 4 câu, 30 giây; tổ đúng nhanh nhất 40 điểm, rồi 30, 20, 10
-    ['Có 2 con cá, thêm 3 con cá. Có tất cả mấy con cá?', '5'],
-    ['Tiếng nào có vần "in": chín, chăn, chồn?', 'chín'],
-    ['Xếp thành câu: lớn khôn / Mẹ ơi, / con đã', 'Mẹ ơi, con đã lớn khôn.'],
-    ['4 + 1 ... 3 + 2. Điền dấu gì vào chỗ chấm?', '=']
+    ['Có 3 con cá và 2 con cá. Có tất cả mấy con cá?', '5'],
+    ['Tiếng nào có âm "qu": quê, phố, xe?', 'quê'],
+    ['Xếp thành câu: vẽ / Hà / xe đạp', 'Hà vẽ xe đạp.'],
+    ['Điền c hay k: ...ẻ vở', 'k (kẻ vở)']
   ],
   veDich: {   // mỗi tổ chọn 3 câu trong các gói 10, 20, 30 điểm
-    10: [['2 + 3 bằng mấy?', '5'], ['Tiếng "khăn" có vần gì?', 'ăn'], ['1 + 2 bằng mấy?', '3'], ['Đọc to: bến đò', 'bến đò'], ['Hình tròn có mấy cạnh?', 'Không có cạnh nào'], ['Đọc to: quả mận', 'quả mận']],
-    20: [['4 cộng mấy bằng 5?', '1'], ['Tìm 2 tiếng có vần "âm": sâm, cam, nấm, tăm', 'sâm, nấm'], ['Đọc to câu: Nhà bé ở gần bến đò.', 'Đọc đúng, rõ ràng'],
-      ['3 + 1 và 2 + 3, bên nào lớn hơn?', '2 + 3'], ['Nói 2 tiếng có vần "un".', 'cún, vun, bún...'], ['Đọc to câu: Sen nở thắm hồ.', 'Đọc đúng, rõ ràng']],
-    30: [['Nói 3 tiếng có vần "on".', 'con, nón, ngon, giòn...'], ['Đọc to câu: Đàn gà cứ tha thẩn gần chân mẹ.', 'Đọc đúng, rõ ràng'], ['2 + 2 ... 1 + 3. Điền dấu gì?', '='],
-      ['Có 1 bạn, thêm 4 bạn. Có tất cả mấy bạn?', '5'], ['Đọc to câu: Sơn ca véo von: Mẹ ơi, con đã lớn khôn.', 'Đọc đúng, rõ ràng'], ['Nói 3 tiếng có vần "ên".', 'nến, bến, tên, lên...']]
+    10: [['Hình tròn có mấy cạnh?', 'Không có cạnh nào'], ['Đọc to: phố cổ', 'phố cổ'], ['Số liền sau số 9 là số mấy?', '10'], ['Đọc to: xe lu', 'xe lu'], ['Tiếng "quả" có âm đầu là gì?', 'qu'], ['Đọc to: đá quý', 'đá quý']],
+    20: [['4 và 1 được mấy?', '5'], ['Tìm 2 tiếng có âm "ph": phở, quạ, pha, vở', 'phở, pha'], ['Đọc to câu: Bà cho bé quà quê.', 'Đọc đúng, rõ ràng'],
+      ['Số 7 và số 4, số nào lớn hơn?', '7'], ['Điền g hay gh: ...à gô', 'g (gà gô)'], ['Đọc to câu: Hà vẽ xe đạp.', 'Đọc đúng, rõ ràng']],
+    30: [['Nói 3 tiếng có âm "x".', 'xe, xa, xô, xứ, xưa...'], ['Đọc to câu: Nghỉ hè, bố mẹ cho Hà về quê.', 'Đọc đúng, rõ ràng'], ['5 gồm 2 và mấy?', '3'],
+      ['Điền ng hay ngh: củ ...ệ', 'ngh (củ nghệ)'], ['Đọc to câu: Xa nhà, bé nhớ mẹ. Xa quê, bé nhớ bà.', 'Đọc đúng, rõ ràng'], ['Kể tên 2 đồ vật có dạng hình vuông.', 'khăn mùi xoa, viên gạch, ô cửa sổ...']]
   }
 };
 // ==========================================================================
