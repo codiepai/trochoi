@@ -260,7 +260,10 @@ function timGiong() {
   giongViet = ds.find(v => /natural|online|hoaimy/i.test(v.name)) || ds[0] || null;
 }
 if (window.speechSynthesis) { timGiong(); speechSynthesis.onvoiceschanged = timGiong; }
-function doc(chu, cho = 0) {
+// Chỉ đọc khi người dùng bấm nút loa, không tự đọc (cô Điệp dặn 12/10/2026)
+let choDoc = false;
+document.addEventListener('click', e => { if (e.target.closest('.nut-nghe, #nut-loa, #nghe, #nut-nghe')) { choDoc = true; setTimeout(() => choDoc = false, 0); } }, true);
+function doc(chu, cho = 0) { if (!choDoc) return;
   if (!window.speechSynthesis || !giongViet || !$('mo-dau').hidden) return;
   speechSynthesis.cancel();
   setTimeout(() => {

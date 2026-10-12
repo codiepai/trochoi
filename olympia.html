@@ -176,7 +176,10 @@ const tiec = () => keu([300, 220], 'sawtooth', 0.2, 0.2);
 let giong = null;
 function timGiong() { if (!window.speechSynthesis) return; const ds = speechSynthesis.getVoices().filter(v => /^vi/i.test(v.lang)); giong = ds.find(v => /natural|online|hoaimy/i.test(v.name)) || ds[0] || null; }
 if (window.speechSynthesis) { timGiong(); speechSynthesis.onvoiceschanged = timGiong; }
-function noi(chu) {
+// Chỉ đọc khi người dùng bấm nút loa, không tự đọc (cô Điệp dặn 12/10/2026)
+let choDoc = false;
+document.addEventListener('click', e => { if (e.target.closest('.nut-nghe, #nut-loa, #nghe, #nut-nghe')) { choDoc = true; setTimeout(() => choDoc = false, 0); } }, true);
+function noi(chu) { if (!choDoc) return;
   if (!giong) timGiong();
   if (!giong) return;
   speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(chu.replace(/"/g, '').replace(/\.\.\./g, ' chấm chấm ').replace(/\//g, ',')); u.voice = giong; u.lang = giong.lang; u.rate = 0.9; speechSynthesis.speak(u);

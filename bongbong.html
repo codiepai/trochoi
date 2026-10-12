@@ -198,7 +198,10 @@ function keu(ds, kieu = 'triangle', cach = 0.1, to = 0.4) {
 let giong = null;
 function timGiong() { if (!window.speechSynthesis) return; const ds = speechSynthesis.getVoices().filter(v => /^vi/i.test(v.lang)); giong = ds.find(v => /natural|online|hoaimy/i.test(v.name)) || ds[0] || null; }
 if (window.speechSynthesis) { timGiong(); speechSynthesis.onvoiceschanged = timGiong; }
-function noi(chu) { if (!giong) return; speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(chu); u.voice = giong; u.lang = giong.lang; u.rate = 0.9; speechSynthesis.speak(u); }
+// Chỉ đọc khi người dùng bấm nút loa, không tự đọc (cô Điệp dặn 12/10/2026)
+let choDoc = false;
+document.addEventListener('click', e => { if (e.target.closest('.nut-nghe, #nut-loa, #nghe, #nut-nghe')) { choDoc = true; setTimeout(() => choDoc = false, 0); } }, true);
+function noi(chu) { if (!choDoc) return; if (!giong) return; speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(chu); u.voice = giong; u.lang = giong.lang; u.rate = 0.9; speechSynthesis.speak(u); }
 function phaoGiay(n) {
   const p = $('phao'); p.textContent = '';
   for (let i = 0; i < n; i++) { const g = document.createElement('i'); g.style.left = Math.random() * 100 + 'vw'; g.style.background = MAU[i % MAU.length]; g.style.animationDuration = (2 + Math.random() * 2.5) + 's'; g.style.animationDelay = Math.random() * .8 + 's'; p.appendChild(g); }
