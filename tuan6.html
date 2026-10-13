@@ -228,6 +228,8 @@
 <script>
 // nếu máy nào báo lỗi, hiện lỗi lên màn hình để chụp gửi cô
 window.onerror = (m, f, d) => {
+  const goc = s => String(s || "").split(/[?#]/)[0];
+  if (/zalo|FBNav|instagram/i.test(m) || !f || goc(f) !== goc(location.href)) return; // lỗi của app Zalo/Facebook chèn vào, không phải của trò chơi
   const o = document.getElementById('loi-may') || document.body.appendChild(Object.assign(document.createElement('div'), { id: 'loi-may' }));
   o.textContent = 'Lỗi: ' + m + ' (dòng ' + d + ')';
 };
