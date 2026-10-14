@@ -211,12 +211,16 @@
 
   .nut-lon { font-size: max(26px, calc(var(--u) * 5.5)); padding: calc(var(--u) * 1) calc(var(--u) * 5); background: var(--la); box-shadow: 0 6px 0 var(--la-dam); }
   .hang-nut { text-align: center; padding-bottom: 8px; }
+  #nut-loa { font-size: max(15px, calc(var(--u) * 2.8)); color: var(--xanh); background: #fff; border: 3px solid var(--xanh); border-radius: 30px; padding: 2px 14px; cursor: pointer; box-shadow: none; }
+  /* iPhone: body chặn chọn chữ thì ô tên không gõ được, nên mở lại cho ô nhập */
+  input { -webkit-user-select: text; user-select: text; }
+  #loi-may { position: fixed; left: 8px; right: 8px; bottom: 8px; z-index: 20; background: #fff; color: #c00; border: 3px solid #c00; border-radius: 12px; padding: 8px; font-size: 15px; }
 
   .man-phu {
     position: fixed; inset: 0; background: var(--phu);
     display: flex; flex-direction: column; align-items: center; justify-content: safe center;
     gap: calc(var(--u) * 2.4); color: var(--trang); text-align: center; padding: 16px;
-    overflow-y: auto; z-index: 5;
+    overflow-y: auto; z-index: 10;
   }
   .man-phu h2 { font-size: max(30px, calc(var(--u) * 7.5)); line-height: 1.1; }
   .man-phu p { font-size: max(22px, calc(var(--u) * 4.8)); color: var(--vang-nhat); line-height: 1.2; }
@@ -268,6 +272,7 @@
 <header>
   <h1>Đường đua tuần 7</h1>
   <div class="mon" id="mon">Toán</div>
+  <button id="nut-loa" title="Nghe lại câu hỏi">🔊 Nghe</button>
   <div class="diem">Câu <span id="so-cau">1</span>/<span id="tong-cau">20</span> · Sao: <span id="so-sao">0</span></div>
 </header>
 
@@ -310,6 +315,13 @@
 <div id="phao"></div>
 
 <script>
+// nếu máy nào báo lỗi, hiện lỗi lên màn hình để chụp gửi cô
+window.onerror = (m, f, d) => {
+  const goc = s => String(s || "").split(/[?#]/)[0];
+  if (/zalo|FBNav|instagram/i.test(m) || !f || goc(f) !== goc(location.href)) return; // lỗi của app Zalo/Facebook chèn vào, không phải của trò chơi
+  const o = document.getElementById('loi-may') || document.body.appendChild(Object.assign(document.createElement('div'), { id: 'loi-may' }));
+  o.textContent = 'Lỗi: ' + m + ' (dòng ' + d + ')';
+};
 const TEN_BAI = 'Đường đua tuần 7: Toán + Tiếng Việt';
 const MAU = ['#e8202a', '#1565d8', '#2fa65a', '#f2891f', '#8e24aa', '#ec5a93'];
 const BAN = [['🐰', 'Thỏ'], ['🐢', 'Rùa'], ['🐱', 'Mèo'], ['🐶', 'Cún'], ['🐻', 'Gấu'], ['🐼', 'Gấu trúc'], ['🐸', 'Ếch'], ['🦊', 'Cáo']];
@@ -395,14 +407,38 @@ function boSo(dung, max = 10, min = 0) {
   return [...ds].sort((a, b) => a - b);
 }
 
+// giọng đọc tiếng Việt của máy (Edge, iPhone, Android đều có); máy nào không có giọng Việt thì im, không đọc bằng giọng Anh
+let giongViet = null;
+function timGiong() {
+  if (!window.speechSynthesis) return;
+  const ds = speechSynthesis.getVoices().filter(v => /^vi/i.test(v.lang));
+  giongViet = ds.find(v => /natural|online|hoaimy/i.test(v.name)) || ds[0] || null;
+}
+if (window.speechSynthesis) { timGiong(); speechSynthesis.onvoiceschanged = timGiong; }
+// Chỉ đọc khi người dùng bấm nút loa, không tự đọc (cô Điệp dặn 12/10/2026)
+let choDoc = false;
+document.addEventListener('click', e => { if (e.target.closest('.nut-nghe, #nut-loa, #nghe, #nut-nghe')) { choDoc = true; setTimeout(() => choDoc = false, 0); } }, true);
+function doc(chu, cho = 0) { if (!choDoc) return;
+  if (!window.speechSynthesis || !giongViet || !$('mo-dau').hidden) return;
+  speechSynthesis.cancel();
+  setTimeout(() => {
+    const u = new SpeechSynthesisUtterance(chu);
+    u.voice = giongViet; u.lang = giongViet.lang; u.rate = 0.9;
+    speechSynthesis.speak(u);
+  }, cho);
+}
+// tên âm đọc theo cách cô dạy lớp 1 (máy đọc chữ "x" thành "ích xì")
+const TEN_AM = { v: 'vờ', x: 'xờ', g: 'gờ', gh: 'gờ kép', ph: 'phờ', qu: 'quờ' };
+
 function keu(dsTanSo) {
   try {
     amThanh = amThanh || new (window.AudioContext || window.webkitAudioContext)();
+    if (amThanh.state === 'suspended') amThanh.resume();
     dsTanSo.forEach((f, i) => {
       const o = amThanh.createOscillator(), g = amThanh.createGain();
-      const t = amThanh.currentTime + i * 0.13;
+      const t = amThanh.currentTime + 0.02 + i * 0.13;
       o.frequency.value = f; o.type = 'triangle';
-      g.gain.setValueAtTime(0.25, t);
+      g.gain.setValueAtTime(0.6, t);
       g.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
       o.connect(g); g.connect(amThanh.destination);
       o.start(t); o.stop(t + 0.26);
@@ -462,15 +498,15 @@ const TAO = {
       khen: `Đúng rồi! Đó là hình ${TEN_HINH[la].toLowerCase()}, 3 hình kia là hình ${TEN_HINH[k].toLowerCase()}.`
     };
   },
-  vx(truoc) { return cauDien(VX, ['v', 'x'], 'Điền v hay x?', truoc); },
-  ggh(truoc) { return cauDien(GGH, ['g', 'gh'], 'Điền g hay gh?', truoc); },
+  vx(truoc) { return { ...cauDien(VX, ['v', 'x'], 'Điền v hay x?', truoc), noi: 'Điền vờ hay xờ?' }; },
+  ggh(truoc) { return { ...cauDien(GGH, ['g', 'gh'], 'Điền g hay gh?', truoc), noi: 'Điền gờ hay gờ kép?' }; },
   tim(truoc) {
     const nhom = Object.keys(AM);
     let am; do { am = lay(nhom); } while (am === truoc);
     const dap = lay(AM[am]);
     const khac = tron(nhom.filter(n => n !== am)).slice(0, 2).map(n => lay(AM[n]));
     return {
-      so: am, hoi: `Chạm vào tiếng có âm ${am}`, chon: tron([dap, ...khac]), dung: dap, trongKhung: true, chu: true,
+      so: am, hoi: `Chạm vào tiếng có âm ${am}`, noi: `Chạm vào tiếng có âm ${TEN_AM[am]}`, chon: tron([dap, ...khac]), dung: dap, trongKhung: true, chu: true,
       khen: `Đúng rồi! Tiếng ${dap} có âm ${am}.`
     };
   },
@@ -617,6 +653,11 @@ $('nut-tiep').onclick = () => {
   } else raCau();
 };
 $('nut-choi-lai').onclick = batDau;
+$('nut-loa').onclick = () => {
+  if (!giongViet) timGiong();
+  if (!giongViet) { alert('Máy này chưa có giọng đọc tiếng Việt. Thầy cô và ba mẹ thử mở bằng Microsoft Edge hoặc điện thoại nhé.'); return; }
+  doc(cau.noi || cau.hoi);
+};
 
 // điểm từng môn và các dạng còn sai, để cô biết con yếu chỗ nào
 function theoMon(mon) {
@@ -691,6 +732,7 @@ function veChonBan() {
 function vaoChoi() {
   ten = $('ten-hs').value.trim();
   try { localStorage.setItem('ten-hs', ten); localStorage.setItem('ban-dua', ban); } catch (e) {}
+  try { $('ten-hs').blur(); } catch (e) {}
   $('mo-dau').hidden = true;
   batDau();
 }
@@ -700,7 +742,9 @@ try {
   if (luu >= 0 && luu < BAN.length) ban = luu;
 } catch (e) {}
 veChonBan();
+// điện thoại: đang mở bàn phím thì lần chạm đầu có thể chỉ đóng bàn phím, nên bắt cả lúc vừa chạm xuống
 $('nut-bat-dau').onclick = vaoChoi;
+$('nut-bat-dau').addEventListener('touchend', e => { e.preventDefault(); vaoChoi(); });
 $('nut-ban-khac').onclick = () => {
   $('ket-thuc').hidden = true;
   $('ten-hs').value = '';
