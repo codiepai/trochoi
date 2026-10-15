@@ -38,7 +38,10 @@
 
   .vong-o { position: relative; flex: 1; min-height: 0; aspect-ratio: 1; max-width: 100%; }
   .vong-o svg { width: 100%; height: 100%; display: block; overflow: visible; }
-  #quay { transform-box: view-box; transform-origin: 50% 50%; }
+  /* xoay quanh tâm vòng (0,0): fill-box của vòng tròn đối xứng nên tâm luôn đúng, không bị trượt che nút QUAY */
+  #quay { transform-box: fill-box; transform-origin: center; }
+  .vong-o { pointer-events: none; }
+  .duoi { position: relative; z-index: 3; }
   .vong-o text { font-family: var(--font); font-weight: 800; }
   .vong-o .mui-ten { position: absolute; left: 50%; top: -3%; transform: translateX(-50%); width: 9%; height: auto; z-index: 2; filter: drop-shadow(0 4px 2px rgba(0,0,0,.25)); }
 
