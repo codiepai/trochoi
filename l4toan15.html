@@ -374,7 +374,7 @@ const vao = () => {
   if ($('mo-dau').hidden) return;
   ten = $('ten-hs').value.trim();
   if (!ten) { $('ten-hs').focus(); $('ten-hs').classList.remove('lac'); void $('ten-hs').offsetWidth; $('ten-hs').classList.add('lac'); return; }
-  $('mo-dau').hidden = true; keu([523, 659]); batDau();
+  $('mo-dau').hidden = true; keu([523, 659]); if (cauDoc) doc(cauDoc); batDau();
 };
 $('bat-dau').addEventListener('click', vao);
 $('bat-dau').addEventListener('touchend', e => { e.preventDefault(); vao(); });

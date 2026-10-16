@@ -228,7 +228,7 @@ function keu(ds, kieu = 'triangle', cach = 0.12, to = 0.35) {
 let giong = null;
 function timGiong() { if (!window.speechSynthesis) return; const ds = speechSynthesis.getVoices().filter(v => /^vi/i.test(v.lang)); giong = ds.find(v => /natural|online|hoaimy/i.test(v.name)) || ds[0] || null; }
 if (window.speechSynthesis) { timGiong(); speechSynthesis.onvoiceschanged = timGiong; }
-// Chỉ đọc khi người dùng bấm nút loa, không tự đọc (cô Điệp dặn 12/10/2026)
+// Tự đọc câu mới, nút loa để nghe lại (cô Điệp dặn 16/10/2026)
 let choDoc = false;
 document.addEventListener('click', e => { if (e.target.closest('.nut-nghe, #nut-loa, #nghe, #nut-nghe')) { choDoc = true; setTimeout(() => choDoc = false, 0); } }, true);
 function noi(chu) { if (!choDoc) return; if (!giong) return; speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(chu.replace(/"/g, '').replace(/\.\.\./g, ' chấm chấm ')); u.voice = giong; u.lang = giong.lang; u.rate = 0.9; speechSynthesis.speak(u); }

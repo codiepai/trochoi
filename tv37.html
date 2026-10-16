@@ -247,7 +247,7 @@ function timGiong() {
   giongViet = ds.find(v => /natural|online|hoaimy/i.test(v.name)) || ds[0] || null;
 }
 if (window.speechSynthesis) { timGiong(); speechSynthesis.onvoiceschanged = timGiong; }
-// Chỉ đọc khi người dùng bấm nút loa, không tự đọc (cô Điệp dặn 12/10/2026)
+// Tự đọc câu mới, nút loa để nghe lại (cô Điệp dặn 16/10/2026)
 function doc(chu) {
   if (!window.speechSynthesis || !giongViet) return;
   speechSynthesis.cancel();
@@ -502,7 +502,7 @@ if (O_NHA) {
   const batDau = e => {
     if (e) e.preventDefault();
     if ($('mo-dau').hidden) return;
-    ten = $('ten-hs').value.trim(); $('mo-dau').hidden = true; keu([523, 659]);
+    ten = $('ten-hs').value.trim(); $('mo-dau').hidden = true; keu([523, 659]); if (cauDoc) doc(cauDoc);
   };
   $('nut-bat-dau').onclick = batDau;
   $('nut-bat-dau').addEventListener('touchend', batDau);

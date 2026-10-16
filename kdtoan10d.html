@@ -172,7 +172,7 @@ function timGiong() {
 }
 if (window.speechSynthesis) { timGiong(); speechSynthesis.onvoiceschanged = timGiong; }
 document.addEventListener('click', e => { if (e.target.closest('.nut-nghe, #nut-loa, #nghe, #nut-nghe')) { choDoc = true; setTimeout(() => choDoc = false, 0); } }, true);
-function doc(chu) { if (!choDoc) return;
+function doc(chu) {
   if (!window.speechSynthesis || !giongViet) return;
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(chu); u.voice = giongViet; u.lang = giongViet.lang; u.rate = 0.9; speechSynthesis.speak(u);

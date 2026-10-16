@@ -302,10 +302,10 @@ function timGiong() {
   giongViet = ds.find(v => /natural|online|hoaimy/i.test(v.name)) || ds[0] || null;
 }
 if (window.speechSynthesis) { timGiong(); speechSynthesis.onvoiceschanged = timGiong; }
-// Chỉ đọc khi người dùng bấm nút loa hoặc nút ▶, không tự đọc (cô Điệp dặn 12/10/2026)
+// Tự đọc câu hỏi mới hiện ra (cô Điệp dặn lại 16/10/2026), nút loa 🔊 để nghe lại
 let choDoc = false;
 document.addEventListener('click', e => { if (e.target.closest('.nut-nghe, #nut-loa, #nghe, #nut-nghe')) { choDoc = true; setTimeout(() => choDoc = false, 0); } }, true);
-function doc(chu, cho = 0) { if (!choDoc) return;
+function doc(chu, cho = 0) {
   if (!window.speechSynthesis || !giongViet || !$('mo-dau').hidden) return;
   speechSynthesis.cancel();
   setTimeout(() => {
@@ -521,6 +521,7 @@ function raCau() {
   $('mon').textContent = cau.mon;
   $('mon').className = 'mon' + (cau.mon === 'Toán' ? '' : ' tv');
   $('cau-hoi').textContent = cau.hoi;
+  if (!cau.nghe) doc(cau.noi || cau.hoi, 300); // tự đọc câu hỏi, nút 🔊 Nghe để nghe lại
   $('thong-bao').textContent = ''; $('thong-bao').className = '';
   $('hang-tiep').hidden = true;
   const hang = $('lua-chon'), khung = $('khung');
