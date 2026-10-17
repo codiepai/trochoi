@@ -458,7 +458,7 @@ if (O_NHA) {
   // ở nhà đi lần lượt từng chặng, không nhảy chặng
   document.querySelectorAll('#chang button').forEach(b => b.disabled = true);
   $('mo-dau').hidden = false;
-  $('nut-bat-dau').onclick = () => { ten = $('ten-hs').value.trim(); $('mo-dau').hidden = true; keu([523, 659]); if (cauDoc) doc(cauDoc); };
+  $('nut-bat-dau').onclick = () => { ten = $('ten-hs').value.trim(); $('mo-dau').hidden = true; keu([523, 659]); };
   $('ten-hs').addEventListener('keydown', e => { if (e.key === 'Enter') $('nut-bat-dau').click(); });
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('phu').hidden && !$('doc-dung')) dongThe(); });

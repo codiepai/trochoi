@@ -562,7 +562,7 @@ $('md-ten').textContent = D.ten; $('md-bai').textContent = D.bai + ' - Tiếng V
 if (O_NHA) {
   document.querySelectorAll('#chang button').forEach(b => b.disabled = true);
   $('mo-dau').hidden = false;
-  $('nut-bat-dau').onclick = () => { ten = $('ten-hs').value.trim(); $('mo-dau').hidden = true; keu([523, 659]); if (cauDoc) doc(cauDoc); };
+  $('nut-bat-dau').onclick = () => { ten = $('ten-hs').value.trim(); $('mo-dau').hidden = true; keu([523, 659]); };
   $('ten-hs').addEventListener('keydown', e => { if (e.key === 'Enter') $('nut-bat-dau').click(); });
 }
 choiLai();
