@@ -21,6 +21,9 @@
     color-scheme: light;
   }
   @media (max-aspect-ratio: 1/1) { :root { --u: min(0.62vh, 0.95vw); } }
+  /* màn hình rộng: ô và thẻ rộng ra cho đỡ trống hai bên */
+  :root { --kx: 1; --ky: 1; }
+  @media (min-aspect-ratio: 16/9) { :root { --kx: 1.5; --ky: .68; } }
   * { box-sizing: border-box; margin: 0; }
   html, body { height: 100%; }
   body {
@@ -57,7 +60,7 @@
   /* ===== Chặng 1 ===== */
   .khu1 { display: flex; gap: calc(var(--u) * 4); flex-wrap: wrap; justify-content: center; align-items: flex-start; }
   table { border-collapse: separate; border-spacing: calc(var(--u) * .7); }
-  th, td { width: calc(var(--u) * 15); height: calc(var(--u) * 9.5); border-radius: calc(var(--u) * 1.4); text-align: center; font-size: max(26px, calc(var(--u) * 6)); line-height: 1; }
+  th, td { width: calc(var(--u) * 15 * var(--kx)); height: calc(var(--u) * 9.5 * var(--ky)); border-radius: calc(var(--u) * 1.4); text-align: center; font-size: max(26px, calc(var(--u) * 6 * var(--ky))); line-height: 1; }
   th { background: #ffe066; color: var(--chu); }
   th.trong { background: none; }
   th.sang { background: #ff922b; color: #fff; }
@@ -70,8 +73,8 @@
   @keyframes lat { from { transform: rotateY(90deg); } to { transform: rotateY(0); } }
   .nhom { display: flex; align-items: center; gap: calc(var(--u) * 1.4); flex-wrap: wrap; justify-content: center; background: rgba(255,255,255,.55); border-radius: calc(var(--u) * 2.5); padding: calc(var(--u) * 1) calc(var(--u) * 2); }
   .nhom .chip { font-size: max(26px, calc(var(--u) * 6.5)); color: #fff; background: var(--do); border-radius: calc(var(--u) * 2); padding: 0 calc(var(--u) * 2.4); line-height: 1.3; }
-  .nhom .o-lat { width: calc(var(--u) * 15); height: calc(var(--u) * 10); border-radius: calc(var(--u) * 1.6); border: none; font-size: max(26px, calc(var(--u) * 6)); }
-  .khu1.nho-the .nhom .o-lat { width: calc(var(--u) * 11.5); height: calc(var(--u) * 8.5); font-size: max(22px, calc(var(--u) * 5)); }
+  .nhom .o-lat { width: calc(var(--u) * 15 * var(--kx)); height: calc(var(--u) * 10); border-radius: calc(var(--u) * 1.6); border: none; font-size: max(26px, calc(var(--u) * 6)); }
+  .khu1.nho-the .nhom .o-lat { width: calc(var(--u) * 11.5 * var(--kx)); height: calc(var(--u) * 8.5); font-size: max(22px, calc(var(--u) * 5)); }
   .khu1.nho-the .nhom .chip { font-size: max(22px, calc(var(--u) * 5)); }
   .khu1.nho-the { gap: calc(var(--u) * 1.6); }
 
@@ -110,7 +113,7 @@
   .tu-dien .o { display: inline-block; min-width: 1.1em; border: 6px dashed var(--do); border-radius: 18px; color: var(--do); padding: 0 .12em; text-align: center; }
   .tu-dien .o.xong { border-style: solid; border-color: var(--la); color: var(--la); background: #d3f9d8; }
   .qua { display: flex; flex-wrap: wrap; justify-content: center; gap: calc(var(--u) * 3); }
-  .qua button { min-width: max(110px, calc(var(--u) * 22)); padding: calc(var(--u) * 1.2) calc(var(--u) * 3); font-size: max(34px, calc(var(--u) * 8.5)); line-height: 1.05; color: #fff; background: var(--cam); border: none; border-radius: calc(var(--u) * 3); box-shadow: 0 8px 0 var(--cam-dam); }
+  .qua button { min-width: max(110px, calc(var(--u) * 22 * var(--kx))); padding: calc(var(--u) * 1.2) calc(var(--u) * 3); font-size: max(34px, calc(var(--u) * 8.5)); line-height: 1.05; color: #fff; background: var(--cam); border: none; border-radius: calc(var(--u) * 3); box-shadow: 0 8px 0 var(--cam-dam); }
   .qua button:active { transform: translateY(5px); box-shadow: 0 3px 0 var(--cam-dam); }
   .qua button.dung { background: var(--la); box-shadow: 0 8px 0 var(--la-dam); }
   .qua button.sai { background: #b9c2cc; box-shadow: 0 8px 0 #8a949e; animation: lac .4s; }
@@ -120,7 +123,7 @@
 
   /* thẻ to giữa màn hình */
   .phu { position: fixed; inset: 0; background: rgba(18,48,74,.78); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 8; }
-  .the { width: min(100%, 1000px); max-height: 100%; overflow-y: auto; background: #fff; border-radius: calc(var(--u) * 4); border: 8px solid var(--mau, var(--cam)); padding: calc(var(--u) * 3) calc(var(--u) * 4); display: flex; flex-direction: column; align-items: center; gap: calc(var(--u) * 2.5); text-align: center; animation: bung .45s cubic-bezier(.3,1.5,.5,1); }
+  .the { width: min(100%, 1000px); min-width: min(94vw, calc(var(--u) * 80)); max-height: 100%; overflow-y: auto; background: #fff; border-radius: calc(var(--u) * 4); border: 8px solid var(--mau, var(--cam)); padding: calc(var(--u) * 3) calc(var(--u) * 4); display: flex; flex-direction: column; align-items: center; gap: calc(var(--u) * 2.5); text-align: center; animation: bung .45s cubic-bezier(.3,1.5,.5,1); }
   @keyframes bung { from { transform: scale(.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
   .the .nhan { font-size: max(20px, calc(var(--u) * 4.4)); color: var(--xanh); }
   .the .tu-to { font-size: max(64px, calc(var(--u) * 18)); line-height: 1.05; color: var(--do); }
