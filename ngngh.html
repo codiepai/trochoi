@@ -198,8 +198,8 @@ let au; function keu(ds) { try { au = au || new (window.AudioContext || window.w
 let giongViet = null, coTieng = true;
 function timGiong() { if (!window.speechSynthesis) return; const v = speechSynthesis.getVoices().filter(x => /^vi/i.test(x.lang)); giongViet = v.find(x => /natural|online|hoaimy/i.test(x.name)) || v[0] || null; }
 if (window.speechSynthesis) { timGiong(); speechSynthesis.onvoiceschanged = timGiong; }
-// tên chữ khi đọc: ng = ngờ, ngh = ngờ hát, g = gờ, gh = gờ hát
-const TEN_CHU = { ng: 'ngờ', ngh: 'ngờ hát', g: 'gờ', gh: 'gờ hát' };
+// tên chữ khi đọc: ng = ngờ, ngh = ngờ ghép, g = gờ, gh = gờ ghép
+const TEN_CHU = { ng: 'ngờ', ngh: 'ngờ ghép', g: 'gờ', gh: 'gờ ghép' };
 const choDoc = t => t.replace(/(^|[\s,.:])(ngh|gh|ng|g)(?=[\s,.:?!]|$)/g, (m, a, b) => a + TEN_CHU[b]).replace(/NHÀ /g, 'nhà ').replace(/ · /g, ' và ');
 function doc(t, tho) {
   if (!coTieng || !window.speechSynthesis) return;
@@ -246,11 +246,11 @@ CHU_CAI.forEach(c => {
   b.onclick = () => {
     document.querySelectorAll('.chip').forEach(x => x.classList.remove('chon')); b.classList.add('chon'); daChon[c] = 1;
     const dac = 'eêi'.includes(c);
-    const ds = (VD[c] || []).map(w => { const m = w.match(/^(ngh|ng|gh|g)(.*)$/); const dau = m[1], van = m[2]; return `<div class="tu"><span class="em">${EM0[w] || ''}</span><span><span class="${dac ? 'dh' : 'd'}">${dau}</span><span class="v">${van.charAt(0)}</span>${van.slice(1)}</span><button data-w="${w}">🔊 nghe</button></div>`; }).join('');
+    const ds = (VD[c] || []).map(w => { const m = w.match(/^(ngh|ng|gh|g)(.*)$/); const dau = m[1], van = m[2]; return `<div class="tu"><span class="em">${EM0[w] || ''}</span><span><span class="${dac ? 'dh' : 'd'}">${dau}</span><span class="v">${van.charAt(0)}</span>${van.slice(1)}</span><button data-w="${w}">🔊 cô đọc</button></div>`; }).join('');
     $('vd').innerHTML = `<div class="noi">Chữ <b class="v">${c}</b> vào <b class="${dac ? 'dh' : 'd'}">${dac ? 'NHÀ ngh · gh' : 'NHÀ ng · g'}</b>${dac ? '. Phải viết <b>ngh</b> hoặc <b>gh</b>.' : '. Viết <b>ng</b> hoặc <b>g</b>.'}</div>${ds}`;
     $('vd').querySelectorAll('button[data-w]').forEach(x => x.onclick = () => doc(x.dataset.w));
     keu(dac ? [659, 784] : [523, 659]);
-    doc(`Chữ ${c} vào nhà ${dac ? 'ngờ hát, gờ hát. Phải viết ngờ hát hoặc gờ hát' : 'ngờ, gờ. Viết ngờ hoặc gờ'}.`, true);
+    doc(`Chữ ${c} vào nhà ${dac ? 'ngờ ghép, gờ ghép. Phải viết ngờ ghép hoặc gờ ghép' : 'ngờ, gờ. Viết ngờ hoặc gờ'}.`, true);
     if (Object.keys(daChon).length >= CHU_CAI.length) $('sang1').classList.add('cam');
   };
   $('chips').appendChild(b);
@@ -349,7 +349,7 @@ function ketThuc() {
   dong.forEach(([nhan, gt]) => { const p = document.createElement('div'), b = document.createElement('b'); b.textContent = gt; p.append(nhan + ': ', b); $('phieu').appendChild(p); });
   $('lai').onclick = () => { dongThe(); choiLai(); };
   phaoGiay(100); keu([392, 523, 659, 784, 1047, 1319, 1568]);
-  setTimeout(() => doc('Hoan hô! Nhớ nhé: e, ê, i thì viết ngờ hát, gờ hát. Các chữ còn lại viết ngờ, gờ.', true), 800);
+  setTimeout(() => doc('Hoan hô! Nhớ nhé: e, ê, i thì viết ngờ ghép, gờ ghép. Các chữ còn lại viết ngờ, gờ.', true), 800);
   guiKetQua(tong, dung);
 }
 const LINK_SHEET = 'https://script.google.com/macros/s/AKfycbzE5tlog_osSNJ7Tsr4SnJPQCiv5LpyfQaDj8jNHNYzT9YEMGnQHTJrrpNXV_45lq1t/exec';
