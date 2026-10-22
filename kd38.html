@@ -58,8 +58,6 @@
   }
   .ca svg { width: 100%; height: 100%; overflow: visible; }
   .ca text { font-family: var(--font); font-weight: 800; }
-  .ca.lat svg { transform: scaleX(-1); }
-  .ca.lat text { transform: scaleX(-1); transform-box: fill-box; transform-origin: center; }
   @keyframes boi { 0%, 100% { translate: 0 calc(var(--u) * -1); } 50% { translate: calc(var(--u) * 2) calc(var(--u) * 1); } }
   .ca.sai { animation: lac .5s; opacity: .45; cursor: default; }
   @keyframes lac { 25% { translate: -14px 0; } 75% { translate: 14px 0; } }
@@ -173,13 +171,14 @@ function phaoGiay(soLuong) {
   setTimeout(() => { p.textContent = ''; }, 6500);
 }
 
-function veCa(mau, chu) {
-  return `<svg viewBox="0 0 300 180">
+function veCa(mau, chu, lat) {
+  return `<svg viewBox="0 0 300 180"><g${lat ? ' transform="translate(300,0) scale(-1,1)"' : ''}>
     <path d="M250 90 L298 40 L290 90 L298 140 Z" fill="${mau}" stroke="#12304a" stroke-width="5" stroke-linejoin="round"/>
     <ellipse cx="140" cy="90" rx="128" ry="78" fill="${mau}" stroke="#12304a" stroke-width="5"/>
     <path d="M120 14 Q150 -10 180 18" fill="${mau}" stroke="#12304a" stroke-width="5"/>
     <circle cx="48" cy="72" r="11" fill="#fff" stroke="#12304a" stroke-width="4"/><circle cx="45" cy="72" r="5" fill="#12304a"/>
-    <text x="150" y="100" font-size="${chu.length > 3 ? 70 : 84}" text-anchor="middle" dominant-baseline="central" fill="#fff" stroke="#12304a" stroke-width="7" paint-order="stroke">${chu}</text>
+  </g>
+    <text x="${lat ? 160 : 150}" y="100" font-size="${chu.length > 3 ? 70 : 84}" text-anchor="middle" dominant-baseline="central" fill="#fff" stroke="#12304a" stroke-width="7" paint-order="stroke">${chu}</text>
   </svg>`;
 }
 
@@ -198,7 +197,7 @@ function raLuot() {
     b.style.left = CHO[i][0] + '%'; b.style.top = CHO[i][1] + '%';
     b.style.setProperty('--i', i);
     b.setAttribute('aria-label', 'Cá có tiếng ' + chu);
-    b.innerHTML = veCa(mauDs[i], chu);
+    b.innerHTML = veCa(mauDs[i], chu, i % 2);
     b.onclick = () => chonCa(b, chu === l.dap);
     ao.appendChild(b);
   });
