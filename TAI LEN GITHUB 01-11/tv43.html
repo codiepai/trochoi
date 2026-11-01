@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Xưởng lắp rô-bốt - Bài 43 au, âu, êu</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&display=swap">
+<style>
+
+[hidden]{display:none!important}
+:root{--u:min(1vh,1.6vw);--chu:#12304a;--xanh:#0b5cab;--do:#e03131;--la:#2f9e44;--cam:#f08c00;--tim:#7048e8;--hong:#e64980;--font:"Baloo 2","Segoe UI",Arial,sans-serif;--emoji:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif;color-scheme:light}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{font-family:var(--font);font-weight:800;color:var(--chu);display:flex;flex-direction:column;align-items:center;padding:calc(var(--u)*1.2) 14px;gap:calc(var(--u)*.8);user-select:none;-webkit-user-select:none;touch-action:manipulation;overflow:hidden}
+button{font-family:inherit;font-weight:800;cursor:pointer}
+button:focus-visible{outline:5px solid var(--xanh);outline-offset:3px}
+.top{width:100%;max-width:1100px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.top a{color:var(--xanh);text-decoration:none;font-size:max(15px,calc(var(--u)*2.8));background:#ffffffcc;border-radius:30px;padding:4px 14px}
+.sao{background:#fff;border-radius:30px;padding:4px 16px;font-size:max(16px,calc(var(--u)*3));color:#b86200;box-shadow:0 3px 0 #0002}
+h1{font-size:max(26px,calc(var(--u)*6.4));line-height:1.05;text-align:center;text-shadow:0 4px 0 #fff}
+.goiy{font-size:max(18px,calc(var(--u)*3.8));text-align:center;color:var(--xanh);min-height:1.35em}
+.tien{display:flex;gap:6px;justify-content:center}
+.tien i{width:max(14px,calc(var(--u)*2.4));height:max(14px,calc(var(--u)*2.4));border-radius:50%;background:#fff;border:3px solid #0003}
+.tien i.xong{background:var(--la);border-color:#1e6b2e}
+.tien i.nay{background:#ffd43b;border-color:var(--cam)}
+.nutlon{font-size:max(22px,calc(var(--u)*5));padding:.3em 1.1em;border:none;border-radius:20px;color:#fff;background:var(--cam);box-shadow:0 6px 0 #b86200}
+.nutlon:active{transform:translateY(4px);box-shadow:0 2px 0 #b86200}
+.phu{background:#fff;color:var(--xanh);box-shadow:0 6px 0 #9bb8d3}
+#man{position:fixed;inset:0;background:#0b3a6acc;display:flex;align-items:center;justify-content:center;z-index:50;padding:16px}
+#man .hop{background:#fff;border-radius:30px;padding:calc(var(--u)*3) calc(var(--u)*4);text-align:center;max-width:620px;box-shadow:0 10px 0 #0004}
+#man h2{font-size:max(30px,calc(var(--u)*7));color:var(--xanh);line-height:1.05}
+#man p{font-size:max(18px,calc(var(--u)*3.6));margin:.5em 0 .8em;font-weight:700}
+#man .sao3{font-size:max(46px,calc(var(--u)*11));letter-spacing:.1em;margin:.1em 0}
+#man .hang{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.bay{position:fixed;pointer-events:none;font-family:var(--emoji);z-index:60;animation:bay 1.3s ease-out forwards}
+@keyframes bay{0%{transform:translate(0,0) scale(.4);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1.3) rotate(var(--r));opacity:0}}
+.lac{animation:lac .4s}
+@keyframes lac{20%{transform:translateX(-12px)}40%{transform:translateX(12px)}60%{transform:translateX(-8px)}80%{transform:translateX(8px)}}
+.nhun{animation:nhun .5s}
+@keyframes nhun{30%{transform:scale(1.18)}60%{transform:scale(.95)}}
+em{font-style:normal;color:var(--do)}
+
+body{background:linear-gradient(#d0ebff,#e7f5ff 55%,#fff4e6)}
+h1{color:#1864ab}
+
+.xuong{display:flex;gap:calc(var(--u)*2);align-items:center;justify-content:center;width:100%;max-width:1000px;flex:1;min-height:0;flex-wrap:wrap}
+.rb{position:relative;width:calc(var(--u)*17);height:calc(var(--u)*27);flex:none}
+.rb>div{position:absolute;opacity:.16;filter:grayscale(1);transition:opacity .4s,filter .4s}
+.rb>div.co{opacity:1;filter:none}
+.rb .ang{left:50%;top:0;width:calc(var(--u)*.9);height:calc(var(--u)*3.2);background:#868e96;margin-left:calc(var(--u)*-.45)}
+.rb .ang:before{content:"";position:absolute;top:calc(var(--u)*-1.6);left:50%;width:calc(var(--u)*3);height:calc(var(--u)*3);background:#fa5252;border-radius:50%;margin-left:calc(var(--u)*-1.5)}
+.rb .dau{left:calc(var(--u)*2.5);top:calc(var(--u)*3.2);width:calc(var(--u)*12);height:calc(var(--u)*8);background:#74c0fc;border-radius:calc(var(--u)*2)}
+.rb .dau:before,.rb .dau:after{content:"";position:absolute;top:calc(var(--u)*2.3);width:calc(var(--u)*2.6);height:calc(var(--u)*2.6);background:#fff;border-radius:50%;box-shadow:inset 0 0 0 calc(var(--u)*.9) #12304a}
+.rb .dau:before{left:calc(var(--u)*2.2)}.rb .dau:after{right:calc(var(--u)*2.2)}
+.rb .than{left:calc(var(--u)*3);top:calc(var(--u)*11.8);width:calc(var(--u)*11);height:calc(var(--u)*9);background:#ffa94d;border-radius:calc(var(--u)*1.6)}
+.rb .than:before{content:"";position:absolute;left:50%;top:50%;width:calc(var(--u)*4);height:calc(var(--u)*4);margin:calc(var(--u)*-2);background:#fff3bf;border-radius:50%;border:calc(var(--u)*.6) solid #f08c00}
+.rb .tr{left:0;top:calc(var(--u)*12.3);width:calc(var(--u)*2.4);height:calc(var(--u)*8);background:#69db7c;border-radius:calc(var(--u)*1.2)}
+.rb .ph{right:0;top:calc(var(--u)*12.3);width:calc(var(--u)*2.4);height:calc(var(--u)*8);background:#69db7c;border-radius:calc(var(--u)*1.2)}
+.rb .chan{left:calc(var(--u)*4);top:calc(var(--u)*21.2);width:calc(var(--u)*9);height:calc(var(--u)*5.6);background:linear-gradient(90deg,#9775fa 0 42%,transparent 42% 58%,#9775fa 58%);border-radius:calc(var(--u)*1)}
+.rb.nhay{animation:nhay .5s 4}
+@keyframes nhay{50%{transform:translateY(calc(var(--u)*-2.5)) rotate(4deg)}}
+.pa{flex:1;min-width:min(100%,300px);display:flex;flex-direction:column;align-items:center;gap:calc(var(--u)*1.2)}
+.hinh{background:#fff;border-radius:24px;border:5px solid #fff;box-shadow:0 7px 0 #0003;width:calc(var(--u)*17);height:calc(var(--u)*16);display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer}
+.hinh img{max-width:88%;max-height:88%}
+.hinh:after{content:"🔊";position:absolute;right:6px;bottom:2px;font-family:var(--emoji);font-size:max(20px,calc(var(--u)*4))}
+.o2{display:flex;gap:10px;align-items:center;font-size:max(34px,calc(var(--u)*9));line-height:1}
+.o2 .ob{min-width:calc(var(--u)*10);height:calc(var(--u)*10);border:4px dashed #adb5bd;border-radius:16px;background:#ffffffaa;display:flex;align-items:center;justify-content:center;padding:0 10px}
+.o2 .ob.co{border:4px solid #2f9e44;background:#fff;border-style:solid}
+.chon{display:flex;gap:calc(var(--u)*1.6);flex-wrap:wrap;justify-content:center}
+.chon button{font-size:max(30px,calc(var(--u)*8));min-width:calc(var(--u)*13);padding:.1em .4em;border:none;border-radius:18px;color:#fff;box-shadow:0 7px 0 #0004}
+.chon button:nth-child(1){background:#e8590c}.chon button:nth-child(2){background:#1c7ed6}.chon button:nth-child(3){background:#2f9e44}
+.chon button:active{transform:translateY(4px)}
+
+</style>
+</head>
+<body>
+<div class="top"><span></span><span class="sao" id="tongSao"></span></div>
+<h1>🤖 Xưởng lắp rô-bốt</h1>
+<div class="goiy" id="goiy"></div>
+<div class="tien" id="tien"></div>
+
+<div class="xuong">
+ <div class="rb" id="rb"><div class="ang"></div><div class="dau"></div><div class="than"></div><div class="tr"></div><div class="ph"></div><div class="chan"></div></div>
+ <div class="pa"><div class="hinh" id="hinh"></div><div class="o2"><div class="ob" id="o1">?</div><span>+</span><div class="ob" id="o2">?</div></div><div class="chon" id="chon"></div></div>
+</div>
+
+<div id="man" hidden><div class="hop"><h2></h2><p></p><div class="sao3"></div><div class="hang"><button class="nutlon" id="manOk">Bắt đầu</button></div></div></div>
+<script>
+
+const $=i=>document.getElementById(i);
+const xao=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const cho=ms=>new Promise(r=>setTimeout(r,ms));
+const lsx=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}};
+let tongSao=parseInt(lsx('vuon-sao')||'0',10)||0; const hienSao=()=>{const e=$('tongSao');if(e)e.textContent='⭐ '+tongSao};
+function congSao(n){tongSao+=n;lsx('vuon-sao',tongSao);hienSao()}
+/* Doc tieng Viet: uu tien giong Viet co san trong may, khong co thi doc bang giong Viet truc tuyen (can mang) */
+let viVoice=null;const layGiong=()=>{if(!window.speechSynthesis)return;viVoice=speechSynthesis.getVoices().filter(x=>/^vi[-_]?/i.test(x.lang)||/vietnam|tiếng việt/i.test(x.name))[0]||null};
+if(window.speechSynthesis){layGiong();speechSynthesis.onvoiceschanged=layGiong}
+let amDS=[],amTT=0;
+function noi(...ds){amTT++;const tt=amTT;amDS.forEach(a=>a.pause());amDS=[];if(window.speechSynthesis)speechSynthesis.cancel();
+ if(viVoice&&window.speechSynthesis){ds.forEach(t=>{const u=new SpeechSynthesisUtterance(t);u.lang=viVoice.lang;u.voice=viVoice;u.rate=.8;speechSynthesis.speak(u)});return}
+ (function tiep(i){if(i>=ds.length||tt!==amTT)return;const a=new Audio('https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=vi&q='+encodeURIComponent(ds[i]));amDS.push(a);a.onended=()=>tiep(i+1);a.onerror=()=>tiep(i+1);const p=a.play();if(p&&p.catch)p.catch(()=>{})})(0)}
+/* Tieng bip bang WebAudio (khong can file am thanh) */
+let ac=null;function bip(loai){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const t=ac.currentTime;
+ const seq=loai==='dung'?[[660,0],[880,.12],[1175,.24]]:loai==='sai'?[[220,0],[180,.14]]:loai==='thang'?[[523,0],[659,.13],[784,.26],[1047,.39],[1319,.52]]:[[600,0]];
+ seq.forEach(([f,d])=>{const o=ac.createOscillator(),g=ac.createGain();o.type=loai==='sai'?'sawtooth':'triangle';o.frequency.value=f;g.gain.setValueAtTime(.0001,t+d);g.gain.exponentialRampToValueAtTime(.25,t+d+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d+.22);o.connect(g).connect(ac.destination);o.start(t+d);o.stop(t+d+.25)})}catch(e){}}
+/* Phao hoa emoji */
+function phao(x,y,ds,n){ds=ds||['⭐','✨','🎉','🌟'];n=n||14;for(let i=0;i<n;i++){const e=document.createElement('div');e.className='bay';e.textContent=ds[i%ds.length];e.style.left=x+'px';e.style.top=y+'px';e.style.fontSize=(22+Math.random()*22)+'px';e.style.setProperty('--dx',((Math.random()-.5)*360)+'px');e.style.setProperty('--dy',(-60-Math.random()*260)+'px');e.style.setProperty('--r',((Math.random()-.5)*400)+'deg');document.body.appendChild(e);setTimeout(()=>e.remove(),1400)}}
+const giua=el=>{const r=el.getBoundingClientRect();return[r.left+r.width/2,r.top+r.height/2]};
+/* Man hinh bat dau / ket thuc */
+function manHinh(tieude,loi,nut,cb,saoSo){const m=$('man');m.hidden=false;m.querySelector('h2').textContent=tieude;m.querySelector('p').textContent=loi;m.querySelector('.sao3').textContent=saoSo?'⭐'.repeat(saoSo)+'☆'.repeat(3-saoSo):'';$('manOk').textContent=nut;$('manOk').onclick=()=>{m.hidden=true;cb()}}
+function hienTien(n,xong){$('tien').innerHTML=Array.from({length:n},(_,i)=>'<i class="'+(i<xong?'xong':i===xong?'nay':'')+'"></i>').join('')}
+hienSao();
+/* To do phan van trong tu: boThanh bo dau thanh (huyen sac hoi nga nang) tung chu, giu nguyen chu cai mu/ngang */
+const boThanh=c=>c.normalize('NFD').replace(/[̣̀́̃̉]/g,'').normalize('NFC');
+function toVan(w,vans){const ch=[...w],nm=ch.map(boThanh).join('').toLowerCase();let best=null;
+ for(const v of vans){const k=nm.lastIndexOf(v);if(k>=0&&(best===null||v.length>best.v.length))best={k,v}}
+ if(!best)return w;const n=[...best.v].length;return ch.slice(0,best.k).join('')+'<em>'+ch.slice(best.k,best.k+n).join('')+'</em>'+ch.slice(best.k+n).join('')}
+
+
+/* [hinh, phu am, van (co dau thanh), tu, cac phu am, cac van] */
+const TU=[
+ ['rau-cai','r','au','rau',['r','d','g'],['au','âu','êu']],
+ ['gau-truc','g','ấu','gấu',['c','g','k'],['áu','ấu','ếu']],
+ ['trau','tr','âu','trâu',['th','tr','ch'],['êu','au','âu']],
+ ['tau-thuy','t','àu','tàu',['đ','n','t'],['ầu','àu','ều']],
+ ['sau-xanh','s','âu','sâu',['x','s','r'],['âu','au','êu']],
+ ['chu-teu','t','ễu','tễu',['đ','t','d'],['ẫu','ãu','ễu']]];
+const BP=['ang','dau','than','tr','ph','chan'];
+let ds=[],i=0,buoc=0,sai=0,khoa=true;
+function batDau(){ds=xao(TU);i=0;sai=0;[...$('rb').children].forEach(b=>b.classList.remove('co'));$('rb').classList.remove('nhay');luot()}
+function luot(){const t=ds[i];buoc=0;khoa=false;hienTien(ds.length,i);$('goiy').textContent='Bấm hình để nghe. Chọn phụ âm đứng trước.';
+ $('hinh').innerHTML='<img alt="" src="https://codiep-ai.netlify.app/hinh/'+t[0]+'.webp">';$('o1').textContent='?';$('o2').textContent='?';$('o1').classList.remove('co');$('o2').classList.remove('co');
+ hien(t[4],t[1]);setTimeout(()=>noi(t[3]),400)}
+function hien(cs,dung){$('chon').innerHTML=xao(cs).map(x=>'<button data-x="'+x+'">'+x+'</button>').join('');
+ [...$('chon').children].forEach(b=>b.onclick=()=>pick(b,dung))}
+$('hinh').onclick=()=>noi(ds[i][3]);
+async function pick(b,dung){if(khoa)return;const t=ds[i];
+ if(b.dataset.x!==dung){sai++;bip('sai');b.classList.add('lac');setTimeout(()=>b.classList.remove('lac'),420);noi(t[3]);return}
+ bip('dung');
+ if(buoc===0){$('o1').textContent=t[1];$('o1').classList.add('co');buoc=1;$('goiy').textContent='Giỏi lắm! Chọn vần ghép vào nhé.';hien(t[5],t[2]);return}
+ khoa=true;$('o2').textContent=t[2];$('o2').classList.add('co');$('chon').innerHTML='';$('goiy').innerHTML='Con ghép được: <b style="font-size:1.4em">'+toVan(t[3],['au','âu','êu'])+'</b>';noi(t[3]);
+ const p=$('rb').children[i];p.classList.add('co','nhun');const [x,y]=giua(p);phao(x,y,null,10);await cho(1700);i++;
+ if(i>=ds.length)return ketThuc();luot()}
+async function ketThuc(){hienTien(ds.length,ds.length);$('rb').classList.add('nhay');const s=sai<=1?3:sai<=4?2:1;congSao(s);bip('thang');const [x,y]=giua($('rb'));phao(x,y,['🤖','⭐','🎉'],20);await cho(900);manHinh('Rô-bốt đã lắp xong!','Con ghép đủ '+ds.length+' tiếng có vần au, âu, êu.','Chơi lại',batDau,s)}
+manHinh('Xưởng lắp rô-bốt','Nghe tên hình, ghép phụ âm với vần để thành tiếng. Mỗi tiếng đúng lắp thêm một bộ phận rô-bốt.','Bắt đầu',batDau);
+
+</script>
+</body>
+</html>
