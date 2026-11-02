@@ -140,7 +140,7 @@ const saoTheoLoi=s=>s<=2?3:s<=5?2:1;
 let tongLoi=0;
 function batDau(){setChang(1);tongLoi=0;const t=[];CAP.forEach(([h,w,v])=>{t.push({h,w,v,loai:'hinh'});t.push({h,w,v,loai:'chu'})});the=xao(t);luot=0;xong=0;mo=[];khoa=false;
  $('luoi').innerHTML=the.map((c,k)=>'<button class="the '+c.v+'" data-k="'+k+'" aria-label="thẻ '+(k+1)+'"><div class="mat"><div class="up">❓</div><div class="mt">'+
-  (c.loai==='hinh'?'<img alt="" src="../hinh/'+c.h+'.webp"><span class="nh">hình</span>':'<span class="chu">'+toVan(c.w,['ao','eo'])+'</span><span class="nh">chữ</span>')+'</div></div></button>').join('');
+  (c.loai==='hinh'?'<img alt="" src="https://codiep-ai.netlify.app/hinh/'+c.h+'.webp"><span class="nh">hình</span>':'<span class="chu">'+toVan(c.w,['ao','eo'])+'</span><span class="nh">chữ</span>')+'</div></div></button>').join('');
  [...$('luoi').children].forEach(b=>b.onclick=()=>lat(b));
  $('goiy').textContent='Lật hai thẻ: một thẻ hình, một thẻ chữ giống nhau.';$('dem').textContent='';hienTien(CAP.length,0)}
 async function lat(b){if(khoa||b.classList.contains('lat')||b.classList.contains('xong'))return;const c=the[+b.dataset.k];b.classList.add('lat');bip('lat');noi(c.w);mo.push(b);
