@@ -103,7 +103,7 @@ function toVan(w,vans){const ch=[...w],nm=ch.map(boThanh).join('').toLowerCase()
  if(!best)return w;const n=[...best.v].length;return ch.slice(0,best.k).join('')+'<em>'+ch.slice(best.k,best.k+n).join('')+'</em>'+ch.slice(best.k+n).join('')}
 
 
-const CAP=[['ngoi-sao','sao','ao'],['qua-tao','táo','ao'],['ao-dai-do','áo','ao'],['keo','kẹo','eo'],['meo-con','mèo','eo'],['ca-heo','cá heo','eo']];
+const CAP=[['ngoi-sao','sao','ao'],['qua-tao','táo','ao'],['ao-dai-do','áo','ao'],['keo','kéo','eo'],['meo-con','mèo','eo'],['ca-heo','cá heo','eo']];
 let the=[],mo=[],khoa=false,luot=0,xong=0;
 function batDau(){const t=[];CAP.forEach(([h,w,v])=>{t.push({h,w,v,loai:'hinh'});t.push({h,w,v,loai:'chu'})});the=xao(t);luot=0;xong=0;mo=[];khoa=false;
  $('luoi').innerHTML=the.map((c,k)=>'<button class="the '+c.v+'" data-k="'+k+'" aria-label="thẻ '+(k+1)+'"><div class="mat"><div class="up">❓</div><div class="mt">'+
