@@ -63,6 +63,16 @@ h1{color:#c92a2a}
 .go.khac .nd{background:linear-gradient(#a5d8ff,#4dabf7)}
 .go.cua .nd{background:linear-gradient(#ffc9c9,#fa5252)}
 .nd .cua{font-family:var(--emoji);font-size:max(30px,calc(var(--u)*7))}
+.noi{display:flex;flex-direction:column;gap:calc(var(--u)*1.6);width:100%;max-width:900px;flex:1;min-height:0;justify-content:center}
+.hai{display:flex;gap:calc(var(--u)*3);justify-content:center}
+.cot{display:flex;flex-direction:column;gap:calc(var(--u)*1.4);flex:1}
+.cum{touch-action:none;font-size:max(18px,calc(var(--u)*4.4));padding:.45em .6em;border:none;border-radius:16px;background:#fff;color:var(--chu);box-shadow:0 5px 0 #0003;line-height:1.15}
+.cum:active{transform:translateY(3px)}
+.cum.chon{background:#ffd43b;box-shadow:0 5px 0 #b86200}
+.cum.xong{background:#69db7c;color:#fff;box-shadow:none;cursor:default}
+.cauxong{display:flex;flex-direction:column;gap:2px;font-size:max(15px,calc(var(--u)*3.4));color:#2b8a3e;text-align:center;min-height:5em}
+#day{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:40}
+#day line{stroke-width:max(7px,calc(var(--u)*1.1));stroke-linecap:round}
 .nd small{font-size:max(11px,calc(var(--u)*2));font-weight:700;color:#fff}
 
 </style>
@@ -75,6 +85,8 @@ h1{color:#c92a2a}
 
 <div class="nv"><span>Tìm 4 kho báu có vần</span><b id="van">iu</b><div class="ruong" id="ruong"></div></div>
 <div class="bai" id="bai"></div>
+<div class="noi" id="noi" hidden></div>
+<svg id="day"></svg>
 
 <div id="man" hidden><div class="hop"><h2></h2><p></p><div class="sao3"></div><div class="hang"><button class="nutlon" id="manOk">Bắt đầu</button></div></div></div>
 <script>
@@ -112,9 +124,9 @@ function toVan(w,vans){const ch=[...w],nm=ch.map(boThanh).join('').toLowerCase()
 
 const IU=[['rìu','cai-riu'],['địu',''],['dịu',''],['xíu','']],UU=[['lựu','qua-luu'],['cừu','cuu'],['hưu',''],['mưu','']];
 const VANS=['iu','ưu'];let vong=0,tim=0,sai=0,khoa=false,o=[];
-function batDau(){vong=0;sai=0;man()}
+function batDau(){vong=0;sai=0;$('noi').hidden=true;$('bai').hidden=false;document.querySelector('.nv').hidden=false;man()}
 function man(){tim=0;khoa=false;const mucTieu=vong===0?IU:UU,khac=vong===0?UU:IU,v=VANS[vong];$('van').textContent=v;
- $('ruong').innerHTML='<span>💎</span><span>💎</span><span>💎</span><span>💎</span>';$('goiy').textContent='Bấm vào gò cát để đào. Nghe và đọc từ thật kĩ nhé!';hienTien(2,vong);
+ $('ruong').innerHTML='<span>💎</span><span>💎</span><span>💎</span><span>💎</span>';$('goiy').textContent='Bấm vào gò cát để đào. Nghe và đọc từ thật kĩ nhé!';hienTien(3,vong);
  o=xao(mucTieu.map(x=>({w:x[0],h:x[1],k:'dung'})).concat(khac.map(x=>({w:x[0],h:x[1],k:'khac'}))).concat([1,2,3,4].map(()=>({k:'cua'}))));
  $('bai').innerHTML=o.map((c,k)=>'<button class="go" data-k="'+k+'" aria-label="gò cát '+(k+1)+'"><span class="gi">🌴</span><div class="nd"></div></button>').join('');
  [...$('bai').children].forEach(b=>b.onclick=()=>dao(b));noi('Tìm kho báu có vần '+v)}
@@ -122,9 +134,40 @@ async function dao(b){if(khoa||b.classList.contains('mo'))return;const c=o[+b.da
  if(c.k==='cua'){sai++;bip('sai');nd.innerHTML='<span class="cua">🦀</span><small>cua kẹp!</small>';b.classList.add('lac');noi('ối, con cua');return}
  nd.innerHTML=(c.h?'<img alt="" src="https://codiep-ai.netlify.app/hinh/'+c.h+'.webp">':'')+'<span class="tx">'+toVan(c.w,['iu','ưu'])+'</span>';noi(c.w);
  if(c.k==='dung'){bip('dung');tim++;[...$('ruong').children][tim-1].classList.add('co');const [x,y]=giua(b);phao(x,y,['💎','✨','⭐'],8);
-  if(tim===4){khoa=true;await cho(1200);vong++;if(vong>=2)return ketThuc();manHinh('Giỏi quá, hết rương vần '+v+'!','Sang bãi biển bên kia, tìm kho báu vần '+VANS[vong]+' nhé.','Đi tiếp',man)}}
+  if(tim===4){khoa=true;await cho(1200);vong++;if(vong>=2)return manHinh('Giỏi quá, hết kho báu rồi!','Sang chặng 3: nối cụm từ để tạo thành câu nhé.','Đi tiếp',chang3);manHinh('Giỏi quá, hết rương vần '+v+'!','Sang bãi biển bên kia, tìm kho báu vần '+VANS[vong]+' nhé.','Đi tiếp',man)}}
  else{sai++;bip('sai');nd.insertAdjacentHTML('beforeend','<small>vần '+(v==='iu'?'ưu':'iu')+'</small>');b.classList.add('nhun');setTimeout(()=>noi('Từ này không có vần '+v),900)}}
-function ketThuc(){hienTien(2,2);const s=sai<=3?3:sai<=7?2:1;congSao(s);bip('thang');phao(innerWidth/2,innerHeight/2,['💎','⭐','🎉'],26);manHinh('Tìm đủ kho báu rồi!','Con đã tìm được 8 kho báu vần iu và ưu.','Chơi lại',batDau,s)}
+const CAP=[[['Bà gửi cho Hà','túi kẹo.'],['Hai bạn thi','nhảy dây.'],['Voi con mời bạn','đi xem hội.'],['Bà đã nghỉ hưu','mà luôn bận bịu.']],
+ [['Ao thu lạnh lẽo','nước trong veo.'],['Đàn sẻ nâu kêu ríu rít','ở sau nhà.'],['Cún con nhìn thấy','dế mèn trên tàu lá.'],['Tàu neo đậu','ven bờ.']]];
+let rd=0,nt=0,ch=null;
+function chang3(){rd=0;$('bai').hidden=true;document.querySelector('.nv').hidden=true;$('noi').hidden=false;hienTien(3,2);vongNoi()}
+function vongNoi(){nt=0;ch=null;khoa=false;const ds=CAP[rd];$('goiy').textContent='Chặng 3: kéo ngón tay từ cụm từ bên trái sang cụm từ bên phải để nối thành câu đúng.';
+ const bt=(x,s)=>'<button class="cum" data-s="'+s+'" data-i="'+x.i+'">'+x.t+'</button>';
+ $('noi').innerHTML='<div class="hai"><div class="cot">'+xao(ds.map((p,i)=>({t:p[0],i}))).map(x=>bt(x,'T')).join('')+'</div><div class="cot">'+xao(ds.map((p,i)=>({t:p[1],i}))).map(x=>bt(x,'P')).join('')+'</div></div><div class="cauxong" id="cx"></div>';
+ dong=[];veLai();[...$('noi').querySelectorAll('.cum')].forEach(b=>{b.onpointerdown=e=>keoDau(e,b)});noi('Nối cụm từ tạo câu')}
+const diem=(b,tay)=>{const r=b.getBoundingClientRect();return[b.dataset.s==='T'?r.right:r.left,r.top+r.height/2]};
+let dong=[],keo=null;
+function veLai(){const g=$('day');let h='';dong.forEach(([a,b])=>{const [x1,y1]=diem(a),[x2,y2]=diem(b);h+='<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="#2f9e44"/>'});
+ if(keo&&keo.x!==undefined){const [x1,y1]=diem(keo.b);h+='<line x1="'+x1+'" y1="'+y1+'" x2="'+keo.x+'" y2="'+keo.y+'" stroke="#f08c00" stroke-dasharray="1 14"/>'}g.innerHTML=h}
+addEventListener('resize',()=>{if(dong.length||keo)veLai()});
+function keoDau(e,b){if(khoa||b.classList.contains('xong'))return;e.preventDefault();try{b.setPointerCapture(e.pointerId)}catch(_){}
+ keo={b,x0:e.clientX,y0:e.clientY};
+ b.onpointermove=ev=>{if(!keo)return;keo.x=ev.clientX;keo.y=ev.clientY;if(Math.hypot(ev.clientX-keo.x0,ev.clientY-keo.y0)>12)keo.dich=true;veLai()};
+ b.onpointerup=ev=>{if(!keo)return;const k=keo;keo=null;b.onpointermove=b.onpointerup=b.onpointercancel=null;veLai();
+  if(!k.dich){chon(b);return}
+  const t=document.elementFromPoint(ev.clientX,ev.clientY),c=t&&t.closest?t.closest('.cum'):null;
+  if(c&&c!==b)ghep(b,c)};
+ b.onpointercancel=()=>{keo=null;veLai()}}
+function chon(b){if(khoa||b.classList.contains('xong'))return;noi(b.textContent);
+ if(ch&&ch.dataset.s===b.dataset.s){ch.classList.remove('chon');ch=b;b.classList.add('chon');return}
+ if(!ch){ch=b;b.classList.add('chon');return}
+ const a=ch;ch=null;a.classList.remove('chon');ghep(a,b)}
+async function ghep(a,b){if(khoa||a.classList.contains('xong')||b.classList.contains('xong')||a.dataset.s===b.dataset.s)return;
+ if(ch){ch.classList.remove('chon');ch=null}
+ if(a.dataset.i!==b.dataset.i){sai++;bip('sai');[a,b].forEach(x=>{x.classList.add('lac');setTimeout(()=>x.classList.remove('lac'),420)});$('goiy').textContent='Chưa thành câu đúng. Thử nối lại nhé!';return}
+ [a,b].forEach(x=>x.classList.add('xong'));bip('dung');nt++;const l=a.dataset.s==='T'?a:b,r=a.dataset.s==='T'?b:a,cau=l.textContent+' '+r.textContent;
+ dong.push([l,r]);$('cx').insertAdjacentHTML('beforeend','<div>✔ '+cau+'</div>');veLai();noi(cau);const [x,y]=giua(b);phao(x,y,['⭐','✨','💎'],8);$('goiy').textContent='Đúng rồi!';
+ if(nt===4){khoa=true;await cho(2200);rd++;if(rd>=CAP.length)return ketThuc();manHinh('Nối giỏi quá!','Nối thêm 4 câu nữa nhé.','Đi tiếp',vongNoi)}}
+function ketThuc(){dong=[];veLai();hienTien(3,3);const s=sai<=4?3:sai<=10?2:1;congSao(s);bip('thang');phao(innerWidth/2,innerHeight/2,['💎','⭐','🎉'],26);manHinh('Tìm đủ kho báu rồi!','Con đã tìm được 8 kho báu vần iu, ưu và nối đúng 8 câu.','Chơi lại',batDau,s)}
 manHinh('Đào kho báu iu - ưu','Bãi biển có nhiều gò cát. Đào đúng kho báu có vần cô giao, tránh con cua nhé.','Bắt đầu',batDau);
 
 </script>
