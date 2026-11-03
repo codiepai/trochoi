@@ -64,9 +64,9 @@ h1{color:#c92a2a}
 .go.cua .nd{background:linear-gradient(#ffc9c9,#fa5252)}
 .nd .cua{font-family:var(--emoji);font-size:max(30px,calc(var(--u)*7))}
 .noi{display:flex;flex-direction:column;gap:calc(var(--u)*1.6);width:100%;max-width:900px;flex:1;min-height:0;justify-content:center}
-.hai{display:flex;gap:max(80px,calc(var(--u)*17));justify-content:center}
-.cot{display:flex;flex-direction:column;gap:calc(var(--u)*1.4);flex:1}
-.cum{touch-action:none;font-size:max(18px,calc(var(--u)*4.4));padding:.45em .6em;border:none;border-radius:16px;background:#fff;color:var(--chu);box-shadow:0 5px 0 #0003;line-height:1.15}
+.hai{width:100%;display:flex;gap:max(90px,min(calc(var(--u)*22),26vw));justify-content:center}
+.cot{display:flex;flex-direction:column;gap:calc(var(--u)*1.4);flex:1 1 0;min-width:0}
+.cum{white-space:nowrap;overflow:hidden;touch-action:none;font-size:max(18px,calc(var(--u)*4.4));padding:.45em .4em;border:none;border-radius:16px;background:#fff;color:var(--chu);box-shadow:0 5px 0 #0003;line-height:1.15}
 .cum:active{transform:translateY(3px)}
 .cum.chon{background:#ffd43b;box-shadow:0 5px 0 #b86200}
 .cum.xong{background:#69db7c;color:#fff;box-shadow:none;cursor:default}
@@ -144,13 +144,15 @@ let rd=0,nt=0,ch=null;
 function chang3(){rd=0;$('bai').hidden=true;document.querySelector('.nv').hidden=true;$('noi').hidden=false;hienTien(3,2);vongNoi()}
 function vongNoi(){nt=0;ch=null;khoa=false;const ds=CAP[rd];$('goiy').textContent='Chặng 3: kéo ngón tay từ cụm từ bên trái sang cụm từ bên phải để nối thành câu đúng.';
  const bt=(x,s)=>'<button class="cum" data-s="'+s+'" data-i="'+x.i+'">'+x.t+'</button>';
- $('noi').innerHTML='<div class="hai"><div class="cot">'+xao(ds.map((p,i)=>({t:p[0],i}))).map(x=>bt(x,'T')).join('')+'</div><div class="cot">'+xao(ds.map((p,i)=>({t:p[1],i}))).map(x=>bt(x,'P')).join('')+'</div></div><div class="cauxong" id="cx"></div>';
- dong=[];veLai();[...$('noi').querySelectorAll('.cum')].forEach(b=>{b.onpointerdown=e=>keoDau(e,b)});noi('Nối cụm từ tạo câu')}
+ dong=[];$('noi').innerHTML='<div class="hai"><div class="cot">'+xao(ds.map((p,i)=>({t:p[0],i}))).map(x=>bt(x,'T')).join('')+'</div><div class="cot">'+xao(ds.map((p,i)=>({t:p[1],i}))).map(x=>bt(x,'P')).join('')+'</div></div><div class="cauxong" id="cx"></div>';
+ dong=[];[...$('noi').querySelectorAll('.cum')].forEach(b=>{b.onpointerdown=e=>keoDau(e,b)});vuaChu();noi('Nối cụm từ tạo câu')}
 const diem=(b,tay)=>{const r=b.getBoundingClientRect();return[b.dataset.s==='T'?r.right:r.left,r.top+r.height/2]};
 let dong=[],keo=null;
 function veLai(){const g=$('day');let h='';dong.forEach(([a,b])=>{const [x1,y1]=diem(a),[x2,y2]=diem(b);h+='<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="#2f9e44"/>'});
  if(keo&&keo.x!==undefined){const [x1,y1]=diem(keo.b);h+='<line x1="'+x1+'" y1="'+y1+'" x2="'+keo.x+'" y2="'+keo.y+'" stroke="#f08c00" stroke-dasharray="1 14"/>'}g.innerHTML=h}
-addEventListener('resize',()=>{if(dong.length||keo)veLai()});
+function vuaChu(){const ds=[...$('noi').querySelectorAll('.cum')];if(!ds.length)return;ds.forEach(b=>b.style.fontSize='');
+ let f=parseFloat(getComputedStyle(ds[0]).fontSize);while(f>10&&ds.some(b=>b.scrollWidth>b.clientWidth+1)){f-=1;ds.forEach(b=>b.style.fontSize=f+'px')}veLai()}
+addEventListener('resize',()=>{if(!$('noi').hidden)vuaChu();else if(dong.length||keo)veLai()});
 function keoDau(e,b){if(khoa||b.classList.contains('xong'))return;e.preventDefault();try{b.setPointerCapture(e.pointerId)}catch(_){}
  keo={b,x0:e.clientX,y0:e.clientY};
  b.onpointermove=ev=>{if(!keo)return;keo.x=ev.clientX;keo.y=ev.clientY;if(Math.hypot(ev.clientX-keo.x0,ev.clientY-keo.y0)>12)keo.dich=true;veLai()};
