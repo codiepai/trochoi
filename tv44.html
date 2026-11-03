@@ -122,6 +122,8 @@ function toVan(w,vans){const ch=[...w],nm=ch.map(boThanh).join('').toLowerCase()
  if(!best)return w;const n=[...best.v].length;return ch.slice(0,best.k).join('')+'<em>'+ch.slice(best.k,best.k+n).join('')+'</em>'+ch.slice(best.k+n).join('')}
 
 
+/* Bo giong doc: chi con am thanh dung/sai */
+noi=function(){};
 const IU=[['rìu','cai-riu'],['địu',''],['dịu',''],['xíu','']],UU=[['lựu','qua-luu'],['cừu','cuu'],['hưu',''],['mưu','']];
 const VANS=['iu','ưu'];let vong=0,tim=0,sai=0,khoa=false,o=[];
 function batDau(){vong=0;sai=0;$('noi').hidden=true;$('bai').hidden=false;document.querySelector('.nv').hidden=false;man()}
