@@ -87,8 +87,8 @@ h1{color:#5f3dc4}
 <div class="tabs"><button id="tab1">1. Bảng vần</button><button id="tab2">2. Ngôi sao từ ngữ</button><button id="tab3">3. Đoạn văn Gà mẹ</button></div>
 <div class="san">
  <div class="man" id="m1" hidden><div class="bang" id="bang"></div><button class="nutlon" id="tiep1" hidden>Sang ngôi sao ➜</button></div>
- <div class="man" id="m2" hidden><button class="nghe" id="nghe2" hidden>🔊 Nghe lại</button><div class="sao10" id="sao10"></div><button class="nutlon" id="tiep2" hidden></button></div>
- <div class="man" id="m3" hidden><button class="nghe" id="nghe3">🔊 Nghe cô đọc cả đoạn</button><div class="huong" id="huong"></div><div class="doan3" id="doan"></div><button class="nutlon" id="xong3" hidden>Hoàn thành ➜</button></div>
+ <div class="man" id="m2" hidden><div class="sao10" id="sao10"></div></div>
+ <div class="man" id="m3" hidden><div class="huong" id="huong"></div><div class="doan3" id="doan"></div><button class="nutlon" id="xong3" hidden>Hoàn thành ➜</button></div>
 </div>
 
 <div id="man" hidden><div class="hop"><h2></h2><p></p><div class="sao3"></div><div class="hang"><button class="nutlon" id="manOk">Bắt đầu</button></div></div></div>
@@ -149,23 +149,15 @@ function man1(){let g='<div class="dau"></div><div class="dau">c</div><div class
 async function latO(b){if(b.classList.contains('xong'))return;b.classList.add('lat');await cho(180);b.textContent=b.dataset.v;b.classList.add('xong');bip('dung');noi(b.dataset.v);lat1++;
  if(lat1>=tong1){$('goiy').textContent='Đã lật hết bảng vần! Giỏi quá!';phao(innerWidth/2,innerHeight/3,['⭐','✨','🌟'],14);$('tiep1').hidden=false}}
 
-/* ===== Man 2: lat ngoi sao co tu, roi nghe va chon ===== */
-let pha2=0,lat2=0,ds2=[],i2=0,khoa2=false;
+/* ===== Man 2: lat 10 ngoi sao co tu ===== */
+let lat2=0;
 const tuHtml=t=>t.split(' ').map(w=>toVan(w,VANX)).join('<br>');
-function man2(){pha2=0;lat2=0;$('nghe2').hidden=true;$('tiep2').hidden=true;
+function man2(){lat2=0;
  $('sao10').innerHTML=SAO.map((t,k)=>'<div class="stw"><button class="st" data-t="'+t+'"><span class="nd">'+(k+1)+'</span></button></div>').join('');
  [...$('sao10').querySelectorAll('.st')].forEach(b=>b.onclick=()=>bamSao(b));
  $('goiy').textContent='Bấm vào ngôi sao để lật ra từ, rồi cả lớp cùng đọc nhé!'}
-async function bamSao(b){
- if(pha2===0){if(b.classList.contains('mo'))return;b.classList.add('lat');await cho(180);b.classList.add('mo');b.querySelector('.nd').innerHTML='<span>'+tuHtml(b.dataset.t)+'</span>';bip('dung');noi(b.dataset.t);lat2++;
-  if(lat2>=SAO.length){$('goiy').textContent='Đã lật hết 10 ngôi sao! Chơi tiếp: nghe cô đọc và chọn đúng ngôi sao.';phao(innerWidth/2,innerHeight/3,['⭐','✨','🌟'],14);const t=$('tiep2');t.textContent='Chơi: nghe và chọn ➜';t.onclick=batDau2;t.hidden=false}}
- else traSao(b)}
-function batDau2(){pha2=1;$('tiep2').hidden=true;ds2=xao(SAO);i2=0;[...$('sao10').querySelectorAll('.st')].forEach(b=>b.classList.remove('xong'));$('nghe2').hidden=false;$('nghe2').onclick=()=>noi(ds2[i2]);hoi2()}
-function hoi2(){khoa2=false;$('goiy').textContent='Nghe cô đọc, bấm đúng ngôi sao có từ đó. Còn '+(SAO.length-i2)+' sao.';noi(ds2[i2])}
-async function traSao(b){if(khoa2||b.classList.contains('xong'))return;
- if(b.dataset.t===ds2[i2]){khoa2=true;b.classList.add('xong');bip('dung');const [px,py]=giua(b);phao(px,py,['⭐','✨'],7);i2++;await cho(700);
-  if(i2>=SAO.length){noi('Giỏi quá! Con đã tìm đủ mười ngôi sao.');bip('thang');phao(innerWidth/2,innerHeight/3,['🌟','⭐','✨'],16);await cho(1800);return vaoMan(3)}hoi2()}
- else{sai++;bip('sai');b.classList.add('sai');setTimeout(()=>b.classList.remove('sai'),500);$('goiy').textContent='Chưa đúng. Bấm "Nghe lại" rồi đọc kĩ các ngôi sao nhé!'}}
+async function bamSao(b){if(b.classList.contains('mo'))return;b.classList.add('lat');await cho(180);b.classList.add('mo');b.querySelector('.nd').innerHTML='<span>'+tuHtml(b.dataset.t)+'</span>';bip('dung');noi(b.dataset.t);lat2++;
+ if(lat2>=SAO.length){$('goiy').textContent='Đã lật hết 10 ngôi sao! Giỏi quá! Bấm thẻ 3 để sang đoạn văn Gà mẹ.';phao(innerWidth/2,innerHeight/3,['⭐','✨','🌟'],14)}}
 
 /* ===== Man 3: lat tung cau, tim tieng co van ===== */
 const tho=s=>boThanh(s.replace(/[^\p{L}]/gu,'')).toLowerCase();
@@ -177,15 +169,16 @@ function man3(){tim=0;lat3=0;$('xong3').hidden=true;$('xong3').onclick=ketThuc;d
  $('doan').innerHTML=CAU.map((c,k)=>'<div class="cau"><button class="lc" data-k="'+k+'">Câu '+(k+1)+': bấm để lật</button><div class="tt" hidden>'+c.split(' ').map(t=>'<button data-d="'+(coVan(t)?1:0)+'">'+t+'</button>').join(' ')+'</div></div>').join('');
  [...$('doan').querySelectorAll('.lc')].forEach(b=>b.onclick=async()=>{const w=b.parentNode;w.classList.add('lat');await cho(180);b.hidden=true;w.querySelector('.tt').hidden=false;noi(CAU[+b.dataset.k]);lat3++;hienHuong();if(lat3>=CAU.length)$('xong3').hidden=false});
  [...$('doan').querySelectorAll('.tt button')].forEach(b=>b.onclick=()=>traTieng(b));
- $('nghe3').onclick=()=>noi(DOAN);hienHuong();
+ hienHuong();
  $('goiy').textContent='Lật từng câu, đọc to, rồi bấm vào các tiếng có vần đã học (ac, oc, uc...). Tìm '+dich+' tiếng!'}
 async function traTieng(b){
  if(b.dataset.d==='1'){b.classList.add('xong');bip('dung');tim++;noi(b.textContent.replace(/[^\p{L}]/gu,''));$('goiy').textContent='Đã tìm '+tim+'/'+dich+' tiếng.';hienHuong();const [px,py]=giua(b);phao(px,py,['⭐'],4);if(tim>=dich){await cho(1200);ketThuc()}}
  else{sai++;bip('sai');b.classList.add('sai');setTimeout(()=>b.classList.remove('sai'),500);$('goiy').textContent='Tiếng "'+b.textContent.replace(/[^\p{L}]/gu,'')+'" chưa có vần đã học. Tìm tiếng khác nhé!'}}
 function ketThuc(){hienTien(TONG,TONG);const diem=Math.max(0,10-sai);window.DIEM=diem+'/10';const s=sai<=2?3:sai<=5?2:1;congSao(s);bip('thang');phao(innerWidth/2,innerHeight/2,['🌟','⭐','✨','🎉'],28);
  manHinh('Ngôi sao sáng rồi!','Điểm của con: '+diem+'/10. '+(diem>=9?'Xuất sắc!':diem>=7?'Giỏi lắm!':'Cố gắng thêm nhé!')+' Con làm sai '+sai+' lần.','Chơi lại',batDau,s);themLink()}
-function themLink(){if($('cd-link'))return;const a=document.createElement('a');a.id='cd-link';a.href='https://zalo.me/g/fgz1en4ym8oc7jye9ure';a.target='_blank';a.rel='noopener';a.textContent='👪 Vào nhóm Zalo nhận học liệu miễn phí mỗi ngày';a.style.cssText='display:block;margin-top:.9em;color:#0b5cab;font-size:18px;font-weight:800';document.querySelector('#man .hop').appendChild(a)}
+function themLink(){if($('cd-link'))return;const a=document.createElement('a');a.id='cd-link';a.href='https://zalo.me/g/fgz1en4ym8oc7jye9ure';a.target='_blank';a.rel='noopener';a.textContent='👪 Vào nhóm Zalo của cô Điệp (học liệu miễn phí mỗi ngày)';a.style.cssText='display:block;margin:1em auto 0;max-width:420px;background:#0b5cab;color:#fff;border-radius:16px;padding:.5em 1em;font-size:20px;font-weight:800;text-decoration:none;text-align:center;box-shadow:0 5px 0 #083d73';document.querySelector('#man .hop').appendChild(a)}
 manHinh('Ngôi Sao Kiến Thức','Lật bảng vần, lật 10 ngôi sao từ ngữ, rồi đọc từng câu trong đoạn văn Gà mẹ.','Bắt đầu',batDau);
+themLink();
 
 </script>
 <script>
