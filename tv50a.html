@@ -10,8 +10,8 @@
 [hidden]{display:none!important}
 :root{--u:min(1vh,1.6vw);--chu:#12304a;--xanh:#0b5cab;--do:#e03131;--la:#2f9e44;--cam:#f08c00;--tim:#7048e8;--hong:#e64980;--font:"Baloo 2","Segoe UI",Arial,sans-serif;--emoji:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif;color-scheme:light}
 *{box-sizing:border-box;margin:0}
-html,body{height:100%}
-body{font-family:var(--font);font-weight:800;color:var(--chu);display:flex;flex-direction:column;align-items:center;padding:calc(var(--u)*1.2) 14px;gap:calc(var(--u)*.8);user-select:none;-webkit-user-select:none;touch-action:manipulation;overflow:hidden}
+html{height:auto}body{min-height:100vh}
+body{font-family:var(--font);font-weight:800;color:var(--chu);display:flex;flex-direction:column;align-items:center;padding:calc(var(--u)*1.2) 14px;gap:calc(var(--u)*.8);user-select:none;-webkit-user-select:none;touch-action:manipulation;overflow:visible}
 button{font-family:inherit;font-weight:800;cursor:pointer}
 button:focus-visible{outline:5px solid var(--xanh);outline-offset:3px}
 .top{width:100%;max-width:1100px;display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -66,7 +66,7 @@ h1{color:#5f3dc4}
 .st.xong{background:radial-gradient(#b2f2bb,#51cf66)}
 .st.sai{animation:lac .4s;background:#ffa8a8}
 .nghe{font-size:max(18px,calc(var(--u)*3.6));padding:.2em 1em;border:none;border-radius:30px;background:#fff;color:#0b5cab;box-shadow:0 5px 0 #9bb8d3}
-.doan3{display:flex;flex-direction:column;gap:calc(var(--u)*1.2);width:100%;max-width:900px}
+.doan3{padding-bottom:60px;display:flex;flex-direction:column;gap:calc(var(--u)*1.2);width:100%;max-width:900px}
 .cau{background:#fff;border-radius:20px;box-shadow:0 5px 0 #0002;min-height:calc(var(--u)*9);display:flex;align-items:center;padding:calc(var(--u)*1) calc(var(--u)*2.4);font-size:max(24px,calc(var(--u)*5.4));font-weight:700;line-height:1.5}
 .cau .lc{width:100%;border:3px dashed #f08c00;background:#fff3bf;color:#b86200;border-radius:14px;padding:.3em;font-size:inherit}
 .cau .tt button{font:inherit;color:inherit;background:none;border:none;padding:0 .1em;border-radius:8px;cursor:pointer}
