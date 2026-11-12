@@ -223,5 +223,48 @@ function vaoTen(){manHinh('Bài 43: au, âu, êu','Chơi 3 chặng: lắp rô-b�
 vaoTen();
 
 </script>
+<script>
+/*HS-NHAP*/
+(function(){
+ const SHEET='https://script.google.com/macros/s/AKfycbzE5tlog_osSNJ7Tsr4SnJPQCiv5LpyfQaDj8jNHNYzT9YEMGnQHTJrrpNXV_45lq1t/exec';
+ const TEN_BAI=(document.title||'Game').slice(0,50)+' (luyện tập)';
+ const HS={ten:'',lop:''};
+ const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k)||'';localStorage.setItem(k,v)}catch(e){return ''}};
+ const chuanLop=s=>String(s||'').replace(/\s+/g,'').replace(/[,\/\-]/g,'.').toUpperCase();
+ const lopLink=()=>String(window.LOP||new URLSearchParams(location.search).get('lop')||'').replace(/[^0-9A-Za-z.]/g,'').slice(0,10);
+ const st=document.createElement('style');
+ st.textContent='#hs-khung{margin:.3em 0 .6em}#hs-khung label{display:block;text-align:left;font-size:16px;margin:.4em 0 .1em;color:#12304a}#hs-khung input{width:100%;font:inherit;font-weight:700;font-size:20px;padding:.35em .6em;border:3px solid #74c0fc;border-radius:14px;text-align:center;color:#12304a;background:#fff}#hs-khung input:focus{outline:4px solid #ffd43b}#hs-loi{color:#e03131;font-size:16px;min-height:1.3em;margin:.2em 0 0}';
+ document.head.appendChild(st);
+ function go(){const d=$('hs-khung');if(d)d.remove()}
+ function chen(){
+  const hop=document.querySelector('#man .hop');if(!hop||$('hs-khung'))return;
+  const d=document.createElement('div');d.id='hs-khung';
+  d.innerHTML='<label for="hs-ten">Họ tên và lớp của con (viết trên một dòng)</label><input id="hs-ten" type="text" maxlength="50" autocomplete="off" placeholder="Nguyễn Minh An, 1/14"><p id="hs-loi"></p>';
+  hop.insertBefore(d,hop.querySelector('.hang'));
+  $('hs-ten').value=ls('hs-ten');
+  $('hs-ten').addEventListener('keydown',e=>{if(e.key==='Enter')$('manOk').click()});
+  const ok=$('manOk'),goc=ok.onclick;
+  ok.onclick=()=>{const v=$('hs-ten').value.trim().replace(/\s+/g,' '),i=Math.max(v.lastIndexOf(','),v.lastIndexOf(';'));
+   const t=i>0?v.slice(0,i).trim():'',l=i>0?v.slice(i+1).trim():'';
+   if(t.length<2||!/\d/.test(l)){$('hs-loi').textContent='Con ghi họ tên, dấu phẩy, rồi lớp nhé. Ví dụ: Nguyễn Minh An, 1/14';$('hs-ten').focus();return}
+   HS.ten=t;HS.lop=l;ls('hs-ten',v);go();goc&&goc()};
+  setTimeout(()=>{try{$('hs-ten').focus()}catch(e){}},50)}
+ function ghiChu(t){const p=$('man').querySelector('p');p.textContent=p.textContent.replace(/ (Đang gửi|Đã gửi|Chưa gửi|Ba mẹ chụp).*$/,'')+' '+t}
+ function gui(sao){
+  if(!HS.ten)return;
+  const CHUP='Ba mẹ chụp màn hình này gửi cô nhé.';
+  const lop=lopLink()||(chuanLop(HS.lop)==='1.14'?'1.14':'');
+  if(!lop){ghiChu(CHUP);return}
+  ghiChu('Đang gửi kết quả cho cô...');
+  let lan='?';try{if(typeof sai==='number')lan=sai}catch(e){}
+  const d={lop,ten:HS.ten+' (lớp '+HS.lop+')',bai:TEN_BAI,dungLanDau:sao,soCau:3,chiTiet:'Sao: '+sao+'/3; số lần sai: '+lan};
+  fetch(SHEET,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(d)})
+   .then(()=>ghiChu('Đã gửi kết quả cho cô.'),()=>ghiChu('Chưa gửi được. '+CHUP))}
+ const mh=manHinh;
+ manHinh=function(tieude,loi,nut,cb,saoSo){go();mh(tieude,loi,nut,cb,saoSo);if(saoSo)gui(saoSo)};
+ window.__hsGui=gui;
+ chen();
+})();
+</script>
 </body>
 </html>
