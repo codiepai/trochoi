@@ -104,7 +104,7 @@ function congSao(n){tongSao+=n;lsx('vuon-sao',tongSao);hienSao()}
 let viVoice=null;const layGiong=()=>{if(!window.speechSynthesis)return;viVoice=speechSynthesis.getVoices().filter(x=>/^vi[-_]?/i.test(x.lang)||/vietnam|tiếng việt/i.test(x.name))[0]||null};
 if(window.speechSynthesis){layGiong();speechSynthesis.onvoiceschanged=layGiong}
 let amDS=[],amTT=0;
-function noi(...ds){amTT++;const tt=amTT;amDS.forEach(a=>a.pause());amDS=[];if(window.speechSynthesis)speechSynthesis.cancel();
+function noi(...ds){return;amTT++;const tt=amTT;amDS.forEach(a=>a.pause());amDS=[];if(window.speechSynthesis)speechSynthesis.cancel();
  if(viVoice&&window.speechSynthesis){ds.forEach(t=>{const u=new SpeechSynthesisUtterance(t);u.lang=viVoice.lang;u.voice=viVoice;u.rate=.8;speechSynthesis.speak(u)});return}
  (function tiep(i){if(i>=ds.length||tt!==amTT)return;const a=new Audio('https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=vi&q='+encodeURIComponent(ds[i]));amDS.push(a);a.onended=()=>tiep(i+1);a.onerror=()=>tiep(i+1);const p=a.play();if(p&&p.catch)p.catch(()=>{})})(0)}
 /* Tieng bip bang WebAudio (khong can file am thanh) */
