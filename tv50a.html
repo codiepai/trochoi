@@ -10,8 +10,8 @@
 [hidden]{display:none!important}
 :root{--u:min(1vh,1.6vw);--chu:#12304a;--xanh:#0b5cab;--do:#e03131;--la:#2f9e44;--cam:#f08c00;--tim:#7048e8;--hong:#e64980;--font:"Baloo 2","Segoe UI",Arial,sans-serif;--emoji:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif;color-scheme:light}
 *{box-sizing:border-box;margin:0}
-html{height:auto}body{min-height:100vh}
-body{font-family:var(--font);font-weight:800;color:var(--chu);display:flex;flex-direction:column;align-items:center;padding:calc(var(--u)*1.2) 14px;gap:calc(var(--u)*.8);user-select:none;-webkit-user-select:none;touch-action:manipulation;overflow:visible}
+html,body{height:100%}
+body{font-family:var(--font);font-weight:800;color:var(--chu);display:flex;flex-direction:column;align-items:center;padding:calc(var(--u)*1.2) 14px;gap:calc(var(--u)*.8);user-select:none;-webkit-user-select:none;touch-action:manipulation;overflow:hidden}
 button{font-family:inherit;font-weight:800;cursor:pointer}
 button:focus-visible{outline:5px solid var(--xanh);outline-offset:3px}
 .top{width:100%;max-width:1100px;display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -46,7 +46,7 @@ h1{color:#5f3dc4}
 .tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
 .tabs button{font-size:max(15px,calc(var(--u)*3));padding:.25em .9em;border:3px solid #fff;border-radius:30px;background:#ffffffaa;color:#0b5cab}
 .tabs button.nay{background:#5f3dc4;color:#fff;border-color:#5f3dc4}
-.san{width:100%;max-width:1100px;flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;gap:calc(var(--u)*1.6)}
+.san{width:100%;max-width:1100px;flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-bottom:40px;display:flex;flex-direction:column;align-items:center;gap:calc(var(--u)*1.6)}
 .man{width:100%;display:flex;flex-direction:column;align-items:center;gap:calc(var(--u)*1.6)}
 .bang{display:grid;grid-template-columns:repeat(3,calc(var(--u)*17));gap:5px;background:#fff8;padding:8px;border-radius:14px}
 .bang div,.bang button{height:calc(var(--u)*6.6);display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:max(22px,calc(var(--u)*5));border:3px solid #b8860b;font-family:inherit;font-weight:800}
@@ -164,13 +164,13 @@ const tho=s=>boThanh(s.replace(/[^\p{L}]/gu,'')).toLowerCase();
 const coVan=s=>{const w=tho(s);return VANX.some(v=>w.endsWith(v))};
 let dich=0,tim=0;
 let lat3=0;
-function hienHuong(){$('huong').innerHTML=lat3<CAU.length?'👆 Bấm vào từng câu để lật ra, đọc to cùng cô.':'👉 Giờ bấm vào các tiếng có vần đã học (ac, oc, uc, at, ot...). Còn <b>'+(dich-tim)+'</b> tiếng!'}
+function hienHuong(){$('huong').innerHTML=lat3<CAU.length?'👆 Bấm từng câu để lật, đọc to.':'👉 Bấm tiếng có vần đã học. Còn <b>'+(dich-tim)+'</b>!'}
 function man3(){tim=0;lat3=0;$('xong3').hidden=true;$('xong3').onclick=ketThuc;dich=DOAN.split(' ').filter(coVan).length;
  $('doan').innerHTML=CAU.map((c,k)=>'<div class="cau"><button class="lc" data-k="'+k+'">Câu '+(k+1)+': bấm để lật</button><div class="tt" hidden>'+c.split(' ').map(t=>'<button data-d="'+(coVan(t)?1:0)+'">'+t+'</button>').join(' ')+'</div></div>').join('');
  [...$('doan').querySelectorAll('.lc')].forEach(b=>b.onclick=async()=>{const w=b.parentNode;w.classList.add('lat');await cho(180);b.hidden=true;w.querySelector('.tt').hidden=false;noi(CAU[+b.dataset.k]);lat3++;hienHuong();if(lat3>=CAU.length)$('xong3').hidden=false});
  [...$('doan').querySelectorAll('.tt button')].forEach(b=>b.onclick=()=>traTieng(b));
  hienHuong();
- $('goiy').textContent='Lật từng câu, đọc to, rồi bấm vào các tiếng có vần đã học (ac, oc, uc...). Tìm '+dich+' tiếng!'}
+ $('goiy').textContent='Tìm '+dich+' tiếng có vần đã học.'}
 async function traTieng(b){
  if(b.dataset.d==='1'){b.classList.add('xong');bip('dung');tim++;noi(b.textContent.replace(/[^\p{L}]/gu,''));$('goiy').textContent='Đã tìm '+tim+'/'+dich+' tiếng.';hienHuong();const [px,py]=giua(b);phao(px,py,['⭐'],4);if(tim>=dich){await cho(1200);ketThuc()}}
  else{sai++;bip('sai');b.classList.add('sai');setTimeout(()=>b.classList.remove('sai'),500);$('goiy').textContent='Tiếng "'+b.textContent.replace(/[^\p{L}]/gu,'')+'" chưa có vần đã học. Tìm tiếng khác nhé!'}}
