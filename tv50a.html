@@ -70,6 +70,8 @@ h1{color:#5f3dc4}
 .cau{background:#fff;border-radius:20px;box-shadow:0 5px 0 #0002;min-height:calc(var(--u)*9);display:flex;align-items:center;padding:calc(var(--u)*1) calc(var(--u)*2.4);font-size:max(24px,calc(var(--u)*5.4));font-weight:700;line-height:1.5}
 .cau .lc{width:100%;border:3px dashed #f08c00;background:#fff3bf;color:#b86200;border-radius:14px;padding:.3em;font-size:inherit}
 .cau .tt button{font:inherit;color:inherit;background:none;border:none;padding:0 .1em;border-radius:8px;cursor:pointer}
+.huong{background:#fff3bf;border:3px solid #f08c00;border-radius:18px;padding:.2em 1em;font-size:max(20px,calc(var(--u)*4.4));color:#b86200;text-align:center}
+.cau .tt button{border-bottom:3px dotted #adb5bd}
 .cau .tt button:hover{background:#fff3bf}
 .cau .tt button.xong{background:#b2f2bb;color:#1e6b2e;pointer-events:none}
 .cau .tt button.sai{animation:lac .4s;background:#ffc9c9}
@@ -86,7 +88,7 @@ h1{color:#5f3dc4}
 <div class="san">
  <div class="man" id="m1" hidden><div class="bang" id="bang"></div><button class="nutlon" id="tiep1" hidden>Sang ngôi sao ➜</button></div>
  <div class="man" id="m2" hidden><button class="nghe" id="nghe2" hidden>🔊 Nghe lại</button><div class="sao10" id="sao10"></div><button class="nutlon" id="tiep2" hidden></button></div>
- <div class="man" id="m3" hidden><button class="nghe" id="nghe3">🔊 Nghe cô đọc cả đoạn</button><div class="doan3" id="doan"></div></div>
+ <div class="man" id="m3" hidden><button class="nghe" id="nghe3">🔊 Nghe cô đọc cả đoạn</button><div class="huong" id="huong"></div><div class="doan3" id="doan"></div><button class="nutlon" id="xong3" hidden>Hoàn thành ➜</button></div>
 </div>
 
 <div id="man" hidden><div class="hop"><h2></h2><p></p><div class="sao3"></div><div class="hang"><button class="nutlon" id="manOk">Bắt đầu</button></div></div></div>
@@ -169,17 +171,20 @@ async function traSao(b){if(khoa2||b.classList.contains('xong'))return;
 const tho=s=>boThanh(s.replace(/[^\p{L}]/gu,'')).toLowerCase();
 const coVan=s=>{const w=tho(s);return VANX.some(v=>w.endsWith(v))};
 let dich=0,tim=0;
-function man3(){tim=0;dich=DOAN.split(' ').filter(coVan).length;
+let lat3=0;
+function hienHuong(){$('huong').innerHTML=lat3<CAU.length?'👆 Bấm vào từng câu để lật ra, đọc to cùng cô.':'👉 Giờ bấm vào các tiếng có vần đã học (ac, oc, uc, at, ot...). Còn <b>'+(dich-tim)+'</b> tiếng!'}
+function man3(){tim=0;lat3=0;$('xong3').hidden=true;$('xong3').onclick=ketThuc;dich=DOAN.split(' ').filter(coVan).length;
  $('doan').innerHTML=CAU.map((c,k)=>'<div class="cau"><button class="lc" data-k="'+k+'">Câu '+(k+1)+': bấm để lật</button><div class="tt" hidden>'+c.split(' ').map(t=>'<button data-d="'+(coVan(t)?1:0)+'">'+t+'</button>').join(' ')+'</div></div>').join('');
- [...$('doan').querySelectorAll('.lc')].forEach(b=>b.onclick=async()=>{const w=b.parentNode;w.classList.add('lat');await cho(180);b.hidden=true;w.querySelector('.tt').hidden=false;noi(CAU[+b.dataset.k])});
+ [...$('doan').querySelectorAll('.lc')].forEach(b=>b.onclick=async()=>{const w=b.parentNode;w.classList.add('lat');await cho(180);b.hidden=true;w.querySelector('.tt').hidden=false;noi(CAU[+b.dataset.k]);lat3++;hienHuong();if(lat3>=CAU.length)$('xong3').hidden=false});
  [...$('doan').querySelectorAll('.tt button')].forEach(b=>b.onclick=()=>traTieng(b));
- $('nghe3').onclick=()=>noi(DOAN);
+ $('nghe3').onclick=()=>noi(DOAN);hienHuong();
  $('goiy').textContent='Lật từng câu, đọc to, rồi bấm vào các tiếng có vần đã học (ac, oc, uc...). Tìm '+dich+' tiếng!'}
 async function traTieng(b){
- if(b.dataset.d==='1'){b.classList.add('xong');bip('dung');tim++;noi(b.textContent.replace(/[^\p{L}]/gu,''));$('goiy').textContent='Đã tìm '+tim+'/'+dich+' tiếng.';const [px,py]=giua(b);phao(px,py,['⭐'],4);if(tim>=dich){await cho(1200);ketThuc()}}
+ if(b.dataset.d==='1'){b.classList.add('xong');bip('dung');tim++;noi(b.textContent.replace(/[^\p{L}]/gu,''));$('goiy').textContent='Đã tìm '+tim+'/'+dich+' tiếng.';hienHuong();const [px,py]=giua(b);phao(px,py,['⭐'],4);if(tim>=dich){await cho(1200);ketThuc()}}
  else{sai++;bip('sai');b.classList.add('sai');setTimeout(()=>b.classList.remove('sai'),500);$('goiy').textContent='Tiếng "'+b.textContent.replace(/[^\p{L}]/gu,'')+'" chưa có vần đã học. Tìm tiếng khác nhé!'}}
-function ketThuc(){hienTien(TONG,TONG);const s=sai<=3?3:sai<=8?2:1;congSao(s);bip('thang');phao(innerWidth/2,innerHeight/2,['🌟','⭐','✨','🎉'],28);
- manHinh('Ngôi sao sáng rồi!','Con đã lật bảng vần, đọc 10 ngôi sao và đoạn văn Gà mẹ. Con làm sai '+sai+' lần.','Chơi lại',batDau,s)}
+function ketThuc(){hienTien(TONG,TONG);const diem=Math.max(0,10-sai);window.DIEM=diem+'/10';const s=sai<=2?3:sai<=5?2:1;congSao(s);bip('thang');phao(innerWidth/2,innerHeight/2,['🌟','⭐','✨','🎉'],28);
+ manHinh('Ngôi sao sáng rồi!','Điểm của con: '+diem+'/10. '+(diem>=9?'Xuất sắc!':diem>=7?'Giỏi lắm!':'Cố gắng thêm nhé!')+' Con làm sai '+sai+' lần.','Chơi lại',batDau,s);themLink()}
+function themLink(){if($('cd-link'))return;const a=document.createElement('a');a.id='cd-link';a.href='https://zalo.me/g/fgz1en4ym8oc7jye9ure';a.target='_blank';a.rel='noopener';a.textContent='👪 Vào nhóm Zalo nhận học liệu miễn phí mỗi ngày';a.style.cssText='display:block;margin-top:.9em;color:#0b5cab;font-size:18px;font-weight:800';document.querySelector('#man .hop').appendChild(a)}
 manHinh('Ngôi Sao Kiến Thức','Lật bảng vần, lật 10 ngôi sao từ ngữ, rồi đọc từng câu trong đoạn văn Gà mẹ.','Bắt đầu',batDau);
 
 </script>
@@ -217,7 +222,7 @@ manHinh('Ngôi Sao Kiến Thức','Lật bảng vần, lật 10 ngôi sao từ n
   if(!lop){ghiChu(CHUP);return}
   ghiChu('Đang gửi kết quả cho cô...');
   let lan='?';try{if(typeof sai==='number')lan=sai}catch(e){}
-  const d={lop,ten:HS.ten+' (lớp '+HS.lop+')',bai:TEN_BAI,dungLanDau:sao,soCau:3,chiTiet:'Sao: '+sao+'/3; số lần sai: '+lan};
+  const d={lop,ten:HS.ten+' (lớp '+HS.lop+')',bai:TEN_BAI,dungLanDau:sao,soCau:3,chiTiet:'Sao: '+sao+'/3; số lần sai: '+lan+(window.DIEM?'; Điểm: '+window.DIEM:'')};
   fetch(SHEET,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(d)})
    .then(()=>ghiChu('Đã gửi kết quả cho cô.'),()=>ghiChu('Chưa gửi được. '+CHUP))}
  const mh=manHinh;
