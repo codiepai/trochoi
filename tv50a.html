@@ -43,34 +43,36 @@ em{font-style:normal;color:var(--do)}
 body{background:linear-gradient(#a5d8ff,#d0ebff 55%,#fff9db)}
 h1{color:#5f3dc4}
 
-.san{width:100%;max-width:900px;flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;gap:calc(var(--u)*1.6)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.tabs button{font-size:max(15px,calc(var(--u)*3));padding:.25em .9em;border:3px solid #fff;border-radius:30px;background:#ffffffaa;color:#0b5cab}
+.tabs button.nay{background:#5f3dc4;color:#fff;border-color:#5f3dc4}
+.san{width:100%;max-width:1100px;flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;gap:calc(var(--u)*1.6)}
 .man{width:100%;display:flex;flex-direction:column;align-items:center;gap:calc(var(--u)*1.6)}
-.bang{display:grid;grid-template-columns:repeat(3,calc(var(--u)*15));gap:4px;background:#fff8;padding:6px;border-radius:14px}
-.bang div,.bang button{height:calc(var(--u)*6.4);display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:max(20px,calc(var(--u)*4.6));border:3px solid #b8860b;font-family:inherit;font-weight:800}
+.bang{display:grid;grid-template-columns:repeat(3,calc(var(--u)*17));gap:5px;background:#fff8;padding:8px;border-radius:14px}
+.bang div,.bang button{height:calc(var(--u)*6.6);display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:max(22px,calc(var(--u)*5));border:3px solid #b8860b;font-family:inherit;font-weight:800}
 .bang .dau{background:#fff;border-color:#adb5bd;color:#868e96;font-size:max(18px,calc(var(--u)*4))}
 .bang .hang{background:#ffd43b;color:#7a4b00}
 .bang button{background:#fff3bf;color:#e8590c;cursor:pointer}
-.bang button.chon{background:#ffa94d;color:#fff;animation:nhun .6s infinite}
-.bang button.xong{background:#b2f2bb;border-color:#2f9e44;color:#1e6b2e;animation:none}
+.bang button.xong{background:#b2f2bb;border-color:#2f9e44;color:#1e6b2e}
 .bang .khoa{background:#e9ecef;border-color:#ced4da;color:#adb5bd;font-size:max(14px,calc(var(--u)*3))}
-.hoi{background:#fff;border-radius:22px;padding:calc(var(--u)*1.2) calc(var(--u)*3);box-shadow:0 6px 0 #0002;font-size:max(30px,calc(var(--u)*8));color:#12304a;text-align:center}
-.hoi b{color:#e8590c}
-.dap{display:flex;gap:calc(var(--u)*1.6);flex-wrap:wrap;justify-content:center}
-.dap button{font-size:max(26px,calc(var(--u)*7));padding:.15em .8em;border:none;border-radius:20px;color:#fff;background:#4263eb;box-shadow:0 7px 0 #2b3b9c;min-width:calc(var(--u)*14)}
-.dap button:nth-child(2){background:#e8590c;box-shadow:0 7px 0 #9c3a08}
-.dap button:nth-child(3){background:#2f9e44;box-shadow:0 7px 0 #1e6b2e}
-.dap button.sai{background:#adb5bd;box-shadow:0 7px 0 #868e96;animation:lac .4s}
-.sao10{display:flex;flex-wrap:wrap;gap:calc(var(--u)*1.2);justify-content:center;max-width:860px}
-.sao10 button{width:calc(var(--u)*22);height:calc(var(--u)*12);border:4px solid #f08c00;background:radial-gradient(#fff3bf,#ffd43b);border-radius:48%;font-size:max(18px,calc(var(--u)*3.8));font-family:inherit;font-weight:800;color:#7a4b00;line-height:1.05;cursor:pointer;box-shadow:0 5px 0 #b86200}
-.sao10 button::before{content:'⭐ ';font-family:var(--emoji)}
-.sao10 button.sai{animation:lac .4s;background:#ffa8a8}
-.sao10 button.xong{background:#8ce99a;color:#1e6b2e;pointer-events:none}
-.doan{background:#fff;border-radius:22px;padding:calc(var(--u)*2) calc(var(--u)*2.6);box-shadow:0 6px 0 #0002;max-width:860px;line-height:1.75;font-size:max(24px,calc(var(--u)*5.6));font-weight:700}
-.doan button{font:inherit;color:inherit;background:none;border:none;padding:0 .12em;border-radius:8px;cursor:pointer}
-.doan button:hover{background:#fff3bf}
-.doan button.xong{background:#b2f2bb;color:#1e6b2e;pointer-events:none}
-.doan button.sai{animation:lac .4s;background:#ffc9c9}
+.lat{animation:latx .4s}
+@keyframes latx{0%{transform:scaleX(1)}50%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+.sao10{display:flex;flex-wrap:wrap;gap:calc(var(--u)*.2);justify-content:center;max-width:1100px}
+.stw{filter:drop-shadow(0 6px 0 #b86200)}
+.st{position:relative;width:calc(var(--u)*24);height:calc(var(--u)*23);border:none;clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);background:radial-gradient(#ffe97a,#ffc400);cursor:pointer}
+.st .nd{position:absolute;left:25%;right:25%;top:33%;bottom:28%;white-space:normal;display:flex;align-items:center;justify-content:center;text-align:center;font-size:max(30px,calc(var(--u)*6.4));color:#fff;text-shadow:0 2px 0 #b86200;line-height:1}
+.st.mo .nd span{white-space:normal;display:block}
+.st.mo .nd{font-size:max(15px,calc(var(--u)*3.6));color:#6b3d00;text-shadow:none;line-height:1.05}
+.st.xong{background:radial-gradient(#b2f2bb,#51cf66)}
+.st.sai{animation:lac .4s;background:#ffa8a8}
 .nghe{font-size:max(18px,calc(var(--u)*3.6));padding:.2em 1em;border:none;border-radius:30px;background:#fff;color:#0b5cab;box-shadow:0 5px 0 #9bb8d3}
+.doan3{display:flex;flex-direction:column;gap:calc(var(--u)*1.2);width:100%;max-width:900px}
+.cau{background:#fff;border-radius:20px;box-shadow:0 5px 0 #0002;min-height:calc(var(--u)*9);display:flex;align-items:center;padding:calc(var(--u)*1) calc(var(--u)*2.4);font-size:max(24px,calc(var(--u)*5.4));font-weight:700;line-height:1.5}
+.cau .lc{width:100%;border:3px dashed #f08c00;background:#fff3bf;color:#b86200;border-radius:14px;padding:.3em;font-size:inherit}
+.cau .tt button{font:inherit;color:inherit;background:none;border:none;padding:0 .1em;border-radius:8px;cursor:pointer}
+.cau .tt button:hover{background:#fff3bf}
+.cau .tt button.xong{background:#b2f2bb;color:#1e6b2e;pointer-events:none}
+.cau .tt button.sai{animation:lac .4s;background:#ffc9c9}
 
 </style>
 </head>
@@ -80,10 +82,11 @@ h1{color:#5f3dc4}
 <div class="goiy" id="goiy"></div>
 <div class="tien" id="tien"></div>
 
+<div class="tabs"><button id="tab1">1. Bảng vần</button><button id="tab2">2. Ngôi sao từ ngữ</button><button id="tab3">3. Đoạn văn Gà mẹ</button></div>
 <div class="san">
- <div class="man" id="m1" hidden><div class="hoi" id="hoi1"></div><div class="bang" id="bang"></div><div class="dap" id="dap"></div></div>
- <div class="man" id="m2" hidden><button class="nghe" id="nghe2">🔊 Nghe lại</button><div class="sao10" id="sao10"></div></div>
- <div class="man" id="m3" hidden><button class="nghe" id="nghe3">🔊 Nghe cô đọc cả đoạn</button><div class="doan" id="doan"></div></div>
+ <div class="man" id="m1" hidden><div class="bang" id="bang"></div><button class="nutlon" id="tiep1" hidden>Sang ngôi sao ➜</button></div>
+ <div class="man" id="m2" hidden><button class="nghe" id="nghe2" hidden>🔊 Nghe lại</button><div class="sao10" id="sao10"></div><button class="nutlon" id="tiep2" hidden></button></div>
+ <div class="man" id="m3" hidden><button class="nghe" id="nghe3">🔊 Nghe cô đọc cả đoạn</button><div class="doan3" id="doan"></div></div>
 </div>
 
 <div id="man" hidden><div class="hop"><h2></h2><p></p><div class="sao3"></div><div class="hang"><button class="nutlon" id="manOk">Bắt đầu</button></div></div></div>
@@ -122,61 +125,62 @@ function toVan(w,vans){const ch=[...w],nm=ch.map(boThanh).join('').toLowerCase()
 
 const VANX=['ac','ăc','âc','oc','ôc','uc','ưc','at','ăt','ât','ot','ôt','ơt'];
 const HANG=['a','ă','â','o','ô','ơ','u','ư'];
-/* o vang trong bang: van; 'x' = o gach cheo; null = chua hoc (ut, ưt hoc o Bai 52) */
+/* 'x' = o gach cheo; null = chua hoc (ut, ưt hoc o Bai 52) */
 const BV={a:['ac','at'],ă:['ăc','ăt'],â:['âc','ât'],o:['oc','ot'],ô:['ôc','ôt'],ơ:['x','ơt'],u:['uc',null],ư:['ưc',null]};
 const SAO=['bật lửa','lọ mực','cột mốc','hạt thóc','xúc xắc','gót chân','đôi mắt','lác đác','giấc mơ','quả ớt'];
-const DOAN='Gà mẹ dẫn đàn con đi ăn. Chốc chốc, tìm thấy mồi, gà mẹ "tục... tục..." gọi con. Đàn gà con chạy lại, chen chúc nhau ăn rồi rúc vào bên mẹ. Gà mẹ ủ ấm cho các con.';
-let sai=0;
-const TONG=3;
-function vaoMan(k){[1,2,3].forEach(j=>$('m'+j).hidden=j!==k);hienTien(TONG,k-1);
- if(k===1)man1();else if(k===2)man2();else man3()}
+const CAU=['Gà mẹ dẫn đàn con đi ăn.','Chốc chốc, tìm thấy mồi, gà mẹ "tục... tục..." gọi con.','Đàn gà con chạy lại, chen chúc nhau ăn rồi rúc vào bên mẹ.','Gà mẹ ủ ấm cho các con.'];
+const DOAN=CAU.join(' ');
+let sai=0;const TONG=3;
+function vaoMan(k){[1,2,3].forEach(j=>{$('m'+j).hidden=j!==k;$('tab'+j).classList.toggle('nay',j===k)});hienTien(TONG,k-1);[man1,man2,man3][k-1]()}
 function batDau(){sai=0;vaoMan(1)}
+[1,2,3].forEach(j=>$('tab'+j).onclick=()=>vaoMan(j));
+$('tiep1').onclick=()=>vaoMan(2);
 
-/* ===== Man 1: dien bang van ===== */
-let cur=null,khoa1=false;
-function man1(){
- let g='<div class="dau"></div><div class="dau">c</div><div class="dau">t</div>';
+/* ===== Man 1: lat o bang van ===== */
+let lat1=0,tong1=0;
+function man1(){let g='<div class="dau"></div><div class="dau">c</div><div class="dau">t</div>';lat1=0;tong1=0;
  HANG.forEach(h=>{g+='<div class="hang">'+h+'</div>';[0,1].forEach(c=>{const v=BV[h][c];
   if(v==='x')g+='<div class="khoa">✕</div>';else if(v===null)g+='<div class="khoa">chưa học</div>';
-  else if(v==='ac')g+='<button class="xong" disabled>ac</button>';
-  else g+='<button data-h="'+h+'" data-c="'+c+'"></button>'})});
- $('bang').innerHTML=g;[...$('bang').querySelectorAll('button:not([disabled])')].forEach(b=>b.onclick=()=>chonO(b));
- $('dap').innerHTML='';$('goiy').textContent='Bảng vần: ghép chữ cái ở cột bên trái với c hoặc t.';
- cur=null;tiepO()}
-function tiepO(){const b=[...$('bang').querySelectorAll('button:not(.xong)')][0];if(!b){return xongMan1()}chonO(b)}
-function chonO(b){if(b.classList.contains('xong'))return;khoa1=false;[...$('bang').querySelectorAll('button')].forEach(x=>x.classList.remove('chon'));b.classList.add('chon');cur=b;
- const h=b.dataset.h,c=+b.dataset.c,v=BV[h][c];$('hoi1').innerHTML='<b>'+h+'</b> + <b>'+['c','t'][c]+'</b> = ?';
- const sai2=xao(VANX.filter(x=>x!==v)).slice(0,2);const ds=xao([v,sai2[0],sai2[1]]);
- $('dap').innerHTML=ds.map(x=>'<button>'+x+'</button>').join('');[...$('dap').children].forEach(x=>x.onclick=()=>traO(x,v));
- noi(h+' và '+['c','t'][c]+' ghép thành vần gì?')}
-async function traO(x,v){if(khoa1)return;
- if(x.textContent===v){khoa1=true;x.style.background='#2f9e44';bip('dung');cur.textContent=v;cur.classList.remove('chon');cur.classList.add('xong');const [px,py]=giua(x);phao(px,py,['⭐','✨'],6);noi(v);await cho(900);tiepO()}
- else{sai++;bip('sai');x.classList.add('sai');$('goiy').textContent='Chưa đúng. Nhìn chữ cái bên trái và cột c hoặc t rồi thử lại nhé!'}}
-async function xongMan1(){$('hoi1').textContent='Bảng vần đã đầy!';$('dap').innerHTML='';bip('thang');phao(innerWidth/2,innerHeight/3,['⭐','✨','🌟'],16);noi('Giỏi quá! Bảng vần đã đầy.');await cho(1800);vaoMan(2)}
+  else{tong1++;g+='<button data-v="'+v+'">?</button>'}})});
+ $('bang').innerHTML=g;[...$('bang').querySelectorAll('button')].forEach(b=>b.onclick=()=>latO(b));$('tiep1').hidden=true;
+ $('goiy').textContent='Bấm vào ô dấu ? để lật ra vần, rồi cả lớp cùng đọc nhé!'}
+async function latO(b){if(b.classList.contains('xong'))return;b.classList.add('lat');await cho(180);b.textContent=b.dataset.v;b.classList.add('xong');bip('dung');noi(b.dataset.v);lat1++;
+ if(lat1>=tong1){$('goiy').textContent='Đã lật hết bảng vần! Giỏi quá!';phao(innerWidth/2,innerHeight/3,['⭐','✨','🌟'],14);$('tiep1').hidden=false}}
 
-/* ===== Man 2: tim ngoi sao theo tu co doc ===== */
-let ds2=[],i2=0,khoa2=false;
-function man2(){ds2=xao(SAO);i2=0;$('sao10').innerHTML=xao(SAO).map(t=>'<button data-t="'+t+'">'+t+'</button>').join('');
- [...$('sao10').children].forEach(b=>b.onclick=()=>traSao(b));$('nghe2').onclick=()=>noi(ds2[i2]);hoi2()}
+/* ===== Man 2: lat ngoi sao co tu, roi nghe va chon ===== */
+let pha2=0,lat2=0,ds2=[],i2=0,khoa2=false;
+const tuHtml=t=>t.split(' ').map(w=>toVan(w,VANX)).join('<br>');
+function man2(){pha2=0;lat2=0;$('nghe2').hidden=true;$('tiep2').hidden=true;
+ $('sao10').innerHTML=SAO.map((t,k)=>'<div class="stw"><button class="st" data-t="'+t+'"><span class="nd">'+(k+1)+'</span></button></div>').join('');
+ [...$('sao10').querySelectorAll('.st')].forEach(b=>b.onclick=()=>bamSao(b));
+ $('goiy').textContent='Bấm vào ngôi sao để lật ra từ, rồi cả lớp cùng đọc nhé!'}
+async function bamSao(b){
+ if(pha2===0){if(b.classList.contains('mo'))return;b.classList.add('lat');await cho(180);b.classList.add('mo');b.querySelector('.nd').innerHTML='<span>'+tuHtml(b.dataset.t)+'</span>';bip('dung');noi(b.dataset.t);lat2++;
+  if(lat2>=SAO.length){$('goiy').textContent='Đã lật hết 10 ngôi sao! Chơi tiếp: nghe cô đọc và chọn đúng ngôi sao.';phao(innerWidth/2,innerHeight/3,['⭐','✨','🌟'],14);const t=$('tiep2');t.textContent='Chơi: nghe và chọn ➜';t.onclick=batDau2;t.hidden=false}}
+ else traSao(b)}
+function batDau2(){pha2=1;$('tiep2').hidden=true;ds2=xao(SAO);i2=0;[...$('sao10').querySelectorAll('.st')].forEach(b=>b.classList.remove('xong'));$('nghe2').hidden=false;$('nghe2').onclick=()=>noi(ds2[i2]);hoi2()}
 function hoi2(){khoa2=false;$('goiy').textContent='Nghe cô đọc, bấm đúng ngôi sao có từ đó. Còn '+(SAO.length-i2)+' sao.';noi(ds2[i2])}
-async function traSao(b){if(khoa2)return;
- if(b.dataset.t===ds2[i2]){khoa2=true;b.classList.add('xong');bip('dung');const [px,py]=giua(b);phao(px,py,['⭐','✨'],7);i2++;await cho(700);if(i2>=SAO.length){noi('Giỏi quá! Con đã tìm đủ mười ngôi sao.');bip('thang');phao(innerWidth/2,innerHeight/3,['🌟','⭐','✨'],16);await cho(1800);return vaoMan(3)}hoi2()}
+async function traSao(b){if(khoa2||b.classList.contains('xong'))return;
+ if(b.dataset.t===ds2[i2]){khoa2=true;b.classList.add('xong');bip('dung');const [px,py]=giua(b);phao(px,py,['⭐','✨'],7);i2++;await cho(700);
+  if(i2>=SAO.length){noi('Giỏi quá! Con đã tìm đủ mười ngôi sao.');bip('thang');phao(innerWidth/2,innerHeight/3,['🌟','⭐','✨'],16);await cho(1800);return vaoMan(3)}hoi2()}
  else{sai++;bip('sai');b.classList.add('sai');setTimeout(()=>b.classList.remove('sai'),500);$('goiy').textContent='Chưa đúng. Bấm "Nghe lại" rồi đọc kĩ các ngôi sao nhé!'}}
 
-/* ===== Man 3: tim tieng co van trong doan van ===== */
+/* ===== Man 3: lat tung cau, tim tieng co van ===== */
 const tho=s=>boThanh(s.replace(/[^\p{L}]/gu,'')).toLowerCase();
 const coVan=s=>{const w=tho(s);return VANX.some(v=>w.endsWith(v))};
 let dich=0,tim=0;
-function man3(){const tk=DOAN.split(' ');dich=tk.filter(coVan).length;tim=0;
- $('doan').innerHTML=tk.map((t,k)=>'<button data-d="'+(coVan(t)?1:0)+'">'+t+'</button>').join(' ');
- [...$('doan').querySelectorAll('button')].forEach(b=>b.onclick=()=>traTieng(b));$('nghe3').onclick=()=>noi(DOAN);
- $('goiy').textContent='Bấm vào những tiếng có vần đã học trong tuần (ac, oc, uc...). Tìm '+dich+' tiếng!';noi('Đọc đoạn văn và bấm vào các tiếng có vần đã học.')}
+function man3(){tim=0;dich=DOAN.split(' ').filter(coVan).length;
+ $('doan').innerHTML=CAU.map((c,k)=>'<div class="cau"><button class="lc" data-k="'+k+'">Câu '+(k+1)+': bấm để lật</button><div class="tt" hidden>'+c.split(' ').map(t=>'<button data-d="'+(coVan(t)?1:0)+'">'+t+'</button>').join(' ')+'</div></div>').join('');
+ [...$('doan').querySelectorAll('.lc')].forEach(b=>b.onclick=async()=>{const w=b.parentNode;w.classList.add('lat');await cho(180);b.hidden=true;w.querySelector('.tt').hidden=false;noi(CAU[+b.dataset.k])});
+ [...$('doan').querySelectorAll('.tt button')].forEach(b=>b.onclick=()=>traTieng(b));
+ $('nghe3').onclick=()=>noi(DOAN);
+ $('goiy').textContent='Lật từng câu, đọc to, rồi bấm vào các tiếng có vần đã học (ac, oc, uc...). Tìm '+dich+' tiếng!'}
 async function traTieng(b){
  if(b.dataset.d==='1'){b.classList.add('xong');bip('dung');tim++;noi(b.textContent.replace(/[^\p{L}]/gu,''));$('goiy').textContent='Đã tìm '+tim+'/'+dich+' tiếng.';const [px,py]=giua(b);phao(px,py,['⭐'],4);if(tim>=dich){await cho(1200);ketThuc()}}
  else{sai++;bip('sai');b.classList.add('sai');setTimeout(()=>b.classList.remove('sai'),500);$('goiy').textContent='Tiếng "'+b.textContent.replace(/[^\p{L}]/gu,'')+'" chưa có vần đã học. Tìm tiếng khác nhé!'}}
 function ketThuc(){hienTien(TONG,TONG);const s=sai<=3?3:sai<=8?2:1;congSao(s);bip('thang');phao(innerWidth/2,innerHeight/2,['🌟','⭐','✨','🎉'],28);
- manHinh('Ngôi sao sáng rồi!','Con đã điền bảng vần, tìm đủ 10 ngôi sao và đọc xong đoạn văn Gà mẹ. Con làm sai '+sai+' lần.','Chơi lại',batDau,s)}
-manHinh('Ngôi Sao Kiến Thức','Ba thử thách ôn Bài 50: điền bảng vần, tìm 10 ngôi sao từ ngữ, rồi đọc đoạn văn Gà mẹ.','Bắt đầu',batDau);
+ manHinh('Ngôi sao sáng rồi!','Con đã lật bảng vần, đọc 10 ngôi sao và đoạn văn Gà mẹ. Con làm sai '+sai+' lần.','Chơi lại',batDau,s)}
+manHinh('Ngôi Sao Kiến Thức','Lật bảng vần, lật 10 ngôi sao từ ngữ, rồi đọc từng câu trong đoạn văn Gà mẹ.','Bắt đầu',batDau);
 
 </script>
 <script>
@@ -221,6 +225,7 @@ manHinh('Ngôi Sao Kiến Thức','Ba thử thách ôn Bài 50: điền bảng v
  window.__hsGui=gui;
  chen();
 })();
+
 </script>
 </body>
 </html>
