@@ -145,7 +145,7 @@ function amKey(t){const s=String(t).normalize('NFC').toLowerCase().replace(/[^\p
 let _am=[],_tt=0;
 noi=function(...ds){_tt++;const tt=_tt;_am.forEach(a=>{try{a.pause()}catch(e){}});_am=[];if(window.speechSynthesis)speechSynthesis.cancel();ds=ds.filter(Boolean);
  (function tiep(i){if(i>=ds.length||tt!==_tt)return;const t=ds[i],k=amKey(t),dc=['am/'+k+'.mp3','../am/'+k+'.mp3','https://codiep-ai.netlify.app/am/'+k+'.mp3'];let n=0;
-  const thu=()=>{if(tt!==_tt)return;if(n>=dc.length)return gg(t,tt,()=>tiep(i+1));const a=new Audio(dc[n]);_am.push(a);a.onended=()=>tiep(i+1);a.onerror=()=>{n++;thu()};const p=a.play();if(p&&p.catch)p.catch(e=>{if(e&&e.name==='NotAllowedError'){return}n++;thu()})};thu()})(0)};
+  const thu=()=>{if(tt!==_tt)return;if(n>=dc.length)return gg(t,tt,()=>tiep(i+1));const a=new Audio(dc[n]);_am.push(a);let xg=false;const sang=()=>{if(xg)return;xg=true;n++;thu()};a.onended=()=>{if(!xg){xg=true;tiep(i+1)}};a.onerror=sang;const p=a.play();if(p&&p.catch)p.catch(e=>{if(e&&e.name==='NotAllowedError'){xg=true;return}sang()})};thu()})(0)};
 function gg(t,tt,xong){if(window.speechSynthesis){const v=speechSynthesis.getVoices().find(x=>/^vi/i.test(x.lang));if(v){const u=new SpeechSynthesisUtterance(t);u.lang=v.lang;u.voice=v;u.rate=.8;u.onend=xong;speechSynthesis.speak(u);return}}
  const a=new Audio('https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=vi&q='+encodeURIComponent(t));_am.push(a);a.onended=xong;a.onerror=xong;const p=a.play();if(p&&p.catch)p.catch(()=>{})}
 
