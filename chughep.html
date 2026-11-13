@@ -96,8 +96,8 @@ body{overflow-y:auto!important;justify-content:flex-start}
 <div class="tien" id="tien"></div>
 
 <div class="san">
- <div class="man" id="m1" hidden><div class="hoi" id="hoi1"></div><div class="kh" id="kh1"></div><button class="nghe" id="ng1" aria-label="nghe">▶</button><div class="lc" id="lc1"></div></div>
- <div class="man" id="m2" hidden><div class="hoi" id="hoi2"></div><div class="tu" id="tu2"></div><button class="nghe" id="ng2" aria-label="nghe">▶</button><div class="lc" id="lc2"></div><div class="luat" id="luat2" hidden></div></div>
+ <div class="man" id="m1" hidden><div class="hoi" id="hoi1"></div><div class="kh" id="kh1"></div><button class="nghe" id="ng1" aria-label="nghe">▶&#xFE0E;</button><div class="lc" id="lc1"></div></div>
+ <div class="man" id="m2" hidden><div class="hoi" id="hoi2"></div><div class="tu" id="tu2"></div><button class="nghe" id="ng2" aria-label="nghe">▶&#xFE0E;</button><div class="lc" id="lc2"></div><div class="luat" id="luat2" hidden></div></div>
  <div class="man" id="m3" hidden><div class="hoi" id="hoi3"></div><div class="rg" id="rg3"></div><div class="qua" id="qua3"></div></div>
 </div>
 
@@ -155,7 +155,7 @@ const DOC={ch:'chờ',tr:'trờ',th:'thờ',kh:'khờ',nh:'nhờ',ph:'phờ',gi:
 /* A: nghe tu, chon chu ghep dau tieng [tu, chu ghep dung, [lua chon sai]] */
 const A=[['chó','ch',['tr','th']],['nhà','nh',['ng','kh']],['khỉ','kh',['ch','nh']],['phở','ph',['th','kh']],['thỏ','th',['tr','ch']],['quả','qu',['gi','kh']]];
 /* B: dien chu ghep vao tu [phan sau, dap an, [lua chon], tu day du, luat hien khi sai] */
-const B=[['ê','ngh',['ng','ngh','g'],'nghề','ng đứng trước a, o, ô, u, ư. ngh đứng trước e, ê, i.'],
+const B=[['ề','ngh',['ng','ngh','g'],'nghề','ng đứng trước a, o, ô, u, ư. ngh đứng trước e, ê, i.'],
          ['ế','gh',['g','gh','ng'],'ghế','g đứng trước a, o, ô, u, ư. gh đứng trước e, ê, i.'],
          ['à','g',['g','gh','ngh'],'gà','g đứng trước a, o, ô, u, ư. gh đứng trước e, ê, i.'],
          ['ô','ng',['ng','ngh','nh'],'ngô','ng đứng trước a, o, ô, u, ư. ngh đứng trước e, ê, i.'],
