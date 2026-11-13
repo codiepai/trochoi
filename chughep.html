@@ -127,6 +127,16 @@ const PFX=['anh-game/','../anh-game/','https://codiep-ai.netlify.app/anh-game/']
 function IA(s,e,c){return '<img class="ia '+(c||'')+'" src="'+PFX[0]+s+'.webp" data-s="'+s+'" data-e="'+(e||'')+'" data-t="0" onerror="aErr(this)" alt="">'}
 function aErr(el){const t=+el.dataset.t+1;if(t<PFX.length){el.dataset.t=t;el.src=PFX[t]+el.dataset.s+'.webp';return}const sp=document.createElement('span');sp.className='ie';sp.style.fontSize='3em';sp.textContent=el.dataset.e||'';el.replaceWith(sp)}
 
+
+/* AM THANH: uu tien file mp3 doc san (am/), roi giong may, cuoi cung Google */
+function amKey(t){const s=String(t).normalize('NFC').toLowerCase().replace(/[^\p{L}\s]/gu,' ').replace(/\s+/g,' ').trim();let h=0x811c9dc5;for(const b of new TextEncoder().encode(s)){h^=b;h=Math.imul(h,0x01000193)>>>0}return h.toString(16).padStart(8,'0')}
+let _am=[],_tt=0;
+noi=function(...ds){_tt++;const tt=_tt;_am.forEach(a=>{try{a.pause()}catch(e){}});_am=[];if(window.speechSynthesis)speechSynthesis.cancel();ds=ds.filter(Boolean);
+ (function tiep(i){if(i>=ds.length||tt!==_tt)return;const t=ds[i],k=amKey(t),dc=['am/'+k+'.mp3','../am/'+k+'.mp3','https://codiep-ai.netlify.app/am/'+k+'.mp3'];let n=0;
+  const thu=()=>{if(tt!==_tt)return;if(n>=dc.length)return gg(t,tt,()=>tiep(i+1));const a=new Audio(dc[n]);_am.push(a);a.onended=()=>tiep(i+1);a.onerror=()=>{n++;thu()};const p=a.play();if(p&&p.catch)p.catch(e=>{if(e&&e.name==='NotAllowedError'){return}n++;thu()})};thu()})(0)};
+function gg(t,tt,xong){if(window.speechSynthesis){const v=speechSynthesis.getVoices().find(x=>/^vi/i.test(x.lang));if(v){const u=new SpeechSynthesisUtterance(t);u.lang=v.lang;u.voice=v;u.rate=.8;u.onend=xong;speechSynthesis.speak(u);return}}
+ const a=new Audio('https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=vi&q='+encodeURIComponent(t));_am.push(a);a.onended=xong;a.onerror=xong;const p=a.play();if(p&&p.catch)p.catch(()=>{})}
+
 /* ===== KHOI DU LIEU: co the sua cho bai khac ===== */
 /* cach doc chu ghep khi co noi */
 const DOC={ch:'chờ',tr:'trờ',th:'thờ',kh:'khờ',nh:'nhờ',ph:'phờ',gi:'giờ',qu:'quờ',ng:'ngờ',ngh:'ngờ ghép',g:'gờ',gh:'gờ ghép',c:'cờ',k:'ca'};
@@ -158,7 +168,7 @@ function cau1(){khoa1=false;const q=A[i1];
  $('ng1').onclick=()=>noi(q[0]);
  $('goiy').textContent='Câu '+(i1+1)+'/'+A.length+'. Bấm ▶ nhiều lần cũng được.';setTimeout(()=>noi(q[0]),250)}
 async function chon1(b,q){if(khoa1)return;const c=b.dataset.c;
- if(c===q[1]){khoa1=true;b.classList.add('dung');bip('dung');noi(q[0]+', '+DOC[c]+' '+q[0]);const [x,y]=giua(b);phao(x,y,['⭐','🍌','✨'],6);await cho(1600);i1++;if(i1>=A.length){bip('thang');return vaoMan(2)}cau1()}
+ if(c===q[1]){khoa1=true;b.classList.add('dung');bip('dung');noi(q[0],DOC[c],q[0]);const [x,y]=giua(b);phao(x,y,['⭐','🍌','✨'],6);await cho(1600);i1++;if(i1>=A.length){bip('thang');return vaoMan(2)}cau1()}
  else{sai++;bip('sai');b.classList.add('sai');$('goiy').textContent='Chưa đúng. Nghe lại ▶ thật kỹ nhé!';setTimeout(()=>b.classList.remove('sai'),600)}}
 
 /* ===== Chang 2: dien chu ghep vao tu ===== */
@@ -184,7 +194,7 @@ function vong3(){const R=C[r3];tim3=0;khoa3=false;
  const ds=xao(xao(R.ok).map(w=>({w,ok:1})).concat(xao(R.no).map(w=>({w,ok:0}))));
  $('qua3').innerHTML=ds.map(o=>'<button class="q" data-ok="'+o.ok+'" data-w="'+o.w+'">'+IA('rung-xanh-qua-chuoi','🍌')+'<span class="w">'+o.w+'</span></button>').join('');
  [...$('qua3').children].forEach(b=>b.onclick=()=>bam3(b));
- $('goiy').textContent='Chữ '+R.g+' nằm ở quả nào nhỉ? Vòng '+(r3+1)+'/'+C.length+'.';noi('Hái quả có chữ '+DOC[R.g])}
+ $('goiy').textContent='Chữ '+R.g+' nằm ở quả nào nhỉ? Vòng '+(r3+1)+'/'+C.length+'.';noi('Hái quả có chữ',DOC[R.g])}
 async function bam3(b){if(khoa3||b.classList.contains('no'))return;const w=b.dataset.w,R=C[r3];noi(w);
  if(b.dataset.ok==='1'){b.classList.add('no');b.querySelector('.w').innerHTML=toVan(w,[R.g]);bip('dung');tim3++;$('rg3').textContent='Chuối đã hái: '+tim3+'/3';const [x,y]=giua(b);phao(x,y,['⭐','🍌','✨'],6);
   if(tim3>=3){khoa3=true;await cho(1200);r3++;if(r3>=C.length){bip('thang');return ketThuc()}vong3()}}
