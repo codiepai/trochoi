@@ -99,9 +99,7 @@ let ac=null;
 function bip(l){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const t=ac.currentTime;
  const sq=l==='dung'?[[660,0],[880,.12],[1175,.24]]:l==='sai'?[[220,0],[180,.14]]:l==='thang'?[[523,0],[659,.13],[784,.26],[1047,.39],[1319,.52]]:[[600,0]];
  sq.forEach(([f,d])=>{const o=ac.createOscillator(),g=ac.createGain();o.type=l==='sai'?'sawtooth':'triangle';o.frequency.value=f;g.gain.setValueAtTime(.0001,t+d);g.gain.exponentialRampToValueAtTime(.25,t+d+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d+.22);o.connect(g).connect(ac.destination);o.start(t+d);o.stop(t+d+.25)})}catch(e){}}
-let viVoice=null;function layGiong(){if(!window.speechSynthesis)return;viVoice=speechSynthesis.getVoices().find(x=>/^vi/i.test(x.lang))||null}
-if(window.speechSynthesis){layGiong();speechSynthesis.onvoiceschanged=layGiong}
-function noi(t){try{if(!window.speechSynthesis)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);if(viVoice){u.voice=viVoice;u.lang=viVoice.lang}else u.lang='vi-VN';u.rate=.85;speechSynthesis.speak(u)}catch(e){}}
+function noi(){}   /* đã bỏ giọng thuyết minh theo yêu cầu của cô */
 function phao(x,y,ds,n){ds=ds||['⭐','✨','🎉','🌟'];n=n||12;for(let i=0;i<n;i++){const e=document.createElement('div');e.className='bay';e.textContent=ds[i%ds.length];e.style.left=x+'px';e.style.top=y+'px';e.style.fontSize=(22+Math.random()*22)+'px';e.style.setProperty('--dx',((Math.random()-.5)*360)+'px');e.style.setProperty('--dy',(-60-Math.random()*240)+'px');e.style.setProperty('--r',((Math.random()-.5)*400)+'deg');document.body.appendChild(e);setTimeout(()=>e.remove(),1400)}}
 const giua=el=>{const r=el.getBoundingClientRect();return[r.left+r.width/2,r.top+r.height/2]};
 
@@ -129,8 +127,7 @@ let i2=0,khoa2=false,Q2=[];
 function man2(){$('nhan').textContent='Màn 2';Q2=xao(HOI).slice(0,6);i2=0;hoi2()}
 function hoi2(){khoa2=false;const q=Q2[i2];
  const ds=xao([{w:q[1],ok:1}].concat(q[2].map(w=>({w,ok:0}))));
- $('khung').innerHTML='<div class="hoi">Màn 2: Chọn từ có nghĩa <em>trái ngược</em> với từ dưới đây <button class="nghe" id="ng" aria-label="nghe">🔊</button></div><span class="bigw">'+q[0]+' <span>↔</span> ?</span><div class="lua">'+ds.map(o=>'<div class="tu" data-ok="'+o.ok+'">'+o.w+'</div>').join('')+'</div><div class="goiy" id="gy">Câu '+(i2+1)+'/'+Q2.length+'. Chạm vào từ trái nghĩa với "'+q[0]+'".</div>';
- $('ng').onclick=()=>noi('Từ trái nghĩa với '+q[0]);noi('Từ nào trái nghĩa với '+q[0]);
+ $('khung').innerHTML='<div class="hoi">Màn 2: Chọn từ có nghĩa <em>trái ngược</em> với từ dưới đây</div><span class="bigw">'+q[0]+' <span>↔</span> ?</span><div class="lua">'+ds.map(o=>'<div class="tu" data-ok="'+o.ok+'">'+o.w+'</div>').join('')+'</div><div class="goiy" id="gy">Câu '+(i2+1)+'/'+Q2.length+'. Chạm vào từ trái nghĩa với "'+q[0]+'".</div>';
  [...document.querySelectorAll('.lua .tu')].forEach(b=>b.onclick=()=>chon2(b))}
 async function chon2(b){if(khoa2||b.classList.contains('dung'))return;const q=Q2[i2];noi(b.textContent);
  if(b.dataset.ok==='1'){khoa2=true;b.classList.add('dung');bip('dung');const[x,y]=giua(b);phao(x,y,['⭐','✨'],8);tien++;chay();$('gy').textContent='Đúng! '+q[0]+' - '+q[1]+'.';await cho(1500);i2++;if(i2>=Q2.length)return vaoMan(3);hoi2()}
