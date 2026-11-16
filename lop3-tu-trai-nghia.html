@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rùa và Thỏ thi chạy - Tìm cặp từ trái nghĩa</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;font-family:"Segoe UI",Arial,sans-serif;color:#1d3557}
+body{background:linear-gradient(#bfe9ff 0,#e8f7ff 45%,#d7f2c4 45%,#bfe6a0 100%);min-height:100vh}
+.wrap{max-width:980px;margin:0 auto;padding:10px 12px 40px}
+h1{font-size:clamp(22px,4.2vw,34px);margin:6px 0 2px;text-align:center;color:#e76f51;text-shadow:0 2px 0 #fff}
+.sub{text-align:center;font-size:clamp(14px,2.4vw,18px);margin:0 0 8px}
+/* đường chạy */
+.duong{position:relative;height:84px;margin:8px 0 12px;border-radius:18px;background:linear-gradient(#a7d676,#86bf55);border:3px solid #5f9e3a;overflow:hidden}
+.duong:before{content:"";position:absolute;left:0;right:0;top:46px;height:30px;background:#d9b382;border-top:3px dashed #fff8}
+.dich{position:absolute;right:8px;top:6px;font-size:40px}
+.rua{position:absolute;top:34px;left:2%;font-size:44px;transition:left .9s ease;filter:drop-shadow(0 3px 2px #0004)}
+.tho{position:absolute;top:2px;left:2%;font-size:36px;transition:left .5s ease}
+.nhan{position:absolute;left:10px;top:4px;font-size:15px;font-weight:700;background:#fff9;border-radius:10px;padding:1px 8px}
+.bar{display:flex;gap:6px;justify-content:center;margin:2px 0 8px}
+.bar i{width:34px;height:12px;border-radius:7px;background:#fff8;border:2px solid #5f9e3a}
+.bar i.xong{background:#ffb703}.bar i.nay{background:#fff;box-shadow:0 0 0 3px #ffb70388}
+.sao{position:absolute;right:14px;top:10px;font-size:22px;font-weight:800;background:#fff;border-radius:14px;padding:2px 12px;border:3px solid #ffb703}
+.card{background:#fffdf5;border:4px solid #ffd166;border-radius:22px;padding:14px;box-shadow:0 6px 0 #e9b949;position:relative}
+.hoi{font-size:clamp(18px,3.2vw,26px);font-weight:700;text-align:center;margin:4px 0 12px}
+.hoi em{color:#d62828;font-style:normal;background:#fff3b0;border-radius:8px;padding:0 8px}
+.goiy{text-align:center;font-size:clamp(14px,2.2vw,18px);min-height:26px;margin:8px 0 0;color:#386641;font-weight:600}
+.nghe{display:inline-block;margin-left:6px;font-size:22px;border:none;background:#4cc9f0;color:#fff;border-radius:50%;width:38px;height:38px;cursor:pointer;vertical-align:middle}
+button{font-family:inherit}
+.btn{border:none;border-radius:16px;padding:12px 26px;font-size:clamp(18px,3vw,24px);font-weight:800;color:#fff;background:#f77f00;box-shadow:0 5px 0 #c96100;cursor:pointer}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #c96100}
+.giua{text-align:center;margin-top:12px}
+/* màn 1: nối */
+.hai{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cot{display:flex;flex-direction:column;gap:10px}
+.tu{border:3px solid #90e0ef;background:#fff;border-radius:16px;padding:12px 6px;text-align:center;font-size:clamp(20px,3.6vw,30px);font-weight:800;cursor:pointer;user-select:none;transition:transform .12s,background .2s}
+.tu:hover{transform:scale(1.03)}
+.tu.chon{background:#ffe066;border-color:#fcbf49;transform:scale(1.05)}
+.tu.dung{background:#b7efc5;border-color:#2dc653;color:#1b4332;pointer-events:none}
+.tu.sai{animation:rung .45s}
+@keyframes rung{0%,100%{transform:translateX(0)}25%{transform:translateX(-9px)}75%{transform:translateX(9px)}}
+/* màn 2 */
+.lua{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px}
+.lua .tu{padding:18px 6px}
+.lua .tu.dung{background:#b7efc5}
+.bigw{display:block;text-align:center;font-size:clamp(34px,7vw,60px);font-weight:900;color:#e76f51;margin:2px 0 10px}
+.bigw span{color:#457b9d}
+/* màn 3 */
+.may{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:6px 0}
+.may .tu{min-width:108px;padding:14px 12px}
+.cap{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0 2px;min-height:44px}
+.cap b{background:#d8f3dc;border:3px solid #52b788;border-radius:14px;padding:4px 14px;font-size:clamp(17px,3vw,24px)}
+.tutim{margin-top:14px;border-top:3px dashed #ffd166;padding-top:12px;text-align:center}
+.tutim input{font:inherit;font-weight:700;font-size:clamp(18px,3vw,24px);width:min(210px,40%);padding:8px 10px;border:3px solid #90e0ef;border-radius:14px;text-align:center}
+.tutim input:focus{outline:4px solid #ffd166}
+.man{position:fixed;inset:0;background:#0007;display:flex;align-items:center;justify-content:center;z-index:50;padding:14px}
+.man[hidden]{display:none}
+.hop{background:#fffdf5;border:5px solid #ffd166;border-radius:26px;max-width:560px;width:100%;padding:20px 22px;text-align:center;box-shadow:0 10px 0 #e9b949}
+.hop h2{margin:0 0 6px;font-size:clamp(24px,5vw,34px);color:#e76f51}
+.hop p{font-size:clamp(15px,2.6vw,19px);line-height:1.45;margin:6px 0 14px}
+.sao3{font-size:46px;letter-spacing:6px;margin:4px 0}
+.bay{position:fixed;pointer-events:none;z-index:60;animation:bay 1.3s ease-out forwards}
+@keyframes bay{to{transform:translate(var(--dx),var(--dy)) rotate(var(--r));opacity:0}}
+.cc{position:fixed;bottom:4px;left:0;right:0;text-align:center;font-size:13px;color:#2b4a1f99;font-weight:700;pointer-events:none}
+@media(max-width:560px){.lua{grid-template-columns:1fr}.may .tu{min-width:92px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <h1>🐢 Rùa và Thỏ thi chạy 🐇</h1>
+ <p class="sub">Tìm cặp từ chỉ đặc điểm có nghĩa trái ngược nhau, ví dụ: <b>nhanh - chậm</b></p>
+ <div class="duong" id="duong"><div class="nhan" id="nhan">Màn 1</div><div class="sao" id="sao">⭐ 0</div><div class="tho" id="tho">🐇</div><div class="rua" id="rua">🐢</div><div class="dich">🚩</div></div>
+ <div class="bar" id="bar"></div>
+ <div class="card" id="khung"></div>
+</div>
+<div class="cc">CÔ ĐIỆP AI</div>
+<div class="man" id="man"><div class="hop"><h2>Rùa và Thỏ thi chạy</h2><p>Thỏ chạy nhanh, rùa đi chậm. Con hãy giúp rùa tìm các <b>cặp từ chỉ đặc điểm có nghĩa trái ngược nhau</b> để rùa về đích nhé!<br>Có 3 màn: nối cặp từ, chọn từ trái nghĩa, tự tìm thêm cặp từ.</p><button class="btn" id="manOk">Bắt đầu</button></div></div>
+
+<script>
+const $=i=>document.getElementById(i);
+const xao=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const cho=ms=>new Promise(r=>setTimeout(r,ms));
+const chuan=s=>String(s||'').normalize('NFC').toLowerCase().replace(/\s+/g,' ').trim();
+
+/* ===== NỘI DUNG (cô sửa ở đây): cặp từ chỉ đặc điểm trái nghĩa ===== */
+const CAP=[['nhanh','chậm'],['cao','thấp'],['to','nhỏ'],['dài','ngắn'],['nóng','lạnh'],['sáng','tối'],['khỏe','yếu'],['đẹp','xấu'],
+ ['rộng','hẹp'],['nặng','nhẹ'],['sâu','nông'],['mới','cũ'],['già','trẻ'],['dày','mỏng'],['ngọt','đắng'],['cứng','mềm'],
+ ['ngoan','hư'],['vui','buồn'],['giỏi','kém'],['sạch','bẩn'],['béo','gầy'],['gần','xa'],['siêng năng','lười biếng'],['thật thà','gian dối'],
+ ['chăm chỉ','lười biếng'],['dũng cảm','nhút nhát'],['cao','lùn'],['đầy','vơi'],['khô','ướt'],['yên tĩnh','ồn ào']];
+/* màn 2: từ hỏi, đáp án đúng, 2 từ gây nhiễu (không phải trái nghĩa) */
+const HOI=[['cao','thấp',['to','dài']],['nóng','lạnh',['ấm','sôi']],['sáng','tối',['đẹp','rộng']],['khỏe','yếu',['mạnh','giỏi']],
+ ['sạch','bẩn',['thơm','mới']],['ngọt','đắng',['chua','thơm']],['dày','mỏng',['nặng','to']],['vui','buồn',['cười','khóc']]];
+/* màn 3: 7 cặp xáo lẫn, tìm đủ 5 cặp */
+const MAY=[['mới','cũ'],['nặng','nhẹ'],['rộng','hẹp'],['sâu','nông'],['béo','gầy'],['gần','xa'],['ngoan','hư']];
+
+/* ===== âm thanh ===== */
+let ac=null;
+function bip(l){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const t=ac.currentTime;
+ const sq=l==='dung'?[[660,0],[880,.12],[1175,.24]]:l==='sai'?[[220,0],[180,.14]]:l==='thang'?[[523,0],[659,.13],[784,.26],[1047,.39],[1319,.52]]:[[600,0]];
+ sq.forEach(([f,d])=>{const o=ac.createOscillator(),g=ac.createGain();o.type=l==='sai'?'sawtooth':'triangle';o.frequency.value=f;g.gain.setValueAtTime(.0001,t+d);g.gain.exponentialRampToValueAtTime(.25,t+d+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d+.22);o.connect(g).connect(ac.destination);o.start(t+d);o.stop(t+d+.25)})}catch(e){}}
+let viVoice=null;function layGiong(){if(!window.speechSynthesis)return;viVoice=speechSynthesis.getVoices().find(x=>/^vi/i.test(x.lang))||null}
+if(window.speechSynthesis){layGiong();speechSynthesis.onvoiceschanged=layGiong}
+function noi(t){try{if(!window.speechSynthesis)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);if(viVoice){u.voice=viVoice;u.lang=viVoice.lang}else u.lang='vi-VN';u.rate=.85;speechSynthesis.speak(u)}catch(e){}}
+function phao(x,y,ds,n){ds=ds||['⭐','✨','🎉','🌟'];n=n||12;for(let i=0;i<n;i++){const e=document.createElement('div');e.className='bay';e.textContent=ds[i%ds.length];e.style.left=x+'px';e.style.top=y+'px';e.style.fontSize=(22+Math.random()*22)+'px';e.style.setProperty('--dx',((Math.random()-.5)*360)+'px');e.style.setProperty('--dy',(-60-Math.random()*240)+'px');e.style.setProperty('--r',((Math.random()-.5)*400)+'deg');document.body.appendChild(e);setTimeout(()=>e.remove(),1400)}}
+const giua=el=>{const r=el.getBoundingClientRect();return[r.left+r.width/2,r.top+r.height/2]};
+
+/* ===== trạng thái ===== */
+let sao=0,sai=0,tien=0,TONG=0;
+function setSao(n){sao+=n;$('sao').textContent='⭐ '+sao}
+function chay(){const p=Math.min(1,tien/TONG);$('rua').style.left=(2+p*80)+'%';$('tho').style.left=(2+Math.min(1,p+.18)*80)+'%';
+ $('bar').innerHTML=Array.from({length:TONG},(_,i)=>'<i class="'+(i<tien?'xong':i===tien?'nay':'')+'"></i>').join('')}
+function manHinh(tieude,loi,nut,cb,s3){const m=$('man');m.hidden=false;m.querySelector('h2').textContent=tieude;m.querySelector('p').innerHTML=loi+(s3?'<div class="sao3">'+'⭐'.repeat(s3)+'☆'.repeat(3-s3)+'</div>':'');$('manOk').textContent=nut;$('manOk').onclick=()=>{m.hidden=true;cb()}}
+
+/* ===== MÀN 1: nối cặp từ trái nghĩa (2 lượt x 5 cặp) ===== */
+const L1=[CAP.slice(0,5),CAP.slice(5,10)];let l1=0,xong1=0,trai=null,phai=null;
+function man1(){$('nhan').textContent='Màn 1';const cp=L1[l1];xong1=0;trai=phai=null;
+ const A=xao(cp.map((c,k)=>({w:c[0],k}))),B=xao(cp.map((c,k)=>({w:c[1],k})));
+ $('khung').innerHTML='<div class="hoi">Màn 1: Nối hai từ có nghĩa <em>trái ngược nhau</em> <span style="font-size:.7em">(lượt '+(l1+1)+'/2)</span></div><div class="hai"><div class="cot" id="cl">'+A.map(o=>'<div class="tu" data-k="'+o.k+'">'+o.w+'</div>').join('')+'</div><div class="cot" id="cr">'+B.map(o=>'<div class="tu" data-k="'+o.k+'">'+o.w+'</div>').join('')+'</div></div><div class="goiy" id="gy">Chạm một từ bên trái, rồi chạm từ trái nghĩa với nó bên phải. Ví dụ: nhanh - chậm.</div>';
+ [...$('cl').children].forEach(b=>b.onclick=()=>{if(b.classList.contains('dung'))return;noi(b.textContent);[...$('cl').children].forEach(x=>x.classList.remove('chon'));b.classList.add('chon');trai=b;thu1()});
+ [...$('cr').children].forEach(b=>b.onclick=()=>{if(b.classList.contains('dung'))return;noi(b.textContent);[...$('cr').children].forEach(x=>x.classList.remove('chon'));b.classList.add('chon');phai=b;thu1()});}
+async function thu1(){if(!trai||!phai)return;const a=trai,b=phai;trai=phai=null;
+ if(a.dataset.k===b.dataset.k){[a,b].forEach(x=>{x.classList.remove('chon');x.classList.add('dung')});bip('dung');const[x,y]=giua(b);phao(x,y,['⭐','✨'],7);xong1++;tien++;chay();$('gy').textContent='Đúng rồi! '+a.textContent+' - '+b.textContent+' là hai từ trái nghĩa.';noi(a.textContent+', '+b.textContent);
+  if(xong1>=L1[l1].length){await cho(1500);l1++;if(l1>=L1.length)return vaoMan(2);man1()}}
+ else{sai++;bip('sai');[a,b].forEach(x=>{x.classList.remove('chon');x.classList.add('sai');setTimeout(()=>x.classList.remove('sai'),450)});$('gy').textContent='Chưa đúng. Hai từ này chưa trái nghĩa. Con thử lại nhé!'}}
+
+/* ===== MÀN 2: chọn từ trái nghĩa ===== */
+let i2=0,khoa2=false,Q2=[];
+function man2(){$('nhan').textContent='Màn 2';Q2=xao(HOI).slice(0,6);i2=0;hoi2()}
+function hoi2(){khoa2=false;const q=Q2[i2];
+ const ds=xao([{w:q[1],ok:1}].concat(q[2].map(w=>({w,ok:0}))));
+ $('khung').innerHTML='<div class="hoi">Màn 2: Chọn từ có nghĩa <em>trái ngược</em> với từ dưới đây <button class="nghe" id="ng" aria-label="nghe">🔊</button></div><span class="bigw">'+q[0]+' <span>↔</span> ?</span><div class="lua">'+ds.map(o=>'<div class="tu" data-ok="'+o.ok+'">'+o.w+'</div>').join('')+'</div><div class="goiy" id="gy">Câu '+(i2+1)+'/'+Q2.length+'. Chạm vào từ trái nghĩa với "'+q[0]+'".</div>';
+ $('ng').onclick=()=>noi('Từ trái nghĩa với '+q[0]);noi('Từ nào trái nghĩa với '+q[0]);
+ [...document.querySelectorAll('.lua .tu')].forEach(b=>b.onclick=()=>chon2(b))}
+async function chon2(b){if(khoa2||b.classList.contains('dung'))return;const q=Q2[i2];noi(b.textContent);
+ if(b.dataset.ok==='1'){khoa2=true;b.classList.add('dung');bip('dung');const[x,y]=giua(b);phao(x,y,['⭐','✨'],8);tien++;chay();$('gy').textContent='Đúng! '+q[0]+' - '+q[1]+'.';await cho(1500);i2++;if(i2>=Q2.length)return vaoMan(3);hoi2()}
+ else{sai++;bip('sai');b.classList.add('sai');setTimeout(()=>b.classList.remove('sai'),450);$('gy').textContent='"'+b.textContent+'" chưa trái nghĩa với "'+q[0]+'". Con chọn từ khác nhé!'}}
+
+/* ===== MÀN 3: tự tìm thêm cặp từ ===== */
+let tim=[],chonA=null,da3=0,tuDo=0;
+const TD=new Set();CAP.forEach(([a,b])=>{TD.add(chuan(a)+'|'+chuan(b));TD.add(chuan(b)+'|'+chuan(a))});
+function man3(){$('nhan').textContent='Màn 3';tim=[];chonA=null;da3=0;tuDo=0;
+ const ws=xao(MAY.flatMap(([a,b])=>[a,b]));
+ $('khung').innerHTML='<div class="hoi">Màn 3: Tìm thêm <em>5 cặp từ</em> trái nghĩa trong các từ dưới đây</div><div class="may" id="may">'+ws.map(w=>'<div class="tu">'+w+'</div>').join('')+'</div><div class="cap" id="cap"></div><div class="goiy" id="gy">Chạm hai từ trái nghĩa với nhau. Tìm đủ 5 cặp nhé! (0/5)</div><div class="tutim"><div style="font-weight:700;margin-bottom:6px">Con còn biết cặp từ nào nữa? Viết vào đây:</div><input id="t1" placeholder="từ thứ nhất"> - <input id="t2" placeholder="từ thứ hai"> <button class="btn" id="kt" style="padding:8px 18px;font-size:20px">Kiểm tra</button><div class="goiy" id="gy2"></div></div>';
+ [...$('may').children].forEach(b=>b.onclick=()=>thu3(b));$('kt').onclick=kiem}
+function laCap(a,b){return MAY.some(([x,y])=>(x===a&&y===b)||(x===b&&y===a))}
+async function thu3(b){if(b.classList.contains('dung'))return;noi(b.textContent);
+ if(!chonA){chonA=b;b.classList.add('chon');return}
+ if(chonA===b){b.classList.remove('chon');chonA=null;return}
+ const a=chonA;chonA=null;a.classList.remove('chon');
+ if(laCap(a.textContent,b.textContent)){[a,b].forEach(x=>x.classList.add('dung'));bip('dung');const[x,y]=giua(b);phao(x,y,['⭐','✨'],7);da3++;$('cap').insertAdjacentHTML('beforeend','<b>'+a.textContent+' - '+b.textContent+'</b>');$('gy').textContent='Đúng rồi! Con đã tìm được '+da3+'/5 cặp.';noi(a.textContent+', '+b.textContent);
+  if(da3<=5){tien=Math.min(TONG,tien+(da3<=2?1:da3<=4?0:1));chay()}
+  if(da3>=5){await cho(1200);ketThuc()}}
+ else{sai++;bip('sai');[a,b].forEach(x=>{x.classList.add('sai');setTimeout(()=>x.classList.remove('sai'),450)});$('gy').textContent='Hai từ này chưa trái nghĩa. Con thử cặp khác nhé!'}}
+function kiem(){const a=chuan($('t1').value),b=chuan($('t2').value);if(!a||!b){$('gy2').textContent='Con viết đủ hai từ nhé.';return}
+ if(a===b){$('gy2').textContent='Hai từ giống nhau thì chưa trái nghĩa.';bip('sai');return}
+ if(TD.has(a+'|'+b)){bip('dung');tuDo++;setSao(1);const[x,y]=giua($('kt'));phao(x,y,['⭐','🌟','✨'],10);$('gy2').textContent='Giỏi quá! '+a+' - '+b+' là cặp từ trái nghĩa. Con được thêm 1 sao!';noi(a+', '+b)}
+ else{bip('sai');$('gy2').textContent='Cô chưa có cặp này trong sách. Con hỏi cô giáo xem có đúng không nhé!'}}
+
+function vaoMan(k){if(k===1){l1=0;man1()}else if(k===2){manHinh('Màn 2','Giỏi lắm! Rùa đã đi được một đoạn. Bây giờ con chọn từ có nghĩa trái ngược với từ cô cho nhé.','Vào màn 2',man2)}else{manHinh('Màn 3','Sắp về đích rồi! Con tự tìm thêm các cặp từ trái nghĩa nhé.','Vào màn 3',man3)}}
+function ketThuc(){tien=TONG;chay();const s=sai<=2?3:sai<=6?2:1;setSao(s);bip('thang');phao(innerWidth/2,innerHeight/2,['🐢','🌟','⭐','🎉'],26);
+ manHinh('Rùa về đích rồi!','Con đã tìm được nhiều cặp từ trái nghĩa: nhanh - chậm, cao - thấp, to - nhỏ... Rùa chậm mà chắc, con làm sai '+sai+' lần. Chúc mừng con!','Chơi lại',batDau,s)}
+function batDau(){sai=0;sao=0;tien=0;$('sao').textContent='⭐ 0';TONG=10+Math.min(6,HOI.length>6?6:HOI.length)+5;chay();vaoMan(1)}
+TONG=21;chay();
+$('manOk').onclick=()=>{$('man').hidden=true;batDau()};
+</script>
+</body>
+</html>
