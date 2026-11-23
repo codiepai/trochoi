@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hái Lộc Đầu Năm - Trò chơi đầu giờ</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
+<style>
+[hidden]{display:none!important}
+:root{--u:min(1vh,1.6vw);--do:#c1121f;--vang:#ffd166;--font:"Baloo 2","Segoe UI",Arial,sans-serif;color-scheme:dark}
+*{box-sizing:border-box;margin:0}
+html,body{min-height:100%}
+body{font-family:var(--font);font-weight:800;color:#fff;background:radial-gradient(circle at 50% 0,#e63946,#9d0208 70%,#6a040f);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:12px 14px 40px;gap:10px;overflow-x:hidden;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+button{font-family:inherit;font-weight:800;cursor:pointer}
+button:focus-visible,textarea:focus-visible{outline:4px solid var(--vang);outline-offset:3px}
+#hoa{position:fixed;inset:0;pointer-events:none;z-index:1}
+.bong{position:absolute;top:-10vh;animation:roi linear infinite;opacity:.9}
+@keyframes roi{to{transform:translateY(115vh) translateX(var(--dx)) rotate(360deg)}}
+.wrap{position:relative;z-index:2;width:100%;max-width:1000px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.top{width:100%;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.top button{border:none;border-radius:30px;padding:6px 16px;background:#fff3c4;color:#9d0208;font-size:max(15px,calc(var(--u)*2.6))}
+h1{font-size:max(28px,calc(var(--u)*6.4));text-align:center;line-height:1.05;color:var(--vang);text-shadow:0 4px 0 #6a040f}
+.sub{font-size:max(16px,calc(var(--u)*3));text-align:center;color:#ffe8c2;font-weight:700}
+.hop{background:#fffaf0;color:#5c1a1a;border-radius:26px;padding:18px;width:100%;box-shadow:0 8px 0 #0006}
+.hop label{display:block;font-size:max(16px,calc(var(--u)*3));margin-bottom:6px}
+textarea{width:100%;min-height:30vh;border:4px solid #f0c987;border-radius:18px;padding:12px;font-family:inherit;font-weight:700;font-size:max(17px,calc(var(--u)*3.2));color:#5c1a1a;resize:vertical;user-select:text;-webkit-user-select:text}
+.dong{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center;margin-top:10px;font-size:max(15px,calc(var(--u)*2.8));font-weight:700}
+.lon{font-size:max(20px,calc(var(--u)*4.6));padding:.3em 1.2em;border:none;border-radius:22px;color:#5c1a1a;background:var(--vang);box-shadow:0 7px 0 #b8860b}
+.lon:active{transform:translateY(5px);box-shadow:0 2px 0 #b8860b}
+.lon.phu{background:#fff;box-shadow:0 7px 0 #d9b27c}
+.bao{color:#b3261e;font-size:max(15px,calc(var(--u)*2.8));min-height:1.3em;text-align:center}
+#choi{width:100%;display:flex;flex-direction:column;align-items:center;gap:10px}
+.con{font-size:max(16px,calc(var(--u)*3.2));background:#ffffff22;border-radius:30px;padding:4px 18px}
+.cay{width:100%;background:#00000022;border-radius:26px;padding:14px 10px;display:grid;grid-template-columns:repeat(auto-fill,minmax(var(--w),1fr));gap:10px;justify-items:center}
+.lx{width:100%;max-width:130px;aspect-ratio:3/4;border:none;border-radius:12px;background:linear-gradient(#e63946,#b3001b);color:var(--vang);box-shadow:0 6px 0 #5c0010,inset 0 0 0 3px #ffd16688;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;transition:transform .15s;font-size:max(22px,calc(var(--u)*5));position:relative;padding:0}
+.lx:hover{transform:translateY(-4px) rotate(-2deg)}
+.lx:active{transform:scale(.94)}
+.lx .v{font-size:2.2em;margin-bottom:4px}
+.lx.mo{background:linear-gradient(#fff3c4,#f4d58d);color:#7a1020;box-shadow:0 6px 0 #a8801f;cursor:default;transform:none}
+.lx.mo .t{font-size:max(15px,calc(var(--u)*3));line-height:1.1;padding:0 4px;overflow-wrap:anywhere;font-weight:800;text-align:center}
+.lx.mo .v{font-size:1.2em}
+#the{position:fixed;inset:0;background:#6a040fdd;z-index:40;display:flex;align-items:center;justify-content:center;padding:16px;cursor:pointer}
+#the .tk{background:linear-gradient(#fffaf0,#ffe9b0);color:#9d0208;border-radius:30px;padding:.4em 1em .5em;text-align:center;box-shadow:0 10px 0 #0006,0 0 0 8px var(--vang);font-size:max(48px,calc(var(--u)*14));line-height:1.2;max-width:94vw;overflow-wrap:anywhere;animation:hien .6s cubic-bezier(.3,1.6,.5,1)}
+#the .tk small{display:block;font-size:.34em;color:#7a1020;margin-bottom:.2em}
+#the .tk i{display:block;font-style:normal;font-size:.28em;color:#7a1020;margin-top:.5em;font-weight:700}
+@keyframes hien{0%{transform:scale(.2) rotate(-14deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+.bay2{position:fixed;pointer-events:none;z-index:60;animation:bayra 1.4s ease-out forwards;font-size:34px}
+@keyframes bayra{0%{transform:translate(0,0) scale(.4);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1.3) rotate(var(--r));opacity:0}}
+#hetgio{position:fixed;inset:0;background:#6a040fcc;z-index:50;display:flex;align-items:center;justify-content:center;padding:16px}
+#hetgio .hop{max-width:520px;text-align:center}
+#hetgio h2{font-size:max(30px,calc(var(--u)*7));color:var(--do)}
+#hetgio p{font-size:max(18px,calc(var(--u)*3.6));margin:.5em 0 .8em;font-weight:700}
+.hang{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div id="hoa" aria-hidden="true"></div>
+<div class="wrap">
+ <div class="top"><button id="btnDS" hidden>✏️ Sửa danh sách</button><span></span><button id="btnAm">🔊 Đọc tên: Bật</button></div>
+ <h1>🧧 Hái Lộc Đầu Năm 🌼</h1>
+
+ <div id="nhap" class="hop">
+  <label for="dsText">Thầy cô dán danh sách học sinh vào đây (mỗi bạn một dòng, hoặc cách nhau bằng dấu phẩy):</label>
+  <textarea id="dsText" placeholder="Nguyễn Minh An&#10;Trần Bảo Ngọc&#10;Lê Gia Huy&#10;..."></textarea>
+  <div class="bao" id="bao"></div>
+  <div class="dong">
+   <button class="lon phu" id="btnMau">Dùng danh sách mẫu</button>
+   <button class="lon" id="btnBD">🧧 Bắt đầu chơi</button>
+  </div>
+  <div class="sub" style="color:#7a5a4a;margin-top:8px;font-weight:600">Danh sách chỉ lưu trên máy này, không gửi đi đâu. Lần sau mở lại vẫn còn.</div>
+ </div>
+
+ <div id="choi" hidden>
+  <div class="sub">Mỗi bao lì xì giấu tên một bạn. Mời một bạn lên hái lộc, hoặc thầy cô bấm "Hái ngẫu nhiên" nhé!</div>
+  <div class="con" id="con"></div>
+  <div class="dong" style="margin:0"><button class="lon" id="btnNgau">🎋 Hái ngẫu nhiên</button><button class="lon phu" id="btnLai">🔄 Chơi lại từ đầu</button></div>
+  <div class="cay" id="cay"></div>
+ </div>
+</div>
+
+<div id="the" hidden><div class="tk" id="tk"></div></div>
+<div id="hetgio" hidden><div class="hop"><h2>🧧 Đã hái hết lộc!</h2><p>Cả lớp đều đã nhận lì xì rồi. Chúc các con năm mới học giỏi, ngoan ngoãn!</p><div class="hang"><button class="lon" id="btnTuDau">Chơi lại từ đầu</button><button class="lon phu" id="btnDong">Đóng</button></div></div></div>
+
+<script>
+const $=i=>document.getElementById(i);
+const KHOA='noel-goi-ten-ds';
+let tenList=[],gan=[],soMo=0,am=true,dangMo=false;
+
+(function(){const t=$('hoa'),E=['🌼','🌸','🌼','🧧'];for(let i=0;i<30;i++){const s=document.createElement('span');s.className='bong';s.textContent=E[i%E.length];s.style.left=Math.random()*100+'vw';s.style.fontSize=(14+Math.random()*20)+'px';s.style.animationDuration=(7+Math.random()*9)+'s';s.style.animationDelay=(-Math.random()*12)+'s';s.style.setProperty('--dx',(Math.random()*100-50)+'px');t.appendChild(s)}})();
+
+let ac;function tick(f,d){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.type='triangle';o.frequency.value=f;o.connect(g);g.connect(ac.destination);const t=ac.currentTime;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.22,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+(d||.2));o.start(t);o.stop(t+(d||.2)+.05)}catch(e){}}
+function nhac(){[392,523,659,784,1047].forEach((f,i)=>setTimeout(()=>tick(f,.25),i*100))}
+
+let giongVi=null;
+function chonGiong(){giongVi=speechSynthesis.getVoices().find(x=>/^vi([-_]|$)/i.test(x.lang))||null}
+if('speechSynthesis' in window){chonGiong();speechSynthesis.onvoiceschanged=chonGiong}
+let amGG=null;
+function noi(text){
+  if(!am)return;
+  try{if(amGG){amGG.pause();amGG=null}}catch(e){}
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+  /* co giong tieng Viet trong may thi dung, khong thi dung giong Google (can mang), khong bao gio doc bang giong Anh */
+  if(giongVi&&'speechSynthesis' in window){
+    const u=new SpeechSynthesisUtterance(text);u.lang=giongVi.lang;u.voice=giongVi;u.rate=.85;speechSynthesis.speak(u);return;
+  }
+  try{
+    const a=new Audio('https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=vi&q='+encodeURIComponent(text));
+    amGG=a;const p=a.play();if(p&&p.catch)p.catch(()=>{});
+  }catch(e){}
+}
+function phao(x,y,n){const E=['🧧','🌼','✨','🎊','💰','🌸'];for(let i=0;i<n;i++){const s=document.createElement('span');s.className='bay2';s.textContent=E[i%E.length];s.style.left=x+'px';s.style.top=y+'px';const a=Math.random()*Math.PI*2,d=70+Math.random()*130;s.style.setProperty('--dx',Math.cos(a)*d+'px');s.style.setProperty('--dy',Math.sin(a)*d+'px');s.style.setProperty('--r',(Math.random()*360-180)+'deg');document.body.appendChild(s);setTimeout(()=>s.remove(),1500)}}
+
+function tachDS(txt){return txt.split(/[\n\r;,\t]+/).map(s=>s.replace(/^\s*\d+\s*[\.\)\-:]\s*/,'').replace(/\s+/g,' ').trim()).filter(Boolean)}
+const MAU=['Nguyễn Minh An','Trần Bảo Ngọc','Lê Gia Huy','Phạm Khánh Linh','Hoàng Đức Anh','Võ Thanh Mai','Đặng Quốc Bảo','Bùi Ngọc Hân','Ngô Thảo Nguyên','Dương Tuấn Kiệt'];
+function luu(){try{localStorage.setItem(KHOA,$('dsText').value)}catch(e){}}
+function nap(){try{const s=localStorage.getItem(KHOA);if(s)$('dsText').value=s}catch(e){}}
+function xao(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function esc(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+
+function dung(){
+  const n=tenList.length;
+  const w=n<=12?120:n<=24?100:n<=40?84:72;
+  $('cay').style.setProperty('--w',w+'px');
+  $('cay').innerHTML=gan.map((t,i)=>'<button class="lx" data-i="'+i+'" aria-label="Bao lì xì số '+(i+1)+'"><span class="v">🧧</span><span class="s">'+(i+1)+'</span></button>').join('');
+  [...$('cay').children].forEach(b=>b.onclick=()=>mo(+b.dataset.i));
+  capNhat();
+}
+function capNhat(){$('con').textContent='Còn '+(tenList.length-soMo)+' / '+tenList.length+' bao lì xì chưa mở'}
+
+function mo(i){
+  if(dangMo)return;
+  const b=$('cay').children[i];if(!b||b.classList.contains('mo'))return;
+  dangMo=true;
+  const ten=gan[i];
+  b.classList.add('mo');b.innerHTML='<span class="v">🌼</span><span class="t">'+esc(ten)+'</span>';
+  soMo++;capNhat();
+  nhac();
+  $('tk').innerHTML='<small>🧧 Mời bạn lên nhận lì xì 🧧</small>'+esc(ten)+'<i>Chạm để đóng</i>';
+  $('the').hidden=false;
+  phao(innerWidth/2,innerHeight/2,16);
+  noi(ten+' ơi!');
+}
+function dongThe(){
+  if($('the').hidden)return;
+  $('the').hidden=true;dangMo=false;
+  if(soMo>=tenList.length)setTimeout(()=>{$('hetgio').hidden=false},300);
+}
+function ngau(){
+  if(dangMo)return;
+  const con=[...$('cay').children].map((b,i)=>b.classList.contains('mo')?-1:i).filter(i=>i>=0);
+  if(!con.length){$('hetgio').hidden=false;return}
+  mo(con[Math.floor(Math.random()*con.length)]);
+}
+function batDau(){
+  tenList=tachDS($('dsText').value);
+  if(tenList.length<1){$('bao').textContent='Thầy cô dán ít nhất một tên học sinh nhé.';return}
+  $('bao').textContent='';luu();
+  gan=xao(tenList);soMo=0;dangMo=false;
+  $('nhap').hidden=true;$('choi').hidden=false;$('btnDS').hidden=false;dung();
+}
+function lai(){gan=xao(tenList);soMo=0;dangMo=false;$('the').hidden=true;$('hetgio').hidden=true;dung()}
+
+$('btnBD').onclick=batDau;
+$('btnMau').onclick=()=>{$('dsText').value=MAU.join('\n')};
+$('btnNgau').onclick=ngau;
+$('btnLai').onclick=lai;$('btnTuDau').onclick=lai;
+$('btnDong').onclick=()=>{$('hetgio').hidden=true};
+$('the').onclick=dongThe;
+document.addEventListener('keydown',e=>{if(e.key==='Escape'||e.key==='Enter'||e.key===' ')dongThe()});
+$('btnDS').onclick=()=>{$('choi').hidden=true;$('nhap').hidden=false;$('btnDS').hidden=true;$('the').hidden=true;dangMo=false};
+$('btnAm').onclick=()=>{am=!am;$('btnAm').textContent='🔊 Đọc tên: '+(am?'Bật':'Tắt');if(!am&&'speechSynthesis' in window)speechSynthesis.cancel()};
+nap();
+</script>
+</body>
+</html>
